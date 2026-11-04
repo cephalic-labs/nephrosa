@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-04T13:47:41Z",
+  "title": "Design System: Renal Relay — inherited starter UI",
+  "extensions": {
+    "breakpoints": [
+      { "name": "sm", "value": "40rem" },
+      { "name": "md", "value": "48rem" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Starter Primary Link",
+      "kind": "button",
+      "refersTo": "starter-link-primary",
+      "description": "Page-local outbound link styled as the primary starter action.",
+      "html": "<a class=\"ds-starter-primary\" href=\"#\">Deploy Now</a>",
+      "css": ".ds-starter-primary { display: flex; height: 3rem; width: 100%; align-items: center; justify-content: center; gap: 0.5rem; border-radius: 9999px; background: #171717; padding: 0 1.25rem; color: #ffffff; font: 500 1rem/1.5 Arial, Helvetica, sans-serif; text-decoration: none; transition: background-color 150ms; } .ds-starter-primary:hover { background: #383838; } .ds-starter-primary:focus-visible { outline: auto; } @media (prefers-color-scheme: dark) { .ds-starter-primary { background: #ededed; color: #0a0a0a; } .ds-starter-primary:hover { background: #cccccc; } } @media (min-width: 768px) { .ds-starter-primary { width: 158px; } }"
+    },
+    {
+      "name": "Starter Secondary Link",
+      "kind": "button",
+      "refersTo": "starter-link-secondary",
+      "description": "Page-local outbound link styled as the secondary starter action.",
+      "html": "<a class=\"ds-starter-secondary\" href=\"#\">Documentation</a>",
+      "css": ".ds-starter-secondary { display: flex; height: 3rem; width: 100%; align-items: center; justify-content: center; border: 1px solid rgba(0, 0, 0, 0.08); border-radius: 9999px; padding: 0 1.25rem; color: #171717; font: 500 1rem/1.5 Arial, Helvetica, sans-serif; text-decoration: none; transition: background-color 150ms, border-color 150ms; } .ds-starter-secondary:hover { border-color: transparent; background: rgba(0, 0, 0, 0.04); } .ds-starter-secondary:focus-visible { outline: auto; } @media (prefers-color-scheme: dark) { .ds-starter-secondary { border-color: rgba(255, 255, 255, 0.145); color: #ededed; } .ds-starter-secondary:hover { border-color: transparent; background: #1a1a1a; } } @media (min-width: 768px) { .ds-starter-secondary { width: 158px; } }"
+    }
+  ],
+  "narrative": {
+    "northStar": "Unassigned; inherited Next.js starter UI",
+    "overview": "This document records the existing create-next-app screen only. It is not the Renal Relay visual direction. The user has asked to keep that direction open.",
+    "keyCharacteristics": [
+      "Single centered starter page with two outbound calls to action.",
+      "Light/dark appearance follows the operating-system color preference.",
+      "Tailwind utilities provide layout and framework-default colors; no shared component library exists."
+    ],
+    "rules": [],
+    "dos": [
+      "Do describe these values as inherited starter defaults when maintaining the current page.",
+      "Do use PRODUCT.md and the relevant product brief before designing a Renal Relay workflow screen."
+    ],
+    "donts": [
+      "Don't present the starter colors or pill actions as approved Renal Relay branding.",
+      "Don't infer a dashboard layout, clinical status palette, or patient-facing visual language from this single starter page.",
+      "Don't treat Tailwind's default palette utilities as custom design tokens."
+    ]
+  }
+}

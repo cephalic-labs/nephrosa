@@ -4,6 +4,7 @@
 
 - `Renal_Relay_Complete_Idea_and_Prototype_Plan.pdf` — product concept, users, requirements, proposed screens, architecture, data/API outline, workflow safeguards, demo scenario, roadmap, pilot measures, and open decisions.
 - `health-a-thon.pptx` — eight-slide Health-a-thon 2026 diabetes-track presentation describing the problem, proposed workflow, technology, safeguards, distinct value, and pilot outcome.
+- Aorta's `README.md`, `PRODUCT.md`, `DESIGN.md`, documentation index, MVP specification, HLD/LLD, ADR, scaffold ledger, and contributor guides — consulted only as a documentation-organization and engineering-process reference. No Aorta product requirements or visual identity are transferred to Renal Relay.
 
 The attachments are source proposals. Their proposed endpoints, schema, roadmap, integrations, and success measures are not evidence that those parts are implemented.
 

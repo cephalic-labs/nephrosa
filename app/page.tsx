@@ -24,205 +24,180 @@ type Overview = {
   episodes: Episode[];
 };
 
-const demoOverview: Overview = {
-  summary: {
-    openEpisodes: 2,
-    overdueEpisodes: 1,
-    awaitingReport: 0,
-    awaitingClinicianReview: 1,
-    dueWithinSevenDays: 1,
-  },
-  episodes: [
-    {
-      id: "demo-episode-1",
-      patientReference: "RR-1042",
-      patientDisplayName: "Maya R.",
-      status: "awaiting_booking",
-      dueAt: relativeDate(-5),
-      ownerDisplayName: "A. Patel",
-      tests: ["uACR", "eGFR"],
-      openBarrierCategory: "time_off_work",
-      nextTask: "Offer an appointment outside work hours",
-    },
-    {
-      id: "demo-episode-2",
-      patientReference: "RR-1078",
-      patientDisplayName: "Arun K.",
-      status: "awaiting_clinician_review",
-      dueAt: relativeDate(2),
-      ownerDisplayName: "J. Thomas",
-      tests: ["uACR", "eGFR"],
-      nextTask: "Review received report and record next action",
-    },
-  ],
-};
-
-function relativeDate(offsetDays: number) {
-  const date = new Date();
-  date.setUTCDate(date.getUTCDate() + offsetDays);
-  return date.toISOString().slice(0, 10);
-}
-
-async function getOverview(): Promise<Overview> {
+async function getOverview(): Promise<Overview | null> {
   const apiUrl = process.env.RELAY_API_URL ?? "http://127.0.0.1:8080";
-
   try {
     const response = await fetch(`${apiUrl}/api/v1/dashboard/overview`, {
       cache: "no-store",
       signal: AbortSignal.timeout(1500),
     });
-    if (!response.ok) throw new Error("Dashboard service unavailable");
+    if (!response.ok) return null;
     return (await response.json()) as Overview;
   } catch {
-    return demoOverview;
+    return null;
   }
 }
 
-function statusLabel(status: string) {
-  const labels: Record<string, string> = {
-    ordered: "Ordered",
-    outreach_pending: "Outreach pending",
-    awaiting_booking: "Booking needed",
-    booked: "Booked",
-    awaiting_test_completion: "Awaiting test",
-    awaiting_report: "Awaiting report",
-    awaiting_clinician_review: "Clinician review",
-  };
-  return labels[status] ?? status.replaceAll("_", " ");
+const workflow = [
+  "Order placed",
+  "Test completed",
+  "Report received",
+  "Next action recorded",
+];
+
+const metrics = [
+  ["Open episodes", "openEpisodes"],
+  ["Overdue", "overdueEpisodes"],
+  ["Awaiting report", "awaitingReport"],
+  ["Clinician review", "awaitingClinicianReview"],
+] as const;
+
+function readable(value: string) {
+  return value.replaceAll("_", " ");
 }
 
-function testLabel(test: string) {
-  if (test.toLowerCase() === "uacr") return "uACR";
-  if (test.toLowerCase() === "egfr") return "eGFR";
-  return test;
-}
-
-function formatDate(value: string) {
+function dateLabel(value: string) {
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return "Date not set";
   return new Intl.DateTimeFormat("en", {
     month: "short",
     day: "numeric",
     year: "numeric",
     timeZone: "UTC",
-  }).format(new Date(value));
+  }).format(date);
 }
 
-function Metric({ label, value, detail, tone = "default" }: { label: string; value: number; detail: string; tone?: "default" | "urgent" }) {
+function SplitMark() {
   return (
-    <article className={`metric metric-${tone}`}>
-      <p className="metric-label">{label}</p>
-      <p className="metric-value">{value}</p>
-      <p className="metric-detail">{detail}</p>
-    </article>
+    <svg className="split-mark" viewBox="0 0 120 120" aria-hidden="true">
+      <defs>
+        <pattern id="relay-dots" width="7" height="7" patternUnits="userSpaceOnUse">
+          <circle cx="1.5" cy="1.5" r="1.3" fill="currentColor" />
+        </pattern>
+      </defs>
+      <path d="M0 0h120v120H0z" fill="url(#relay-dots)" />
+      <path d="M0 0h57v57H0zM63 0h57v57H63zM0 63h57v57H0z" fill="var(--ink)" />
+    </svg>
   );
 }
 
 async function Dashboard() {
   const data = await getOverview();
-  const todayISO = new Date().toISOString().slice(0, 10);
-  const today = new Intl.DateTimeFormat("en", {
-    weekday: "long",
-    month: "long",
-    day: "numeric",
-  }).format(new Date());
+  const connected = data !== null;
+  const episodes = data?.episodes ?? [];
+  const today = new Date().toISOString().slice(0, 10);
 
   return (
-    <main className="workspace">
-      <aside className="sidebar" aria-label="Main navigation">
-        <Link className="brand" href="/" aria-label="Renal Relay home">
-          <span className="brand-mark" aria-hidden="true">R</span>
-          <span className="brand-name">renal<span>relay</span></span>
+    <main className="dashboard-shell">
+      <header className="site-header">
+        <Link className="wordmark" href="/" aria-label="Renal Relay dashboard">
+          <span className="wordmark-symbol" aria-hidden="true"><span /><span /><span /><span /></span>
+          <span>renal relay</span>
         </Link>
-        <p className="nav-heading">WORKSPACE</p>
-        <nav className="main-nav">
-          <a className="nav-item active" href="#overview" aria-current="page">
-            <svg viewBox="0 0 20 20" aria-hidden="true"><rect x="3" y="3" width="5" height="5" rx="1"/><rect x="12" y="3" width="5" height="5" rx="1"/><rect x="3" y="12" width="5" height="5" rx="1"/><rect x="12" y="12" width="5" height="5" rx="1"/></svg>
-            Overview
-          </a>
-          <a className="nav-item" href="#episodes">
-            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 4.5h10M5 9.5h10M5 14.5h6"/><path d="M3.5 4.5h.01M3.5 9.5h.01M3.5 14.5h.01"/></svg>
-            Monitoring episodes <span className="nav-count">{data.summary.openEpisodes}</span>
-          </a>
-          <a className="nav-item" href="#follow-through">
-            <svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="7"/><path d="M10 6v4l2.5 1.5"/></svg>
-            Follow-through
-          </a>
+        <nav className="primary-nav" aria-label="Main navigation">
+          <a href="#dashboard" aria-current="page">Dashboard</a>
+          <a href="#workflow">Workflow</a>
+          <a href="#episodes">Episodes</a>
         </nav>
-        <div className="sidebar-bottom">
-          <div className="clinic-switcher"><span className="clinic-avatar">C</span><span><strong>Care team</strong><small>Prototype workspace</small></span><span className="chevron">⌄</span></div>
-          <p className="sidebar-footnote">Fictional records for demonstration</p>
+        <div className={`connection-state ${connected ? "is-connected" : "is-offline"}`} role="status">
+          <span className="connection-dot" />
+          {connected ? "Live connection" : "Connection unavailable"}
         </div>
-      </aside>
+      </header>
 
-      <section className="main-panel" id="overview">
-        <header className="topbar">
-          <div className="breadcrumb">Workspace <span>/</span> Overview</div>
-          <div className="topbar-meta"><span className="today-date">{today}</span><span className="avatar" aria-label="Signed in as Alex Patel">AP</span></div>
-        </header>
+      <section className="split-grid" id="dashboard" aria-label="Care team dashboard">
+        <div className="grid-cell introduction">
+          <h1>Care continues after the order.</h1>
+          <p>Keep kidney monitoring moving from uACR and eGFR orders to clinician acknowledgement and a documented next action.</p>
+          <span className="intro-rule" aria-hidden="true" />
+        </div>
 
-        <div className="content">
-          <div className="page-heading">
-            <div>
-              <h1>Good morning, Alex</h1>
-              <p>Keep ordered kidney monitoring moving toward a documented next step.</p>
-            </div>
-            <button className="button-primary" type="button" disabled title="Episode creation is not available in this prototype">＋ <span>New episode</span></button>
+        <section className="grid-cell workflow-panel" id="workflow" aria-labelledby="workflow-title">
+          <div className="workflow-topline">
+            <h2 id="workflow-title">The follow-through</h2>
+            <SplitMark />
           </div>
+          <p className="workflow-copy">One visible path from ordered test to recorded next step.</p>
+          <ol className="workflow-list">
+            {workflow.map((step, index) => (
+              <li key={step}>
+                <span className="workflow-index">0{index + 1}</span>
+                <span>{step}</span>
+                {index < workflow.length - 1 && <span className="workflow-arrow" aria-hidden="true" />}
+              </li>
+            ))}
+          </ol>
+        </section>
 
-          <div className="demo-notice" role="status"><span className="notice-dot" /> Prototype workspace · Use fictional records only.</div>
+        <section className="grid-cell metrics-panel" aria-label="Episode overview">
+          <h2>Team overview</h2>
+          <div className="metrics-grid">
+            {metrics.map(([label, key]) => (
+              <div className="metric" key={key}>
+                <span className="metric-label">{label}</span>
+                <strong className="metric-value">{connected ? data.summary[key] : "—"}</strong>
+              </div>
+            ))}
+          </div>
+          <p className="metric-note">{connected ? `${data.summary.dueWithinSevenDays} due within seven days` : "Counts appear when the dashboard service is available."}</p>
+        </section>
 
-          <section className="metrics" aria-label="Episode overview">
-            <Metric label="Open episodes" value={data.summary.openEpisodes} detail="Across your care team" />
-            <Metric label="Overdue" value={data.summary.overdueEpisodes} detail="Needs follow-through" tone="urgent" />
-            <Metric label="Awaiting report" value={data.summary.awaitingReport} detail="Completed test, report not logged" />
-            <Metric label="Clinician review" value={data.summary.awaitingClinicianReview} detail="Next action to document" />
-          </section>
-
-          <section className="episode-section" id="episodes" aria-labelledby="episode-title">
-            <div className="section-heading">
-              <div><h2 id="episode-title">Monitoring episodes</h2><p>Ordered tests, open barriers, and the next accountable step.</p></div>
+        <section className="grid-cell episodes-panel" id="episodes" aria-labelledby="episodes-title">
+          <div className="episodes-heading">
+            <div>
+              <h2 id="episodes-title">Monitoring episodes</h2>
+              <p>Current follow-through across the care team.</p>
             </div>
-            <div className="table-wrap">
-              <table>
-                <thead><tr><th scope="col">PATIENT</th><th scope="col">MONITORING</th><th scope="col">STATUS</th><th scope="col">DUE DATE</th><th scope="col">OWNER</th></tr></thead>
-                <tbody>
-                  {data.episodes.map((episode) => (
-                    <tr key={episode.id}>
-                      <td><div className="patient-cell"><span className="patient-avatar">{episode.patientDisplayName.slice(0, 1)}</span><span><strong>{episode.patientDisplayName}</strong><small>{episode.patientReference}</small></span></div></td>
-                      <td><div className="test-list">{episode.tests.map((test) => <span className="test-tag" key={test}>{testLabel(test)}</span>)}</div></td>
-                      <td><span className={`status-pill ${episode.dueAt.slice(0, 10) < todayISO ? "status-overdue" : episode.status === "awaiting_clinician_review" ? "status-review" : "status-pending"}`}><span />{episode.dueAt.slice(0, 10) < todayISO ? `Overdue · ${statusLabel(episode.status)}` : statusLabel(episode.status)}</span></td>
-                      <td className="date-cell">{formatDate(episode.dueAt)}</td>
-                      <td className="owner-cell">{episode.ownerDisplayName}</td>
-                    </tr>
-                  ))}
-                  {data.episodes.length === 0 && <tr><td className="empty-state" colSpan={5}>No open monitoring episodes are assigned to this team.</td></tr>}
-                </tbody>
-              </table>
+            <span className="episode-total">{connected ? episodes.length : "—"} <span>open</span></span>
+          </div>
+          {!connected ? (
+            <div className="episode-empty" role="status">
+              <strong>Live episodes couldn’t be loaded.</strong>
+              <span>Check the service connection and try again.</span>
+              <form action="/" method="get">
+                <button className="retry-button" type="submit">Try again</button>
+              </form>
             </div>
-          </section>
-
-          <section className="follow-through" id="follow-through" aria-labelledby="follow-title">
-            <div className="follow-heading"><div><h2 id="follow-title">Next steps to keep moving</h2><p>Open work linked to a monitoring episode.</p></div><span className="follow-count">{data.episodes.length} active</span></div>
-            <div className="task-list">
-              {data.episodes.slice(0, 3).map((episode) => (
-                <article className="task-row" key={`${episode.id}-task`}>
-                  <span className="task-check" aria-hidden="true" />
-                  <div className="task-copy"><strong>{episode.nextTask || `Continue follow-through for ${episode.patientDisplayName}`}</strong><span>{episode.patientDisplayName} <span aria-hidden="true">·</span> {episode.openBarrierCategory ? `Barrier: ${episode.openBarrierCategory.replaceAll("_", " ")}` : statusLabel(episode.status)}</span></div>
-                  <span className="task-owner">{episode.ownerDisplayName}</span>
-                </article>
-              ))}
-              {data.episodes.length === 0 && <p className="empty-tasks">When an episode needs follow-through, its next step will appear here.</p>}
+          ) : episodes.length === 0 ? (
+            <div className="episode-empty">
+              <strong>No open monitoring episodes.</strong>
+              <span>New episodes will appear here when they are recorded.</span>
             </div>
-          </section>
-          <footer className="page-footer">Renal Relay prototype <span>·</span> Care teams retain clinical review and next-action authority.</footer>
-        </div>
+          ) : (
+            <div className="episode-list">
+              {episodes.map((episode) => {
+                const overdue = episode.dueAt.slice(0, 10) < today;
+                return (
+                  <article className="episode-row" key={episode.id}>
+                    <div className="episode-person">
+                      <strong>{episode.patientDisplayName}</strong>
+                      <span>{episode.patientReference}</span>
+                    </div>
+                    <div className="episode-tests">{episode.tests.join(" · ")}</div>
+                    <div className="episode-status">
+                      <span className={overdue ? "status-dot is-overdue" : "status-dot"} />
+                      {overdue ? "Overdue · " : ""}{readable(episode.status)}
+                    </div>
+                    <div className="episode-due">Due {dateLabel(episode.dueAt)}</div>
+                    <div className="episode-owner">{episode.ownerDisplayName}</div>
+                  </article>
+                );
+              })}
+            </div>
+          )}
+        </section>
       </section>
+      <footer className="site-footer">
+        <span>Renal Relay</span>
+        <span>Care teams retain responsibility for clinical review and next-action decisions.</span>
+      </footer>
     </main>
   );
 }
 
 export default function Home() {
   return (
-    <Suspense fallback={<main className="workspace loading-state" role="status">Loading the care-team overview…</main>}>
+    <Suspense fallback={<main className="loading-screen" role="status">Loading dashboard…</main>}>
       <Dashboard />
     </Suspense>
   );

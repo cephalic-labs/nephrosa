@@ -193,7 +193,7 @@ func (r *Router) episodeDetail(c *gin.Context) {
 	detail.Tests = make([]EpisodeTest, 0)
 	rows, err := tx.Query(ctx, `
 		SELECT o.id::text, o.test_type, o.ordered_at, o.due_at,
-		       c.completed_at, c.verification_source, COALESCE(cu.display_name, '')
+		       c.completed_at, COALESCE(c.verification_source, ''), COALESCE(cu.display_name, '')
 		FROM test_orders o
 		LEFT JOIN test_completions c ON c.test_order_id = o.id
 		LEFT JOIN users cu ON cu.id = c.recorded_by

@@ -4,7 +4,7 @@ import { GeistMono } from "geist/font/mono";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Renal Relay | Care team workspace",
+  title: "Renal Relay | Dashboard",
   description: "A care-team workspace for kidney monitoring follow-through.",
 };
 

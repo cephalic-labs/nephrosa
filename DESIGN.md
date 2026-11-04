@@ -1,35 +1,43 @@
 ---
 name: Renal Relay
-description: A clear care-team dashboard for kidney monitoring follow-through.
+description: A care-team dashboard with the expressive contrast of a type studio.
 colors:
-  ink: "#101210"
-  muted-ink: "#48534c"
-  paper: "#fbfcfa"
-  rule: "#171a17"
-  signal-mint: "#0af474"
-  relay-green: "#057f3c"
-  support-copy: "#344139"
-  support-on-dark: "#d7e2da"
-  paper-on-dark: "#f4f8f4"
-  rule-on-dark: "#68736b"
-  support-on-mint: "#153c27"
-  row-rule: "#acb2ad"
-  overdue: "#a13223"
-  offline-red: "#8b3124"
-  offline-surface: "#ffb4a8"
-  metric-rule: "rgb(16 18 16 / 42%)"
+  night: "#050505"
+  paper: "#f5f2ec"
+  paper-muted: "#d4d0c8"
+  ink: "#141411"
+  muted-ink: "#a9a69f"
+  line: "#45443f"
+  header-line: "#363631"
+  lime: "#8cff00"
+  lime-hover: "#78da00"
+  lime-ink: "#34421f"
+  lime-rule: "rgb(20 20 17 / 40%)"
+  cyan: "#20c7d9"
+  cyan-ink: "#19383b"
+  cyan-muted: "#315356"
+  cyan-rule: "rgb(20 20 17 / 42%)"
+  critical: "#a42c24"
+  success: "#18753c"
+  offline-line: "#514d42"
+  offline-ground: "#1b1a17"
+  offline-ink: "#f6c273"
+  episode-muted: "#55524c"
+  episode-ink: "#282722"
+  episode-rule: "#c5c0b7"
+  header-ground: "rgb(5 5 5 / 94%)"
 typography:
   display:
-    fontFamily: "Geist, Arial, Helvetica, sans-serif"
-    fontSize: "clamp(46px, 6.4vw, 88px)"
-    fontWeight: 570
-    lineHeight: 0.97
-    letterSpacing: "-0.072em"
+    fontFamily: "Noto Serif Relay, Georgia, Times New Roman, serif"
+    fontSize: "clamp(58px, 7.2vw, 96px)"
+    fontWeight: 450
+    lineHeight: 0.99
+    letterSpacing: "-0.058em"
   headline:
-    fontFamily: "Geist, Arial, Helvetica, sans-serif"
-    fontSize: "23px"
-    fontWeight: 560
-    lineHeight: 1.2
+    fontFamily: "Noto Serif Relay, Georgia, Times New Roman, serif"
+    fontSize: "clamp(26px, 3vw, 37px)"
+    fontWeight: 480
+    lineHeight: 1.15
     letterSpacing: "-0.045em"
   body:
     fontFamily: "Geist, Arial, Helvetica, sans-serif"
@@ -39,146 +47,254 @@ typography:
   label:
     fontFamily: "Geist, Arial, Helvetica, sans-serif"
     fontSize: "12px"
-    fontWeight: 540
-    lineHeight: 1.45
-  measurement:
+    fontWeight: 550
+    lineHeight: 1.35
+  brand:
     fontFamily: "Geist, Arial, Helvetica, sans-serif"
+    fontSize: "18px"
+    fontWeight: 650
+    letterSpacing: "-0.055em"
+  navigation:
+    fontFamily: "Geist, Arial, Helvetica, sans-serif"
+    fontSize: "13px"
+    fontWeight: 550
+  navigation-mobile:
+    fontFamily: "Geist, Arial, Helvetica, sans-serif"
+    fontSize: "12px"
+    fontWeight: 550
+  hero-copy:
+    fontFamily: "Geist, Arial, Helvetica, sans-serif"
+    fontSize: "16px"
+    fontWeight: 400
+    lineHeight: 1.65
+  compact-copy:
+    fontFamily: "Geist, Arial, Helvetica, sans-serif"
+    fontSize: "14px"
+    fontWeight: 400
+  workflow-heading:
+    fontFamily: "Noto Serif Relay, Georgia, Times New Roman, serif"
+    fontSize: "30px"
+    fontWeight: 480
+  workflow-heading-mobile:
+    fontFamily: "Noto Serif Relay, Georgia, Times New Roman, serif"
+    fontSize: "27px"
+    fontWeight: 480
+  workflow-copy:
+    fontFamily: "Geist, Arial, Helvetica, sans-serif"
+    fontSize: "13px"
+    fontWeight: 400
+  workflow-index:
+    fontFamily: "Geist Mono, monospace"
     fontSize: "10px"
     fontWeight: 400
-    lineHeight: 1.35
+  overview-heading:
+    fontFamily: "Noto Serif Relay, Georgia, Times New Roman, serif"
+    fontSize: "29px"
+    fontWeight: 480
+  overview-heading-mobile:
+    fontFamily: "Noto Serif Relay, Georgia, Times New Roman, serif"
+    fontSize: "25px"
+    fontWeight: 480
+  measure-mobile:
+    fontFamily: "Geist, Arial, Helvetica, sans-serif"
+    fontSize: "43px"
+    fontWeight: 590
+  episode-count:
+    fontFamily: "Geist, Arial, Helvetica, sans-serif"
+    fontSize: "19px"
+    fontWeight: 400
+  episode-copy:
+    fontFamily: "Geist, Arial, Helvetica, sans-serif"
+    fontSize: "11px"
+    fontWeight: 400
+  episode-state:
+    fontFamily: "Geist, Arial, Helvetica, sans-serif"
+    fontSize: "17px"
+    fontWeight: 590
+  workflow-label-small:
+    fontFamily: "Geist, Arial, Helvetica, sans-serif"
+    fontSize: "10px"
+    fontWeight: 550
+  hero-tablet:
+    fontFamily: "Noto Serif Relay, Georgia, Times New Roman, serif"
+    fontSize: "clamp(54px, 7vw, 76px)"
+    fontWeight: 450
+  hero-mobile:
+    fontFamily: "Noto Serif Relay, Georgia, Times New Roman, serif"
+    fontSize: "clamp(54px, 13.5vw, 76px)"
+    fontWeight: 450
+  hero-narrow:
+    fontFamily: "Noto Serif Relay, Georgia, Times New Roman, serif"
+    fontSize: "52px"
+    fontWeight: 450
+  episodes-heading-mobile:
+    fontFamily: "Noto Serif Relay, Georgia, Times New Roman, serif"
+    fontSize: "28px"
+    fontWeight: 480
+  measure:
+    fontFamily: "Geist, Arial, Helvetica, sans-serif"
+    fontSize: "clamp(36px, 4.4vw, 57px)"
+    fontWeight: 590
+    lineHeight: 1.02
+    letterSpacing: "-0.065em"
 rounded:
-  none: "0px"
+  control: "4px"
+  status: "5px"
+  panel: "12px"
 spacing:
-  shell-gutter: "44px"
-  cell-inset: "48px"
-  mobile-gutter: "16px"
-  rule: "1px"
+  shell-gutter: "48px"
+  header-height: "80px"
+  shell-max: "1440px"
+  workflow-inset: "32px"
+  episode-inset: "clamp(24px, 3.8vw, 48px)"
 components:
-  dark-workflow-panel:
-    backgroundColor: "{colors.ink}"
-    textColor: "{colors.paper}"
-    rounded: "{rounded.none}"
-    padding: "clamp(25px, 3.6vw, 48px)"
-  signal-overview-panel:
-    backgroundColor: "{colors.signal-mint}"
+  workflow-panel:
+    backgroundColor: "{colors.cyan}"
     textColor: "{colors.ink}"
-    rounded: "{rounded.none}"
-    padding: "clamp(26px, 3.6vw, 48px)"
+    rounded: "{rounded.panel}"
+    padding: "32px"
+  overview-panel:
+    backgroundColor: "{colors.lime}"
+    textColor: "{colors.ink}"
+    rounded: "{rounded.panel}"
+    padding: "32px clamp(24px, 4vw, 54px) 29px"
+  episode-panel:
+    backgroundColor: "{colors.paper}"
+    textColor: "{colors.ink}"
+    rounded: "{rounded.panel}"
+    padding: "clamp(24px, 3.8vw, 48px)"
+  button-retry:
+    backgroundColor: "{colors.lime}"
+    textColor: "{colors.ink}"
+    rounded: "{rounded.control}"
+    height: "43px"
+    padding: "0 17px"
 ---
 
 # Design System: Renal Relay
 
 ## Overview
 
-**Creative North Star: “Split Studio”**
+**Creative North Star: “Electric Type Studio”**
 
-Renal Relay uses the disciplined contrast of a Swiss editorial grid to make care-team follow-through immediately visible. The dashboard pairs a quiet paper field and oversized, direct headline with an ink-dark workflow panel and a signal-mint overview. Hard rules define the four-panel composition; a small halftone mark nods to the selected Aspen Search reference without importing its marketing content.
+This system adapts Glyphs.app’s expressive type-studio character to a practical care-team workspace: a night-black canvas, oversized serif display, crisp sans-serif interface text, and confident blocks of electric lime and cyan. The page moves between focused dark space and bright, tactile work surfaces. The type and color bring personality; navigation and episode content stay familiar and task-first.
 
-The page leads with the purpose of the work, then shows the follow-through sequence, live team counts, and the current episode queue. Aorta’s straightforward task progression informs the workflow panel. The interface renders only values returned by the dashboard API; an unavailable service shows an explicit offline state and no invented records.
+The dashboard introduces the follow-through path, shows current team counts, and then presents the live episode queue. It does not reproduce Glyphs’ software copy, type specimens, product images, or testimonials. The bundled Noto Serif variable font supplies the display voice; its OFL license is included in `public/fonts/OFL.txt`.
 
 **Key Characteristics:**
 
-- Split Studio four-panel grid with square corners and precise black rules.
-- Signal mint used for the live count field and small workflow accents.
-- Oversized, compact headline balanced by calm operational copy.
-- Patient and episode content appears only when returned by the live service.
+- Night-black shell with an oversized, warm-white serif headline.
+- Lime for live workload and connected-state signals; cyan for the workflow sequence.
+- A light paper episode surface provides a distinct, readable data zone.
+- Only API-returned counts and episode rows are displayed.
 
 ## Colors
 
-The palette is built from near-black and warm paper, with electric mint as a deliberate signal and deep green for accessible links and state accents.
+Near-black, warm paper, electric lime, and bright cyan give the dashboard the contrast and color confidence of the Glyphs reference while keeping status and episode content easy to read.
 
 ### Primary
 
-- **Signal Mint** (`{colors.signal-mint}`): The team overview surface and small active marks; use black text on the mint field.
-- **Relay Green** (`{colors.relay-green}`): Text links, the live connection indicator, and focus outline where a darker accent is needed.
-- **Supporting Text** (`{colors.support-copy}`): Introductory paragraph ink on paper; `support-on-dark` and `paper-on-dark` are the text values for dark surfaces.
-- **Supporting Details** (`{colors.support-on-mint}`): Secondary copy on the mint overview. `row-rule` separates episode rows, while `metric-rule` divides counts.
-- **Overdue / Offline** (`{colors.overdue}`, `{colors.offline-red}`, `{colors.offline-surface}`): Reserved for overdue status and an unavailable connection, always paired with text.
+- **Electric Lime** (`{colors.lime}`): The team overview surface, connected state, keyboard focus, and retry action. Keep its text near-black.
+- **Studio Cyan** (`{colors.cyan}`): The workflow panel, with near-black text and a dark-cyan secondary label.
+
+### Secondary
+
+- **Urgency Red** (`{colors.critical}`): The overdue status marker, accompanied by the word “Overdue.”
+- **Success Green** (`{colors.success}`): A non-overdue episode status marker; status text remains present.
 
 ### Neutral
 
-- **Ink** (`{colors.ink}`): Main text and the dark workflow panel.
-- **Muted Ink** (`{colors.muted-ink}`): Supporting copy on paper and mint.
-- **Paper** (`{colors.paper}`): Main page field and text on the ink panel.
-- **Rule** (`{colors.rule}`): One-pixel divisions between panels.
-- **Offline Red** (`{colors.offline-red}`): Connection-unavailable indicator, paired with explicit status text.
+- **Night** (`{colors.night}`): The page ground and sticky header.
+- **Warm Paper** (`{colors.paper}`) and **Soft Paper** (`{colors.paper-muted}`): Queue surface and supporting text on night.
+- **Queue Ink** (`{colors.episode-ink}`) and **Queue Muted Ink** (`{colors.episode-muted}`): Patient and status text on the warm-paper surface.
+- **Ink** (`{colors.ink}`): Text on the light, lime, and cyan surfaces.
+- **Muted Ink** (`{colors.muted-ink}`): Supporting text on the night surface.
+- **Rules** (`{colors.line}`, `{colors.header-line}`, `{colors.episode-rule}`): Section and row divisions.
+- **Connection Unavailable** (`{colors.offline-ground}`, `{colors.offline-ink}`): Explicit degraded-service state, distinct from the lime live state.
 
-**The Live-Data Rule.** Counts and episode rows come from the dashboard response. When it is unavailable, show an unavailable state instead of sample values.
+**The Live-Data Rule.** Every summary measure and episode row comes from the dashboard API. An unavailable service never falls back to sample records or fabricated counts.
 
 ## Typography
 
-**Display Font:** Geist (with Arial, Helvetica, sans-serif fallback)
+**Display Font:** Noto Serif Relay (bundled variable font; Georgia and Times New Roman fallbacks)
 
-**Body Font:** Geist (with Arial, Helvetica, sans-serif fallback)
+**Body Font:** Geist (with Arial and Helvetica fallbacks)
 
-**Label/Mono Font:** Geist Mono for workflow indices; system monospace fallback.
+**Label/Mono Font:** Geist for interface labels; Geist Mono for workflow indices.
 
-**Character:** Geist gives the page a compact, contemporary voice without competing with the grid. Large display type is tightly tracked; operational text stays open and readable.
+**Character:** A high-contrast serif headline carries the editorial presence of a type studio. Geist keeps navigation, labels, and patient information direct and familiar.
 
 ### Hierarchy
 
-- **Display** (570, `clamp(46px, 6.4vw, 88px)`; 90px on extra-wide screens; 0.97): Main dashboard statement; on mobile the size scales with viewport and caps at 76px.
-- **Headline** (560, 21–23px, 1.2): Workflow, overview, and episode section titles.
-- **Body** (400, 13–17px, 1.35–1.65): Explanatory and episode copy; keep paragraphs to roughly 50ch.
-- **Label** (400–650, 9–18px, 1.35–1.5): Connection, navigation, workflow index, patient reference, and due-date details.
-- **Measurement** (590, 34–56px, 1.08): API-backed summary counts, with tabular numerals.
+- **Display** (450, `clamp(58px, 7.2vw, 96px)`, 0.99): Dashboard headline on wide layouts; scales down at tablet and phone sizes.
+- **Headline** (480, 26–37px, 1.15): Episode and panel headings in the display serif.
+- **Body** (400, 14–16px, 1.55–1.65): Explanatory and operational copy; limit hero text to about 48ch.
+- **Label** (400–700, 10–13px, 1.35): Navigation, status, workflow labels, and episode metadata.
+- **Measure** (590, 36–57px, 1.02): API-backed workload counts with tabular numerals.
+
+**The Contrast Rule.** Keep the large serif voice in headings. Use Geist for all labels, controls, and episode data.
 
 ## Layout
 
-The content is capped at 1440px. A horizontal navigation bar sits above a two-column, two-row grid with zero gaps and shared one-pixel rules. The top row gives equal space to the headline and dark workflow sequence; the lower row pairs mint counts with the episode queue. Desktop shell gutters are 44px and panel insets are fluid, around 25–48px.
+The page is a single centered workspace capped at 1440px, with 48px desktop gutters and a sticky, compact header. The first content region pairs the oversized headline and introduction with a cyan workflow panel. A lime band contains five live summary measures; a warm-paper panel holds the episode queue and its loading, unavailable, and empty states.
 
-At 900px the gutter and panel insets tighten. At 620px and below the panels stack in reading order, the header navigation moves to its own row, and episode details reflow into a two-column list. Keep the first heading visible, keep the four workflow steps distinct, and avoid horizontal page scrolling.
+At 1020px the metrics move to three columns and the episode rows wrap. At 700px the hero and workflow stack, the metric band becomes two columns, and episode rows reflow into compact pairs. Keep the page free of horizontal overflow and preserve the nav and service status in the sticky header.
 
 ## Elevation & Depth
 
-This system is flat and uses no persistent shadows. Black rules, large color fields, and spacing establish separation; focus uses a visible 3px green outline with a 4px offset. Do not add shadows as a substitute for the grid.
+Persistent shadows are not used. Large color panels and one-pixel rules define the composition. The sticky header uses a dark translucent ground and a restrained 14px backdrop blur so it remains legible over the long page; focus uses a 3px lime outline with a 4px offset.
 
 ## Shapes
 
-Surfaces and panel corners are square. Use one-pixel borders and crisp geometric marks. The workflow’s dot pattern is a small authored SVG texture tied to the supplied Aspen reference; do not expand it into a generic background grid.
+Feature and episode panels use gently rounded corners (12px). The connection indicator is a compact, slightly squared control (5px); the retry button is more square (4px). Rules remain 1px. Avoid round status pills and nested card stacks.
 
 ## Components
 
-### Header and Navigation
+### Navigation
 
-- **Shape:** Open horizontal bar with a one-pixel bottom rule.
-- **Navigation:** Text links with a green underline for the current section; no pills or enclosing cards.
-- **Connection:** A small status dot and explicit “Live connection” or “Connection unavailable” text.
-- **Responsive:** Brand and status remain on the first row; navigation occupies the second row on narrow screens.
+- **Style:** A sticky black header with a fine divider, white wordmark, and plain sans-serif links.
+- **Active state:** Lime underline under the current section; links shift to warm paper on hover.
+- **Connection state:** Lime field when live; dark inset field with amber text when unavailable.
+- **Responsive:** Navigation moves to its own row on narrow screens while the service state stays visible.
 
 ### Workflow Panel
 
-- **Shape:** Square ink field, padded 25–48px.
-- **Content:** Four steps in sequence: order placed, test completed, report received, next action recorded.
-- **Color:** Paper text, mint indices and directional marks.
-- **Behavior:** The diagram is explanatory content, not a claim about an individual episode’s current state.
+- **Shape:** Rounded cyan field (12px) with near-black text.
+- **Content:** Four numbered steps in a two-column sequence: order, test completion, report receipt, and recorded next action.
+- **Behavior:** Describes the product’s workflow; it does not imply that an individual episode has completed these stages.
 
 ### Team Overview
 
-- **Shape:** Square signal-mint field divided into a two-by-two count grid.
-- **Content:** Open episodes, overdue, awaiting report, and clinician review values from the API; unavailable values render as an em dash.
-- **Contrast:** Ink labels and numbers; the due-within-seven-days count is supporting copy.
+- **Shape:** Lime panel (12px) with five measures separated by fine dark rules.
+- **Content:** Open, overdue, awaiting-report, clinician-review, and due-within-seven-days values from the API. If unavailable, use an em dash and “Awaiting live data.”
+- **States:** Connected and unavailable states use distinct backgrounds and explicit labels.
 
 ### Episode Queue
 
-- **Shape:** Open paper field with one-pixel row rules.
-- **Content:** Only API-returned patient reference, tests, status, due date, and owner are shown.
-- **States:** A connected empty response gets a neutral empty message. A failed request gets a clear error and a working retry control.
-- **Status:** Use explicit status text; color is supplementary.
+- **Shape:** Warm-paper panel (12px), with one-pixel row rules and dark text.
+- **Content:** Patient display name and reference, ordered tests, status, due date, and owner from the API only.
+- **States:** Show a real empty state for a successful zero-row response; show a clear service error and a working retry action after a failed request.
+- **Status:** Use explicit status text; red and green dots are supplementary.
+
+### Retry Button
+
+- **Shape:** Squared lime control (4px), 43px high.
+- **Hover / Focus:** A small lift and darker lime on hover; a clear lime outline on keyboard focus.
+- **Action:** Submits a GET navigation to reload the dashboard response.
 
 ## Do's and Don'ts
 
 ### Do:
 
-- Keep the dashboard heading and live connection state easy to find.
-- Preserve the split grid, high contrast, and square rules.
-- Pair status colors with readable labels and visible keyboard focus.
-- Keep clinical review and next-action authority with care teams.
-- Show only API-backed patient and episode information.
+- Keep the display serif for section and hero headings; keep product controls and patient data in Geist.
+- Use lime and cyan as broad, deliberate work surfaces, not as gradients.
+- Keep each workflow step readable on desktop and mobile.
+- Pair every colored state with text and preserve keyboard focus visibility.
+- Render only live API data; distinguish service failure from a successful empty response.
 
 ### Don't:
 
-- Add fictional patients, fabricated counts, or demo banners to the dashboard.
-- Add controls that do not perform a real action or links that lead nowhere.
-- Use color alone to convey status, or imply automated clinical decisions.
-- Add rounded card stacks, decorative gradients, or unsupported clinical interpretations.
+- Add fictional names, sample counts, fabricated episodes, or demonstration banners.
+- Use marketing testimonials, mock product imagery, or controls unrelated to care-team work.
+- Hide service failure behind zero counts or an empty-queue message.
+- Imply diagnosis, interpretation of lab results, or automated clinical decisions.

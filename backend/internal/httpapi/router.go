@@ -2,11 +2,13 @@ package httpapi
 
 import (
 	"context"
+	"errors"
 	"log/slog"
 	"net/http"
 	"time"
 
 	"github.com/gin-gonic/gin"
+	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgxpool"
 )
 
@@ -25,6 +27,7 @@ func New(pool *pgxpool.Pool) http.Handler {
 	})
 	engine.GET("/health/ready", router.ready)
 	engine.GET("/api/v1/dashboard/overview", router.dashboardOverview)
+	engine.GET("/api/v1/episodes/:id", router.episodeDetail)
 	return engine
 }
 
@@ -72,6 +75,319 @@ type DashboardEpisode struct {
 	Tests               []string  `json:"tests"`
 	OpenBarrierCategory string    `json:"openBarrierCategory,omitempty"`
 	NextTask            string    `json:"nextTask,omitempty"`
+}
+
+type EpisodeDetail struct {
+	ID                 string           `json:"id"`
+	PatientReference   string           `json:"patientReference"`
+	PatientDisplayName string           `json:"patientDisplayName"`
+	Status             string           `json:"status"`
+	DueAt              time.Time        `json:"dueAt"`
+	OwnerDisplayName   string           `json:"ownerDisplayName"`
+	Tests              []EpisodeTest    `json:"tests"`
+	Contacts           []EpisodeContact `json:"contacts"`
+	Barriers           []EpisodeBarrier `json:"barriers"`
+	Tasks              []EpisodeTask    `json:"tasks"`
+	Reports            []EpisodeReport  `json:"reports"`
+	ClinicalReviews    []EpisodeReview  `json:"clinicalReviews"`
+	AuditEvents        []AuditEvent     `json:"auditEvents"`
+}
+
+type EpisodeTest struct {
+	ID         string          `json:"id"`
+	TestType   string          `json:"testType"`
+	OrderedAt  time.Time       `json:"orderedAt"`
+	DueAt      time.Time       `json:"dueAt"`
+	Completion *TestCompletion `json:"completion,omitempty"`
+}
+
+type TestCompletion struct {
+	CompletedAt        time.Time `json:"completedAt"`
+	VerificationSource string    `json:"verificationSource"`
+	RecordedBy         string    `json:"recordedBy"`
+}
+
+type EpisodeContact struct {
+	Channel     string    `json:"channel"`
+	Outcome     string    `json:"outcome"`
+	Language    string    `json:"language"`
+	AttemptedAt time.Time `json:"attemptedAt"`
+	RecordedBy  string    `json:"recordedBy"`
+}
+
+type EpisodeBarrier struct {
+	Category    string     `json:"category"`
+	Description string     `json:"description"`
+	Status      string     `json:"status"`
+	CreatedAt   time.Time  `json:"createdAt"`
+	ResolvedAt  *time.Time `json:"resolvedAt,omitempty"`
+}
+
+type EpisodeTask struct {
+	ID                    string     `json:"id"`
+	Type                  string     `json:"type"`
+	Summary               string     `json:"summary"`
+	Priority              string     `json:"priority"`
+	Status                string     `json:"status"`
+	DueAt                 *time.Time `json:"dueAt,omitempty"`
+	AssignedTo            string     `json:"assignedTo,omitempty"`
+	AssignedToDisplayName string     `json:"assignedToDisplayName,omitempty"`
+}
+
+type EpisodeReport struct {
+	ReceivedAt time.Time `json:"receivedAt"`
+	Reference  string    `json:"reference"`
+	RecordedBy string    `json:"recordedBy"`
+}
+
+type EpisodeReview struct {
+	AcknowledgedAt time.Time `json:"acknowledgedAt"`
+	Clinician      string    `json:"clinician"`
+	NextAction     string    `json:"nextAction"`
+}
+
+type AuditEvent struct {
+	EventType  string    `json:"eventType"`
+	OccurredAt time.Time `json:"occurredAt"`
+	Actor      string    `json:"actor"`
+}
+
+func (r *Router) episodeDetail(c *gin.Context) {
+	ctx, cancel := context.WithTimeout(c.Request.Context(), 4*time.Second)
+	defer cancel()
+
+	tx, err := r.db.BeginTx(ctx, pgx.TxOptions{
+		IsoLevel:   pgx.RepeatableRead,
+		AccessMode: pgx.ReadOnly,
+	})
+	if err != nil {
+		writeUnavailable(c, "episode_detail_unavailable", err)
+		return
+	}
+	defer tx.Rollback(context.Background())
+
+	var detail EpisodeDetail
+	err = tx.QueryRow(ctx, `
+		SELECT e.id::text, p.external_reference, p.display_name, e.status, e.due_at, u.display_name
+		FROM episodes e
+		JOIN patients p ON p.id = e.patient_id
+		JOIN users u ON u.id = e.owner_id
+		WHERE e.id::text = $1 AND e.status <> 'closed'
+	`, c.Param("id")).Scan(
+		&detail.ID,
+		&detail.PatientReference,
+		&detail.PatientDisplayName,
+		&detail.Status,
+		&detail.DueAt,
+		&detail.OwnerDisplayName,
+	)
+	if errors.Is(err, pgx.ErrNoRows) {
+		c.JSON(http.StatusNotFound, gin.H{"error": gin.H{"code": "episode_not_found", "message": "Episode not found."}})
+		return
+	}
+	if err != nil {
+		writeUnavailable(c, "episode_detail_unavailable", err)
+		return
+	}
+
+	detail.Tests = make([]EpisodeTest, 0)
+	rows, err := tx.Query(ctx, `
+		SELECT o.id::text, o.test_type, o.ordered_at, o.due_at,
+		       c.completed_at, c.verification_source, COALESCE(cu.display_name, '')
+		FROM test_orders o
+		LEFT JOIN test_completions c ON c.test_order_id = o.id
+		LEFT JOIN users cu ON cu.id = c.recorded_by
+		WHERE o.episode_id::text = $1
+		ORDER BY o.test_type
+	`, detail.ID)
+	if err != nil {
+		writeUnavailable(c, "episode_detail_unavailable", err)
+		return
+	}
+	for rows.Next() {
+		var test EpisodeTest
+		var completedAt *time.Time
+		var verificationSource string
+		var recordedBy string
+		if err := rows.Scan(&test.ID, &test.TestType, &test.OrderedAt, &test.DueAt, &completedAt, &verificationSource, &recordedBy); err != nil {
+			rows.Close()
+			writeUnavailable(c, "episode_detail_unavailable", err)
+			return
+		}
+		if completedAt != nil {
+			test.Completion = &TestCompletion{CompletedAt: *completedAt, VerificationSource: verificationSource, RecordedBy: recordedBy}
+		}
+		detail.Tests = append(detail.Tests, test)
+	}
+	if err := rows.Err(); err != nil {
+		rows.Close()
+		writeUnavailable(c, "episode_detail_unavailable", err)
+		return
+	}
+	rows.Close()
+
+	detail.Contacts = make([]EpisodeContact, 0)
+	rows, err = tx.Query(ctx, `
+		SELECT c.channel, c.outcome, c.language, c.attempted_at, u.display_name
+		FROM contact_attempts c JOIN users u ON u.id = c.recorded_by
+		WHERE c.episode_id::text = $1
+		ORDER BY c.attempted_at DESC
+	`, detail.ID)
+	if err != nil {
+		writeUnavailable(c, "episode_detail_unavailable", err)
+		return
+	}
+	for rows.Next() {
+		var contact EpisodeContact
+		if err := rows.Scan(&contact.Channel, &contact.Outcome, &contact.Language, &contact.AttemptedAt, &contact.RecordedBy); err != nil {
+			rows.Close()
+			writeUnavailable(c, "episode_detail_unavailable", err)
+			return
+		}
+		detail.Contacts = append(detail.Contacts, contact)
+	}
+	if err := rows.Err(); err != nil {
+		rows.Close()
+		writeUnavailable(c, "episode_detail_unavailable", err)
+		return
+	}
+	rows.Close()
+
+	detail.Barriers = make([]EpisodeBarrier, 0)
+	rows, err = tx.Query(ctx, `
+		SELECT category, description, status, created_at, resolved_at
+		FROM barriers WHERE episode_id::text = $1 ORDER BY created_at DESC
+	`, detail.ID)
+	if err != nil {
+		writeUnavailable(c, "episode_detail_unavailable", err)
+		return
+	}
+	for rows.Next() {
+		var barrier EpisodeBarrier
+		if err := rows.Scan(&barrier.Category, &barrier.Description, &barrier.Status, &barrier.CreatedAt, &barrier.ResolvedAt); err != nil {
+			rows.Close()
+			writeUnavailable(c, "episode_detail_unavailable", err)
+			return
+		}
+		detail.Barriers = append(detail.Barriers, barrier)
+	}
+	if err := rows.Err(); err != nil {
+		rows.Close()
+		writeUnavailable(c, "episode_detail_unavailable", err)
+		return
+	}
+	rows.Close()
+
+	detail.Tasks = make([]EpisodeTask, 0)
+	rows, err = tx.Query(ctx, `
+		SELECT t.id::text, t.task_type, t.summary, t.priority, t.status, t.due_at,
+		       COALESCE(t.assigned_to::text, ''), COALESCE(u.display_name, '')
+		FROM tasks t LEFT JOIN users u ON u.id = t.assigned_to
+		WHERE t.episode_id::text = $1 ORDER BY t.created_at
+	`, detail.ID)
+	if err != nil {
+		writeUnavailable(c, "episode_detail_unavailable", err)
+		return
+	}
+	for rows.Next() {
+		var task EpisodeTask
+		if err := rows.Scan(&task.ID, &task.Type, &task.Summary, &task.Priority, &task.Status, &task.DueAt, &task.AssignedTo, &task.AssignedToDisplayName); err != nil {
+			rows.Close()
+			writeUnavailable(c, "episode_detail_unavailable", err)
+			return
+		}
+		detail.Tasks = append(detail.Tasks, task)
+	}
+	if err := rows.Err(); err != nil {
+		rows.Close()
+		writeUnavailable(c, "episode_detail_unavailable", err)
+		return
+	}
+	rows.Close()
+
+	detail.Reports = make([]EpisodeReport, 0)
+	rows, err = tx.Query(ctx, `
+		SELECT r.received_at, r.reference, u.display_name
+		FROM reports r JOIN users u ON u.id = r.recorded_by
+		WHERE r.episode_id::text = $1 ORDER BY r.received_at DESC
+	`, detail.ID)
+	if err != nil {
+		writeUnavailable(c, "episode_detail_unavailable", err)
+		return
+	}
+	for rows.Next() {
+		var report EpisodeReport
+		if err := rows.Scan(&report.ReceivedAt, &report.Reference, &report.RecordedBy); err != nil {
+			rows.Close()
+			writeUnavailable(c, "episode_detail_unavailable", err)
+			return
+		}
+		detail.Reports = append(detail.Reports, report)
+	}
+	if err := rows.Err(); err != nil {
+		rows.Close()
+		writeUnavailable(c, "episode_detail_unavailable", err)
+		return
+	}
+	rows.Close()
+
+	detail.ClinicalReviews = make([]EpisodeReview, 0)
+	rows, err = tx.Query(ctx, `
+		SELECT cr.acknowledged_at, u.display_name, cr.next_action
+		FROM clinical_reviews cr JOIN users u ON u.id = cr.clinician_id
+		WHERE cr.episode_id::text = $1 ORDER BY cr.acknowledged_at DESC
+	`, detail.ID)
+	if err != nil {
+		writeUnavailable(c, "episode_detail_unavailable", err)
+		return
+	}
+	for rows.Next() {
+		var review EpisodeReview
+		if err := rows.Scan(&review.AcknowledgedAt, &review.Clinician, &review.NextAction); err != nil {
+			rows.Close()
+			writeUnavailable(c, "episode_detail_unavailable", err)
+			return
+		}
+		detail.ClinicalReviews = append(detail.ClinicalReviews, review)
+	}
+	if err := rows.Err(); err != nil {
+		rows.Close()
+		writeUnavailable(c, "episode_detail_unavailable", err)
+		return
+	}
+	rows.Close()
+
+	detail.AuditEvents = make([]AuditEvent, 0)
+	rows, err = tx.Query(ctx, `
+		SELECT ae.event_type, ae.occurred_at, COALESCE(u.display_name, 'System')
+		FROM audit_events ae LEFT JOIN users u ON u.id = ae.actor_id
+		WHERE ae.episode_id::text = $1 ORDER BY ae.occurred_at DESC
+	`, detail.ID)
+	if err != nil {
+		writeUnavailable(c, "episode_detail_unavailable", err)
+		return
+	}
+	for rows.Next() {
+		var event AuditEvent
+		if err := rows.Scan(&event.EventType, &event.OccurredAt, &event.Actor); err != nil {
+			rows.Close()
+			writeUnavailable(c, "episode_detail_unavailable", err)
+			return
+		}
+		detail.AuditEvents = append(detail.AuditEvents, event)
+	}
+	if err := rows.Err(); err != nil {
+		rows.Close()
+		writeUnavailable(c, "episode_detail_unavailable", err)
+		return
+	}
+	rows.Close()
+
+	if err := tx.Commit(ctx); err != nil {
+		writeUnavailable(c, "episode_detail_unavailable", err)
+		return
+	}
+	c.JSON(http.StatusOK, detail)
 }
 
 func (r *Router) dashboardOverview(c *gin.Context) {

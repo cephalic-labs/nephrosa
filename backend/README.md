@@ -22,8 +22,11 @@ The container builds as a static binary and runs as a non-root user. Compose sup
 | `GET /health/live` | Process liveness; does not require a database query. |
 | `GET /health/ready` | Database readiness. |
 | `GET /api/v1/dashboard/overview` | Counts and up to ten open episode summaries. |
+| `GET /api/v1/episodes/:id` | Read-only details for an open episode: test orders and verification, contacts, barriers, tasks, report receipt metadata, clinician acknowledgement and next action, and audit event labels. |
 
-Responses include `Cache-Control: no-store` and basic browser security headers. Errors are returned with a generic message while internal details are logged server-side. Do not log credentials, conversation contents, or unnecessary patient details.
+Episode details are read in a read-only repeatable-read transaction. Report contents and audit metadata are not returned. A missing or closed episode returns 404; a database failure returns a generic 503 response. Responses include `Cache-Control: no-store` and basic browser security headers. Errors are returned with a generic message while internal details are logged server-side. Do not log credentials, conversation contents, or unnecessary patient details.
+
+The route has no authentication or authorization. It is for the local fictional-data prototype only and must not be exposed to real-patient data or an untrusted network.
 
 ## Configuration
 

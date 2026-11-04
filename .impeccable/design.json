@@ -1,0 +1,544 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-04T16:42:10.183Z",
+  "title": "Design System: Renal Relay Electric Type Studio, Light and Dark",
+  "extensions": {
+    "colorMeta": {
+      "night": {
+        "role": "neutral",
+        "displayName": "Night",
+        "canonical": "#050505",
+        "tonalRamp": [
+          "#262626",
+          "#404040",
+          "#595959",
+          "#737373",
+          "#8c8c8c",
+          "#a6a6a6",
+          "#bfbfbf",
+          "#f2f2f2"
+        ]
+      },
+      "paper": {
+        "role": "neutral",
+        "displayName": "Paper",
+        "canonical": "#f5f2ec",
+        "tonalRamp": [
+          "#322a1a",
+          "#54462c",
+          "#75623e",
+          "#967f4f",
+          "#b09869",
+          "#c1af8a",
+          "#d3c6ab",
+          "#f6f4ee"
+        ]
+      },
+      "paper-muted": {
+        "role": "neutral",
+        "displayName": "Paper Muted",
+        "canonical": "#d4d0c8",
+        "tonalRamp": [
+          "#2b2822",
+          "#484238",
+          "#645d4e",
+          "#817765",
+          "#9a917e",
+          "#b1a99b",
+          "#c7c2b7",
+          "#f4f3f1"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Ink",
+        "canonical": "#141411",
+        "tonalRamp": [
+          "#292923",
+          "#45453b",
+          "#606052",
+          "#7c7c69",
+          "#969683",
+          "#adad9f",
+          "#c4c4ba",
+          "#f3f3f1"
+        ]
+      },
+      "muted-ink": {
+        "role": "neutral",
+        "displayName": "Muted Ink",
+        "canonical": "#a9a69f",
+        "tonalRamp": [
+          "#282724",
+          "#43413c",
+          "#5e5b54",
+          "#79756c",
+          "#938f86",
+          "#aba8a1",
+          "#c3c1bc",
+          "#f3f3f2"
+        ]
+      },
+      "line": {
+        "role": "neutral",
+        "displayName": "Line",
+        "canonical": "#45443f",
+        "tonalRamp": [
+          "#282725",
+          "#43423d",
+          "#5d5c55",
+          "#78766e",
+          "#919087",
+          "#aaa8a2",
+          "#c2c1bc",
+          "#f3f3f2"
+        ]
+      },
+      "header-line": {
+        "role": "neutral",
+        "displayName": "Header Line",
+        "canonical": "#363631",
+        "tonalRamp": [
+          "#282824",
+          "#43433d",
+          "#5e5e55",
+          "#78786d",
+          "#929287",
+          "#aaaaa1",
+          "#c2c2bc",
+          "#f3f3f2"
+        ]
+      },
+      "lime": {
+        "role": "primary",
+        "displayName": "Lime",
+        "canonical": "#8cff00",
+        "tonalRamp": [
+          "#2a4d00",
+          "#468000",
+          "#62b300",
+          "#7ee600",
+          "#98ff1a",
+          "#afff4d",
+          "#c6ff80",
+          "#f3ffe5"
+        ]
+      },
+      "lime-hover": {
+        "role": "primary",
+        "displayName": "Lime Hover",
+        "canonical": "#78da00",
+        "tonalRamp": [
+          "#2a4d00",
+          "#468000",
+          "#62b300",
+          "#7ee600",
+          "#98ff1a",
+          "#afff4d",
+          "#c6ff80",
+          "#f4ffe5"
+        ]
+      },
+      "lime-ink": {
+        "role": "neutral",
+        "displayName": "Lime Ink",
+        "canonical": "#34421f",
+        "tonalRamp": [
+          "#293418",
+          "#445729",
+          "#607939",
+          "#7b9c49",
+          "#95b663",
+          "#acc686",
+          "#c4d6a8",
+          "#f3f7ee"
+        ]
+      },
+      "lime-rule": {
+        "role": "neutral",
+        "displayName": "Lime Rule",
+        "canonical": "rgb(20 20 17 / 40%)",
+        "tonalRamp": [
+          "#292923",
+          "#45453b",
+          "#606052",
+          "#7c7c69",
+          "#969683",
+          "#adad9f",
+          "#c4c4ba",
+          "#f3f3f1"
+        ]
+      },
+      "cyan": {
+        "role": "secondary",
+        "displayName": "Cyan",
+        "canonical": "#20c7d9",
+        "tonalRamp": [
+          "#0a3d43",
+          "#10666f",
+          "#178f9c",
+          "#1db7c8",
+          "#37d1e2",
+          "#63dbe8",
+          "#90e5ef",
+          "#e9fafc"
+        ]
+      },
+      "cyan-ink": {
+        "role": "neutral",
+        "displayName": "Cyan Ink",
+        "canonical": "#19383b",
+        "tonalRamp": [
+          "#173336",
+          "#26555a",
+          "#35777d",
+          "#4499a1",
+          "#5eb3bb",
+          "#82c4ca",
+          "#a5d5d9",
+          "#edf7f7"
+        ]
+      },
+      "cyan-muted": {
+        "role": "neutral",
+        "displayName": "Cyan Muted",
+        "canonical": "#315356",
+        "tonalRamp": [
+          "#1c2f31",
+          "#2e4e51",
+          "#416e72",
+          "#538d92",
+          "#6da7ac",
+          "#8dbabe",
+          "#aeced1",
+          "#eff5f6"
+        ]
+      },
+      "cyan-rule": {
+        "role": "neutral",
+        "displayName": "Cyan Rule",
+        "canonical": "rgb(20 20 17 / 42%)",
+        "tonalRamp": [
+          "#292923",
+          "#45453b",
+          "#606052",
+          "#7c7c69",
+          "#969683",
+          "#adad9f",
+          "#c4c4ba",
+          "#f3f3f1"
+        ]
+      },
+      "critical": {
+        "role": "tertiary",
+        "displayName": "Critical",
+        "canonical": "#a42c24",
+        "tonalRamp": [
+          "#3f110e",
+          "#691c17",
+          "#922720",
+          "#bc3229",
+          "#d64c43",
+          "#df746d",
+          "#e89c96",
+          "#faebea"
+        ]
+      },
+      "success": {
+        "role": "secondary",
+        "displayName": "Success",
+        "canonical": "#18753c",
+        "tonalRamp": [
+          "#0d3f21",
+          "#166a36",
+          "#1e944c",
+          "#27be62",
+          "#41d87b",
+          "#6be198",
+          "#95e9b6",
+          "#eafbf0"
+        ]
+      },
+      "offline-line": {
+        "role": "neutral",
+        "displayName": "Offline Line",
+        "canonical": "#514d42",
+        "tonalRamp": [
+          "#2a2822",
+          "#464339",
+          "#625e50",
+          "#7e7867",
+          "#989281",
+          "#afaa9d",
+          "#c6c2b9",
+          "#f4f3f1"
+        ]
+      },
+      "offline-ground": {
+        "role": "neutral",
+        "displayName": "Offline Ground",
+        "canonical": "#1b1a17",
+        "tonalRamp": [
+          "#292823",
+          "#45423b",
+          "#605d52",
+          "#7c776a",
+          "#959183",
+          "#ada99f",
+          "#c4c2ba",
+          "#f3f3f1"
+        ]
+      },
+      "offline-ink": {
+        "role": "tertiary",
+        "displayName": "Offline Ink",
+        "canonical": "#f6c273",
+        "tonalRamp": [
+          "#482d05",
+          "#784b08",
+          "#a8690b",
+          "#d8880e",
+          "#f1a127",
+          "#f4b657",
+          "#f7cb87",
+          "#fdf5e7"
+        ]
+      },
+      "episode-muted": {
+        "role": "neutral",
+        "displayName": "Episode Muted",
+        "canonical": "#55524c",
+        "tonalRamp": [
+          "#282724",
+          "#43413c",
+          "#5e5b54",
+          "#79756c",
+          "#938e86",
+          "#aba7a1",
+          "#c3c0bc",
+          "#f3f2f2"
+        ]
+      },
+      "episode-ink": {
+        "role": "neutral",
+        "displayName": "Episode Ink",
+        "canonical": "#282722",
+        "tonalRamp": [
+          "#292823",
+          "#45433b",
+          "#605e52",
+          "#7c7969",
+          "#969283",
+          "#adab9f",
+          "#c4c3ba",
+          "#f3f3f1"
+        ]
+      },
+      "episode-rule": {
+        "role": "neutral",
+        "displayName": "Episode Rule",
+        "canonical": "#c5c0b7",
+        "tonalRamp": [
+          "#2a2722",
+          "#474239",
+          "#635c50",
+          "#7f7666",
+          "#999080",
+          "#afa89c",
+          "#c6c1b8",
+          "#f4f3f1"
+        ]
+      },
+      "header-ground": {
+        "role": "neutral",
+        "displayName": "Header Ground",
+        "canonical": "rgb(5 5 5 / 94%)",
+        "tonalRamp": [
+          "#262626",
+          "#404040",
+          "#595959",
+          "#737373",
+          "#8c8c8c",
+          "#a6a6a6",
+          "#bfbfbf",
+          "#f2f2f2"
+        ]
+      },
+      "light-ground": {
+        "role": "neutral",
+        "displayName": "Light Ground",
+        "canonical": "#f1eee8",
+        "tonalRamp": []
+      },
+      "light-header": {
+        "role": "neutral",
+        "displayName": "Light Header",
+        "canonical": "rgb(241 238 232 / 94%)",
+        "tonalRamp": []
+      },
+      "light-ink": {
+        "role": "neutral",
+        "displayName": "Light Ink",
+        "canonical": "#141411",
+        "tonalRamp": []
+      },
+      "light-muted": {
+        "role": "neutral",
+        "displayName": "Light Muted",
+        "canonical": "#55524c",
+        "tonalRamp": []
+      },
+      "light-rule": {
+        "role": "neutral",
+        "displayName": "Light Rule",
+        "canonical": "#c9c4ba",
+        "tonalRamp": []
+      },
+      "light-offline-ground": {
+        "role": "neutral",
+        "displayName": "Light Offline Ground",
+        "canonical": "#fff8e9",
+        "tonalRamp": []
+      },
+      "light-offline-ink": {
+        "role": "neutral",
+        "displayName": "Light Offline Ink",
+        "canonical": "#68440e",
+        "tonalRamp": []
+      },
+      "focus-dark": {
+        "role": "neutral",
+        "displayName": "Focus Dark",
+        "canonical": "#467500",
+        "tonalRamp": []
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Studio serif",
+        "purpose": "Oversized dashboard statement."
+      },
+      "headline": {
+        "displayName": "Section serif",
+        "purpose": "Workflow, overview and episode headings."
+      },
+      "body": {
+        "displayName": "Geist interface",
+        "purpose": "Navigation, explanations, controls and patient data."
+      },
+      "measure": {
+        "displayName": "Workload measure",
+        "purpose": "API-backed summary counts."
+      },
+      "theme-control": {
+        "displayName": "Theme switch",
+        "purpose": "Compact header control for switching the dashboard between light and dark themes."
+      }
+    },
+    "motion": [
+      {
+        "name": "control-transition",
+        "value": "160ms ease",
+        "purpose": "Short hover and color feedback on controls."
+      },
+      {
+        "name": "reduced-motion",
+        "value": "prefers-reduced-motion: reduce",
+        "purpose": "Reduce transitions on request."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "phone",
+        "value": "700px"
+      },
+      {
+        "name": "tablet",
+        "value": "1020px"
+      },
+      {
+        "name": "wide-shell",
+        "value": "1440px"
+      },
+      {
+        "name": "large-shell",
+        "value": "1500px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Retry Button",
+      "kind": "button",
+      "refersTo": "button-retry",
+      "description": "Lime action to reload an unavailable dashboard.",
+      "html": "<button class=\"ds-button\">Try again</button>",
+      "css": ".ds-button { min-height: 43px; border: 0; border-radius: 4px; background: var(--lime); padding: 0 17px; color: var(--ink); font: 700 12px/1.4 var(--font-geist-sans), Arial, sans-serif; cursor: pointer; transition: background 160ms ease, transform 160ms ease; } .ds-button:hover { background: var(--lime-hover); transform: translateY(-1px); } .ds-button:focus-visible { outline: 3px solid var(--lime); outline-offset: 5px; }"
+    },
+    {
+      "name": "Primary Navigation",
+      "kind": "nav",
+      "description": "Sticky product navigation with a theme switch and lime active underline.",
+      "html": "<header class=\"ds-header\"><nav class=\"ds-nav\">\u2026</nav><button class=\"ds-theme-toggle\" type=\"button\">Switch to dark mode</button></header>",
+      "css": ".ds-nav { display: flex; gap: 36px; } .ds-nav a { border-bottom: 2px solid transparent; color: var(--paper-muted); font: 550 13px/1.4 var(--font-geist-sans), Arial, sans-serif; text-decoration: none; } .ds-nav a:hover, .ds-nav a.is-current { border-color: var(--lime); color: var(--paper); } .ds-nav a:focus-visible { outline: 3px solid var(--lime); outline-offset: 5px; } .ds-theme-toggle { min-height: 40px; border: 1px solid var(--line); border-radius: 5px; background: transparent; color: var(--ink); padding: 0 11px; font: 600 12px/1.4 var(--font-geist-sans), Arial, sans-serif; cursor: pointer; }"
+    },
+    {
+      "name": "Workflow Panel",
+      "kind": "card",
+      "refersTo": "workflow-panel",
+      "description": "Cyan work surface with four numbered follow-through steps.",
+      "html": "<section class=\"ds-workflow\"><h2>The follow-through</h2><ol><li><span>01</span>Order placed</li><li><span>02</span>Test completed</li><li><span>03</span>Report received</li><li><span>04</span>Next action recorded</li></ol></section>",
+      "css": ".ds-workflow { border-radius: 12px; background: var(--cyan); padding: 32px; color: var(--ink); } .ds-workflow h2 { margin: 0; font: 480 30px/1.15 \"Noto Serif Relay\", Georgia, serif; } .ds-workflow ol { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 0 22px; margin: 24px 0 0; padding: 0; list-style: none; } .ds-workflow li { display: flex; min-height: 60px; flex-direction: column; justify-content: space-between; border-top: 1px solid var(--cyan-rule); padding: 10px 0; font: 580 13px/1.3 var(--font-geist-sans), Arial, sans-serif; } .ds-workflow li span { color: var(--cyan-muted); font: 10px/1.3 var(--font-geist-mono), monospace; }"
+    },
+    {
+      "name": "Team Overview",
+      "kind": "card",
+      "refersTo": "overview-panel",
+      "description": "API-backed summary values on the lime signal surface.",
+      "html": "<section class=\"ds-overview\"><h2>Team overview</h2><div><strong>\u2014</strong><span>Open episodes</span></div><p>Awaiting live data</p></section>",
+      "css": ".ds-overview { border-radius: 12px; background: var(--lime); padding: 32px; color: var(--ink); } .ds-overview h2 { margin: 0 0 20px; font: 480 29px/1.15 \"Noto Serif Relay\", Georgia, serif; } .ds-overview strong { display: block; font: 590 57px/1.02 var(--font-geist-sans), Arial, sans-serif; font-variant-numeric: tabular-nums; } .ds-overview span, .ds-overview p { color: var(--lime-ink); font: 400 12px/1.4 var(--font-geist-sans), Arial, sans-serif; }"
+    },
+    {
+      "name": "Episode State",
+      "kind": "card",
+      "description": "Warm paper queue with explicit unavailable state.",
+      "html": "<section class=\"ds-episodes\"><h2>Monitoring episodes</h2><p>Current follow-through across the care team.</p><div class=\"ds-state\"><strong>Live episodes couldn\u2019t be loaded.</strong><span>Check the dashboard service, then try again.</span></div></section>",
+      "css": ".ds-episodes { border-radius: 12px; background: var(--paper); padding: 32px; color: var(--ink); } .ds-episodes h2 { margin: 0; font: 480 37px/1.15 \"Noto Serif Relay\", Georgia, serif; } .ds-episodes p, .ds-state span { color: var(--episode-muted); font: 400 13px/1.5 var(--font-geist-sans), Arial, sans-serif; } .ds-state { display: flex; min-height: 140px; flex-direction: column; justify-content: center; gap: 7px; border-top: 1px solid var(--episode-rule); } .ds-state strong { color: var(--episode-ink); font: 590 17px/1.4 var(--font-geist-sans), Arial, sans-serif; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "Electric Type Studio",
+    "overview": "This system adapts Glyphs.app\u2019s expressive type-studio character to a practical care-team workspace: oversized serif display, crisp sans-serif interface text, and confident blocks of electric lime and cyan. A compact header switch starts in light mode and lets staff move to the original night-black canvas. The light theme uses warm paper ground, dark ink, and the same tactile accent work surfaces; both themes preserve the task-first hierarchy. The dashboard introduces the follow-through path, shows current team counts, and then presents the live episode queue. It does not reproduce Glyphs\u2019 software copy, type specimens, product images, or testimonials. The bundled Noto Serif variable font supplies the display voice; its OFL license is included in `public/fonts/OFL.txt`.",
+    "keyCharacteristics": [
+      "Warm-paper shell by default, with a switch to the original night-black theme.",
+      "Lime for live workload and connected-state signals; cyan for the workflow sequence.",
+      "Near-white queue surface in light mode and warm paper in dark mode.",
+      "Only API-returned counts and episode rows are displayed."
+    ],
+    "rules": [
+      {
+        "name": "The Live-Data Rule",
+        "body": "Every summary measure and episode row comes from the dashboard API. An unavailable service never falls back to sample records or fabricated counts.",
+        "section": "colors"
+      },
+      {
+        "name": "The Contrast Rule",
+        "body": "Keep the large serif voice in headings. Use Geist for all labels, controls, and episode data.",
+        "section": "typography"
+      }
+    ],
+    "dos": [
+      "Do keep the display serif for section and hero headings; keep product controls and patient data in Geist.",
+      "Do use lime and cyan as broad, deliberate work surfaces, not as gradients.",
+      "Do keep each workflow step readable on desktop and mobile.",
+      "Do pair every colored state with text and preserve keyboard focus visibility.",
+      "Do render only live API data; distinguish service failure from a successful empty response."
+    ],
+    "donts": [
+      "Don't add fictional names, sample counts, fabricated episodes, or demonstration banners.",
+      "Don't use marketing testimonials, mock product imagery, or controls unrelated to care-team work.",
+      "Don't hide service failure behind zero counts or an empty-queue message.",
+      "Don't imply diagnosis, interpretation of lab results, or automated clinical decisions."
+    ]
+  }
+}

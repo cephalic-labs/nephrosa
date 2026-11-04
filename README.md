@@ -4,7 +4,7 @@ Renal Relay is a clinician-led follow-through workspace for kidney monitoring in
 
 ## Project status
 
-This repository is an initialized Next.js application and the starting point for the proposed prototype. The product and technical documents describe intended behavior and planned components; they do not claim those workflows or integrations are implemented. The present task establishes documentation and a project structure plan only.
+This repository contains the initial Next.js application and documentation/scaffold for the user-confirmed prototype baseline. The Renal Relay workflows and planned services are not implemented. The architecture and clinical integration choices remain proposals or open decisions.
 
 ## Product boundary
 
@@ -15,14 +15,15 @@ This repository is an initialized Next.js application and the starting point for
 
 ## Documentation
 
-- [Product brief](docs/product-brief.md)
-- [Requirements and acceptance criteria](docs/requirements.md)
-- [Workflow and safeguards](docs/workflow.md)
-- [Architecture and boundaries](docs/architecture.md)
-- [Data model and API proposal](docs/data-and-api.md)
-- [Project structure](docs/project-structure.md)
-- [Roadmap and open decisions](docs/roadmap.md)
-- [Source notes](docs/source-notes.md)
+- [Documentation index and source precedence](docs/README.md)
+- [Product record](PRODUCT.md)
+- [MVP product specification](docs/product/mvp-spec.md)
+- [Proposed HLD/LLD architecture](docs/architecture/renal-relay-hld-lld.md)
+- [Architecture decision record](docs/adr/0001-monorepo-scaffold-and-runtime-boundaries.md)
+- [Scaffold plan and progress ledger](docs/scaffold-plan.md)
+- [Local development](docs/guides/local-development.md)
+
+The documents distinguish proposal, accepted decisions, scaffold, and implemented behavior. See the [source notes](docs/source-notes.md) for the supplied concept materials and unresolved decisions.
 
 ## Current application
 

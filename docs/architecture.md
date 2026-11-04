@@ -1,6 +1,6 @@
 # Proposed architecture
 
-This is a target architecture for the prototype, derived from the supplied concept plan. It is not a description of implemented services.
+This is a concise architecture summary for navigation. The detailed architecture baseline is [`architecture/renal-relay-hld-lld.md`](architecture/renal-relay-hld-lld.md). Both describe proposed services and do not claim that those services are implemented.
 
 ## Components
 

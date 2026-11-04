@@ -26,7 +26,7 @@ This repository is an initialized Next.js application and the starting point for
 
 ## Current application
 
-The repository currently contains the initialized Next.js app at its root. See `package.json` for the available commands. Planned backend, database, and integration components are documented, but have not been scaffolded or implemented in this documentation-only phase.
+The repository contains the initialized Next.js app at its root and empty directories marking the planned backend, database, voice integration, and deployment boundaries. No service code, migrations, containers, or integrations have been implemented. See `package.json` for the available commands.
 
 ## Prototype outcome
 

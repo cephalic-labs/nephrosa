@@ -2,7 +2,7 @@
 
 ## Current repository
 
-The initialized repository is a Next.js application at its root (`app/`, `public/`, and root configuration files). This task adds documentation only. The directory tree below is a proposed destination for later implementation, not a report of existing files.
+The initialized repository is a Next.js application at its root (`app/`, `public/`, and root configuration files). Empty tracked directories now mark the planned backend, database, voice integration, and deployment boundaries. They contain no implementation code. The directory tree below describes the scaffold and later implementation destinations.
 
 ## Proposed monorepo layout
 

@@ -41,6 +41,23 @@ typography:
     fontWeight: 450
     lineHeight: 0.99
     letterSpacing: "-0.058em"
+  detail-display:
+    fontFamily: "Noto Serif Relay, Georgia, Times New Roman, serif"
+    fontSize: "clamp(46px, 6vw, 76px)"
+    fontWeight: 450
+    letterSpacing: "-0.05em"
+  detail-unavailable:
+    fontFamily: "Noto Serif Relay, Georgia, Times New Roman, serif"
+    fontSize: "clamp(38px, 5vw, 58px)"
+    fontWeight: 450
+  detail-mobile:
+    fontFamily: "Noto Serif Relay, Georgia, Times New Roman, serif"
+    fontSize: "clamp(44px, 11vw, 66px)"
+    fontWeight: 450
+  detail-section:
+    fontFamily: "Noto Serif Relay, Georgia, Times New Roman, serif"
+    fontSize: "24px"
+    fontWeight: 480
   headline:
     fontFamily: "Noto Serif Relay, Georgia, Times New Roman, serif"
     fontSize: "clamp(26px, 3vw, 37px)"
@@ -264,7 +281,7 @@ Feature and episode panels use gently rounded corners (12px). The connection ind
 - **Active state:** Lime underline under the current section; links shift to the theme's primary ink on hover.
 - **Connection state:** Lime field when live; dark inset field with amber text when unavailable.
 - **Responsive:** Navigation moves to its own row on narrow screens while the service state stays visible.
-- **Theme switch:** A text-labeled, keyboard-operable control switches between light and dark themes; light is the initial theme.
+- **Theme switch:** A text-labeled, keyboard-operable control switches between light and dark themes; light is the initial theme, and the chosen theme is saved in browser storage.
 
 ### Workflow Panel
 
@@ -284,6 +301,14 @@ Feature and episode panels use gently rounded corners (12px). The connection ind
 - **Content:** Patient display name and reference, ordered tests, status, due date, and owner from the API only.
 - **States:** Show a real empty state for a successful zero-row response; show a clear service error and a working retry action after a failed request.
 - **Status:** Use explicit status text; red and green dots are supplementary.
+
+### Episode Detail
+
+- **Purpose:** Follow one open episode's recorded path across tests, coordinator follow-through, contacts, reports, clinician review, and audit history.
+- **Layout:** Editorial serif patient heading over two responsive columns of ruled sections; stack to one column on phones.
+- **Content:** Show only API-returned data. Distinguish recorded evidence from missing records with explicit copy. Show report reference metadata only; never display or interpret laboratory values.
+- **Unavailable / missing:** A missing episode returns the not-found route. If the service is unavailable, show an explicit retry action. Do not replace service failure with empty records.
+- **Navigation:** Episode names in the dashboard queue open this detail view; the shared header returns to dashboard sections.
 
 ### Retry Button
 

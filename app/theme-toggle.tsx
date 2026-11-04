@@ -1,9 +1,37 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useSyncExternalStore } from "react";
+
+type Theme = "light" | "dark";
+
+const THEME_KEY = "renal-relay-theme";
+const THEME_EVENT = "renal-relay-theme-change";
+
+function getThemeSnapshot(): Theme {
+  try {
+    const savedTheme = window.localStorage.getItem(THEME_KEY);
+    if (savedTheme === "light" || savedTheme === "dark") return savedTheme;
+  } catch {
+    // Fall back to the current document theme when browser storage is blocked.
+  }
+  return document.documentElement.dataset.theme === "dark" ? "dark" : "light";
+}
+
+function getServerThemeSnapshot(): Theme {
+  return "light";
+}
+
+function subscribeToTheme(onChange: () => void) {
+  window.addEventListener(THEME_EVENT, onChange);
+  window.addEventListener("storage", onChange);
+  return () => {
+    window.removeEventListener(THEME_EVENT, onChange);
+    window.removeEventListener("storage", onChange);
+  };
+}
 
 export function ThemeToggle() {
-  const [theme, setTheme] = useState<"light" | "dark">("light");
+  const theme = useSyncExternalStore(subscribeToTheme, getThemeSnapshot, getServerThemeSnapshot);
 
   useEffect(() => {
     document.documentElement.dataset.theme = theme;
@@ -11,11 +39,21 @@ export function ThemeToggle() {
 
   const nextTheme = theme === "light" ? "dark" : "light";
 
+  function changeTheme() {
+    document.documentElement.dataset.theme = nextTheme;
+    try {
+      window.localStorage.setItem(THEME_KEY, nextTheme);
+    } catch {
+      // Theme changes still apply when browser storage is unavailable.
+    }
+    window.dispatchEvent(new Event(THEME_EVENT));
+  }
+
   return (
     <button
       className="theme-toggle"
       type="button"
-      onClick={() => setTheme(nextTheme)}
+      onClick={changeTheme}
       aria-label={`Switch to ${nextTheme} mode`}
       aria-pressed={theme === "dark"}
       title={`Switch to ${nextTheme} mode`}

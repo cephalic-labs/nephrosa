@@ -4,7 +4,7 @@ Use the Impeccable skill for interface work. Read the relevant skill references 
 
 ## Current system
 
-The dashboard at `app/page.tsx` is the first Renal Relay surface. `app/globals.css` holds its tokens and components. The design is neutral-first with teal interaction accents, clear operational hierarchy, visible synthetic-data labeling, semantic tables, and responsive behavior. Do not reintroduce the Next.js starter page.
+The dashboard at `app/page.tsx` and episode detail at `app/episodes/[id]/page.tsx` are the Renal Relay care-team surfaces. `app/globals.css` holds their shared tokens and components. The design follows `DESIGN.md`: Glyphs-inspired serif display, light and dark themes, lime and cyan work surfaces, clear operational hierarchy, and responsive behavior. Do not reintroduce the Next.js starter page or fabricate counts or episode records.
 
 ## UI implementation expectations
 

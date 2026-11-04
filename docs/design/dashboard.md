@@ -10,21 +10,21 @@ Operate. The primary user is a clinic care-team member reviewing a daily queue a
 
 ## First viewport
 
-The first view establishes the workspace and current owner, then shows open/overdue/review measures and a table of episodes with patient reference, ordered tests, workflow status, due date, and owner. The episode table is the primary working surface. A distinct notice identifies fictional demonstration data when the page is not connected to the local API.
+The first view establishes the workspace, then shows API-backed open/overdue/review measures and a queue of open episodes with patient reference, ordered tests, workflow status, due date, and owner. Each patient name links to a read-only episode detail route. When the API is unavailable, measures use an em dash and both dashboard and detail views show a clear retryable unavailable state; they never substitute sample records.
 
 ## Content and state
 
 - Show only minimal patient display information and a prototype reference.
 - Keep ordered test types and workflow status explicit.
 - Show dates and accountable owner without relying on color or position alone.
-- Show the next task and an open barrier when available.
+- Episode detail shows recorded tasks, barriers, contact history, completion verification, report receipt metadata, clinician acknowledgement, and audit event labels.
 - Provide empty states for no open episodes and no follow-through tasks.
 - Keep disabled or unimplemented controls visibly unavailable; do not imply that a displayed action has changed persisted workflow state.
 
 ## Interaction boundary
 
-The current prototype is read-only. The episode navigation and view links are in-page anchors, and episode creation is disabled. No authentication, patient search, episode mutation, or clinical decision support is implemented. The care team retains review, next-action, escalation, and closure authority.
+The current prototype is read-only. The dashboard links to episode details; no episode mutations or clinical decision support are implemented. The read API has no authentication or authorization and is for fictional local data only. The care team retains review, next-action, escalation, and closure authority.
 
 ## Visual direction
 
-Follow the project-wide [DESIGN.md](../../DESIGN.md): calm light surfaces, neutral-first composition, teal for active navigation and primary actions, readable status text, and restrained warning color. The source proposal's teal/mint palette informs accents, while the Impeccable craft and legibility guidance governs the interface.
+Follow the project-wide [DESIGN.md](../../DESIGN.md): warm-paper light mode by default, an available dark theme, editorial serif display, lime and cyan work surfaces, readable status text, and restrained warning color.

@@ -433,6 +433,22 @@
       "theme-control": {
         "displayName": "Theme switch",
         "purpose": "Compact header control for switching the dashboard between light and dark themes."
+      },
+      "detail-display": {
+        "displayName": "Episode display",
+        "purpose": "Serif patient name heading on the episode detail surface."
+      },
+      "detail-unavailable": {
+        "displayName": "Unavailable detail heading",
+        "purpose": "Serif heading for unavailable episode data."
+      },
+      "detail-mobile": {
+        "displayName": "Episode display mobile",
+        "purpose": "Responsive serif patient heading on narrow layouts."
+      },
+      "detail-section": {
+        "displayName": "Detail section heading",
+        "purpose": "Compact serif section heading for evidence groups."
       }
     },
     "motion": [
@@ -478,7 +494,7 @@
     {
       "name": "Primary Navigation",
       "kind": "nav",
-      "description": "Sticky product navigation with a theme switch and lime active underline.",
+      "description": "Sticky product navigation with a browser-persisted theme switch and lime active underline.",
       "html": "<header class=\"ds-header\"><nav class=\"ds-nav\">\u2026</nav><button class=\"ds-theme-toggle\" type=\"button\">Switch to dark mode</button></header>",
       "css": ".ds-nav { display: flex; gap: 36px; } .ds-nav a { border-bottom: 2px solid transparent; color: var(--paper-muted); font: 550 13px/1.4 var(--font-geist-sans), Arial, sans-serif; text-decoration: none; } .ds-nav a:hover, .ds-nav a.is-current { border-color: var(--lime); color: var(--paper); } .ds-nav a:focus-visible { outline: 3px solid var(--lime); outline-offset: 5px; } .ds-theme-toggle { min-height: 40px; border: 1px solid var(--line); border-radius: 5px; background: transparent; color: var(--ink); padding: 0 11px; font: 600 12px/1.4 var(--font-geist-sans), Arial, sans-serif; cursor: pointer; }"
     },
@@ -504,11 +520,18 @@
       "description": "Warm paper queue with explicit unavailable state.",
       "html": "<section class=\"ds-episodes\"><h2>Monitoring episodes</h2><p>Current follow-through across the care team.</p><div class=\"ds-state\"><strong>Live episodes couldn\u2019t be loaded.</strong><span>Check the dashboard service, then try again.</span></div></section>",
       "css": ".ds-episodes { border-radius: 12px; background: var(--paper); padding: 32px; color: var(--ink); } .ds-episodes h2 { margin: 0; font: 480 37px/1.15 \"Noto Serif Relay\", Georgia, serif; } .ds-episodes p, .ds-state span { color: var(--episode-muted); font: 400 13px/1.5 var(--font-geist-sans), Arial, sans-serif; } .ds-state { display: flex; min-height: 140px; flex-direction: column; justify-content: center; gap: 7px; border-top: 1px solid var(--episode-rule); } .ds-state strong { color: var(--episode-ink); font: 590 17px/1.4 var(--font-geist-sans), Arial, sans-serif; }"
+    },
+    {
+      "name": "Episode Detail",
+      "kind": "page",
+      "description": "Read-only episode timeline and evidence surface with separate order, coordinator, report, clinician-review, and audit sections.",
+      "html": "<main class=\"episode-detail\"><a class=\"back-link\" href=\"/#episodes\">All episodes</a><section class=\"detail-grid\"><section class=\"detail-section\"><h2>Ordered tests</h2><p>API-recorded test order and verification state.</p></section><section class=\"detail-section\"><h2>Activity history</h2><p>API-recorded audit event labels and timestamps.</p></section></section></main>",
+      "css": ".episode-detail { padding: 38px 0 70px; } .detail-grid { display: grid; grid-template-columns: minmax(0,1.1fr) minmax(320px,.9fr); gap: 46px; } .detail-section { border-top: 2px solid var(--canvas-ink); padding-top: 13px; } @media (max-width: 700px) { .detail-grid { grid-template-columns: minmax(0,1fr); gap: 28px; } }"
     }
   ],
   "narrative": {
     "northStar": "Electric Type Studio",
-    "overview": "This system adapts Glyphs.app\u2019s expressive type-studio character to a practical care-team workspace: oversized serif display, crisp sans-serif interface text, and confident blocks of electric lime and cyan. A compact header switch starts in light mode and lets staff move to the original night-black canvas. The light theme uses warm paper ground, dark ink, and the same tactile accent work surfaces; both themes preserve the task-first hierarchy. The dashboard introduces the follow-through path, shows current team counts, and then presents the live episode queue. It does not reproduce Glyphs\u2019 software copy, type specimens, product images, or testimonials. The bundled Noto Serif variable font supplies the display voice; its OFL license is included in `public/fonts/OFL.txt`.",
+    "overview": "This system adapts Glyphs.app\u2019s expressive type-studio character to a practical care-team workspace: oversized serif display, crisp sans-serif interface text, and confident blocks of electric lime and cyan. A compact header switch starts in light mode and lets staff move to the original night-black canvas. The light theme uses warm paper ground, dark ink, and the same tactile accent work surfaces; both themes preserve the task-first hierarchy. The dashboard introduces the follow-through path, shows current team counts, and then presents the live episode queue. It does not reproduce Glyphs\u2019 software copy, type specimens, product images, or testimonials. The bundled Noto Serif variable font supplies the display voice; its OFL license is included in `public/fonts/OFL.txt`. The light or dark theme choice is saved in browser storage and shared by dashboard and episode detail routes.",
     "keyCharacteristics": [
       "Warm-paper shell by default, with a switch to the original night-black theme.",
       "Lime for live workload and connected-state signals; cyan for the workflow sequence.",

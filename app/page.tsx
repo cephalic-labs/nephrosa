@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 import Link from "next/link";
-import { ThemeToggle } from "./theme-toggle";
+import { SiteHeader } from "./site-header";
 
 type Episode = {
   id: string;
@@ -76,22 +76,7 @@ async function Dashboard() {
 
   return (
     <main className="dashboard-shell">
-      <header className="site-header">
-        <Link className="wordmark" href="/" aria-label="Renal Relay dashboard">
-          <span className="wordmark-symbol" aria-hidden="true"><span /><span /><span /></span>
-          <span>renal relay</span>
-        </Link>
-        <nav className="primary-nav" aria-label="Main navigation">
-          <a href="#dashboard" aria-current="page">Dashboard</a>
-          <a href="#workflow">Workflow</a>
-          <a href="#episodes">Episodes</a>
-        </nav>
-        <ThemeToggle />
-        <div className={`connection-state ${connected ? "is-connected" : "is-offline"}`} role="status">
-          <span className="connection-dot" />
-          {connected ? "Live connection" : "Connection unavailable"}
-        </div>
-      </header>
+      <SiteHeader connected={connected} />
 
       <section className="hero" id="dashboard" aria-labelledby="dashboard-title">
         <div className="hero-copy">
@@ -155,7 +140,9 @@ async function Dashboard() {
               return (
                 <article className="episode-row" key={episode.id} role="listitem">
                   <div className="episode-person">
+                    <Link href={`/episodes/${episode.id}`} aria-label={`Open episode details for ${episode.patientDisplayName}`}>
                     <strong>{episode.patientDisplayName}</strong>
+                    </Link>
                     <span>{episode.patientReference}</span>
                   </div>
                   <div className="episode-tests">{episode.tests.join(" · ")}</div>

@@ -24,12 +24,13 @@ This repository contains the Phase 1 Renal Relay prototype foundation: a Next.js
 - [Local development](docs/guides/local-development.md)
 - [Security and local secrets](docs/guides/security-secrets.md)
 - [Dashboard surface brief](docs/design/dashboard.md)
+- [Episode detail surface brief](docs/design/episode-detail.md)
 
 The documents distinguish proposal, accepted decisions, scaffold, and implemented behavior. See the [source notes](docs/source-notes.md) for the supplied concept materials and unresolved decisions.
 
 ## Current application
 
-The root Next.js app renders a care-team overview from the Go dashboard API when it is available and clearly labeled fictional sample records otherwise. The API exposes liveness/readiness and a read-only overview endpoint. PostgreSQL migrations establish workflow tables; a separate command seeds two fictional demonstration episodes. Docker Compose wires the local services and secret files. No authentication, workflow mutation endpoints, health-system connection, voice integration, or production hardening is included. See the local development guide for startup steps and limits.
+The root Next.js app renders the care-team overview and linked episode details from the Go API. If the API is unavailable, it shows an explicit unavailable state without sample records or fabricated counts. The API exposes liveness/readiness, a read-only dashboard overview, and a read-only episode detail endpoint. PostgreSQL migrations establish workflow tables; a separate command seeds two fictional demonstration episodes. Docker Compose wires the local services and secret files. Authentication, workflow mutation endpoints, health-system connection, voice integration, and production hardening are not included. Use fictional records only; see the local development guide for startup steps and limits.
 
 ## Prototype outcome
 

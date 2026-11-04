@@ -15,26 +15,51 @@ From the repository root:
 
 ```bash
 pnpm install --frozen-lockfile
-./scripts/dev-secrets.sh
 docker compose -f deploy/compose.yaml up -d --build db api
 docker compose -f deploy/compose.yaml --profile dev-seed run --rm seed
 ```
 
-The script creates `.env` and three random database credentials under the ignored `secrets/` directory. It will not overwrite an existing secrets directory. Keep those files local and never paste their contents into logs, issues, or commits. If resetting the disposable local database, stop the stack, remove the `postgres_data` volume, archive or remove `secrets/`, then run the script again; existing database roles retain the credentials with which the volume was initialized.
+If `.env` or `secrets/` does not exist, run `./scripts/dev-secrets.sh` once before starting Compose. It creates non-secret local settings plus three random database credentials with restrictive permissions. It refuses to overwrite an existing secrets directory. Keep these files local and never paste their contents into logs, issues, or commits. Existing database roles keep the credentials with which the database volume was initialized; only reset a disposable local database using a planned reset procedure.
 
-In a second terminal:
+Compose starts PostgreSQL, applies migrations, then starts the Go API on `127.0.0.1:8080`. Seeding is explicit and repeatable; it adds only the fictional demo records. Check the services and API health:
+
+```bash
+docker compose -f deploy/compose.yaml ps
+curl -fsS http://127.0.0.1:8080/health/live
+curl -fsS http://127.0.0.1:8080/health/ready
+```
+
+Inspect the API-backed dashboard counts and episode rows:
+
+```bash
+curl -fsS http://127.0.0.1:8080/api/v1/dashboard/overview | python3 -m json.tool
+```
+
+Copy an `id` from the returned `episodes` array and request its detail:
+
+```bash
+curl -fsS http://127.0.0.1:8080/api/v1/episodes/EPISODE_ID | python3 -m json.tool
+```
+
+In a second terminal, run the web app and open <http://localhost:3000>:
 
 ```bash
 pnpm dev
 ```
 
-Open <http://localhost:3000>. The page reads the dashboard API at `RELAY_API_URL` (default `http://127.0.0.1:8080`). It displays clearly labeled fictional sample data if the API is unavailable. To inspect service state:
+The Next.js server reads `RELAY_API_URL` from `.env`; the default is `http://127.0.0.1:8080`. Select a patient name in the dashboard queue to open its episode details. The UI renders API data only. If the API is unavailable, it shows an unavailable state instead of fallback counts or rows.
 
-```bash
-docker compose -f deploy/compose.yaml ps
-curl http://127.0.0.1:8080/health/live
-curl http://127.0.0.1:8080/health/ready
-```
+## Smoke checks
+
+- `GET /health/live` returns `{"status":"ok"}` when the API process is running.
+- `GET /health/ready` returns `{"status":"ready"}` when PostgreSQL is reachable.
+- `GET /api/v1/dashboard/overview` returns seeded fictional summary counts and open episode rows.
+- `GET /api/v1/episodes/<id>` returns episode detail. An unknown or closed episode returns HTTP 404.
+- In the browser, episode names open details and the light/dark theme control works on both routes.
+- To see the unavailable state, run `docker compose -f deploy/compose.yaml stop api`, reload the page, then restore the API with `docker compose -f deploy/compose.yaml start api`.
+- To see the not-found UI, navigate to `/episodes/not-an-id` in the browser.
+
+These routes are unauthenticated. Use only the included fictional records; do not enter real patient information or expose the services beyond loopback.
 
 ## Available commands
 

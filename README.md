@@ -1,36 +1,33 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Renal Relay
 
-## Getting Started
+Renal Relay is a clinician-led follow-through workspace for kidney monitoring in people with diabetes. It keeps clinician-ordered uACR and eGFR monitoring episodes visible until testing, report receipt, clinician acknowledgement, and a documented next action are accounted for.
 
-First, run the development server:
+## Project status
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+This repository is an initialized Next.js application and the starting point for the proposed prototype. The product and technical documents describe intended behavior and planned components; they do not claim those workflows or integrations are implemented. The present task establishes documentation and a project structure plan only.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Product boundary
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- Care teams own clinical decisions, approved outreach content, escalation rules, report review, and episode closure.
+- Patient outreach requires recorded consent and respects language preference and opt-out.
+- Voice and language-model components may capture structured follow-up information. They must not diagnose, interpret laboratory results, calculate clinical risk, or recommend treatment.
+- Use fictional or appropriately de-identified records in the prototype. Do not use real patient data without institutional privacy and security review.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Documentation
 
-## Learn More
+- [Product brief](docs/product-brief.md)
+- [Requirements and acceptance criteria](docs/requirements.md)
+- [Workflow and safeguards](docs/workflow.md)
+- [Architecture and boundaries](docs/architecture.md)
+- [Data model and API proposal](docs/data-and-api.md)
+- [Project structure](docs/project-structure.md)
+- [Roadmap and open decisions](docs/roadmap.md)
+- [Source notes](docs/source-notes.md)
 
-To learn more about Next.js, take a look at the following resources:
+## Current application
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+The repository currently contains the initialized Next.js app at its root. See `package.json` for the available commands. Planned backend, database, and integration components are documented, but have not been scaffolded or implemented in this documentation-only phase.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Prototype outcome
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+The central measure is the share of ordered monitoring episodes for which the test is completed, the report is acknowledged by a clinician, and a next action is recorded within the clinician-set window. The proposed pilot is 60–90 days in one diabetes clinic, with baseline agreed with the clinical team and weekly exception review.

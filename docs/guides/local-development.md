@@ -21,7 +21,7 @@ docker compose -f deploy/compose.yaml --profile dev-seed run --rm seed
 
 If `.env` or `secrets/` does not exist, run `./scripts/dev-secrets.sh` once before starting Compose. It creates non-secret local settings plus three random database credentials with restrictive permissions. It refuses to overwrite an existing secrets directory. Keep these files local and never paste their contents into logs, issues, or commits. Existing database roles keep the credentials with which the database volume was initialized; only reset a disposable local database using a planned reset procedure.
 
-Compose starts PostgreSQL, applies migrations, then starts the Go API on `127.0.0.1:8080`. Seeding is explicit and repeatable; it adds only the fictional demo records. Check the services and API health:
+Compose starts PostgreSQL, bootstraps the app and migration roles in a one-shot container running as your host UID/GID, applies migrations, then starts the Go API on `127.0.0.1:8080`. This lets the role bootstrap read the owner-only secret files without making them world-readable. The database volume is preserved across this role-bootstrap change; no database reset is needed. Seeding is explicit and repeatable; it adds only the fictional demo records. Check the services and API health:
 
 ```bash
 docker compose -f deploy/compose.yaml ps

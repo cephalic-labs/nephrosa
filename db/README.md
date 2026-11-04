@@ -18,4 +18,4 @@ PostgreSQL is the local prototype store. The current migration establishes workf
 
 ## Roles
 
-The PostgreSQL initialization script creates an administrator for local initialization, a migration role with schema creation rights, and an application role with limited table/sequence DML. The current API only reads data; the application role is not intended as a clinical authorization boundary. Credentials are sourced from ignored `secrets/` files as described in the [security guide](../docs/guides/security-secrets.md).
+The `roles` Compose bootstrap service creates the migration role with schema creation rights and the application role with limited table/sequence DML. It runs as the host UID/GID that owns the owner-only local secret files, then connects to PostgreSQL with the administrator credential. PostgreSQL itself mounts only its administrator secret. The current API only reads data; the application role is not a clinical authorization boundary. Credentials are sourced from ignored `secrets/` files as described in the [security guide](../docs/guides/security-secrets.md).

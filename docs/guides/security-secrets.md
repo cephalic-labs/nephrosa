@@ -4,7 +4,7 @@
 
 Local credentials are generated into the ignored `secrets/` directory by `scripts/dev-secrets.sh`. The script creates separate random PostgreSQL administrator, application, and migration passwords; it never prints their values. Secret files are created with owner-only permissions, and the generated `.env` contains non-secret development settings only.
 
-The Compose stack mounts these files as secrets. The API connects as the restricted `renalrelay_app` role. The one-shot migration container uses `renalrelay_migrator`. The PostgreSQL administrator credential is used only by the database initialization process.
+The Compose stack mounts these files as secrets. A one-shot role-bootstrap container runs as the local host UID/GID so it can read the owner-only app and migration credentials and create those database roles. PostgreSQL itself receives only its administrator credential. The API connects as the restricted `renalrelay_app` role; the migration container uses `renalrelay_migrator`.
 
 Never commit `secrets/`, `.env`, credential files, or screenshots/logs containing secret values. Do not copy production credentials into local development. The local Compose setup is a development boundary, not production secret storage.
 

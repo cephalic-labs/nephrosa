@@ -1,5 +1,6 @@
 import { Suspense } from "react";
 import Link from "next/link";
+import { ThemeToggle } from "./theme-toggle";
 
 type Episode = {
   id: string;
@@ -85,6 +86,7 @@ async function Dashboard() {
           <a href="#workflow">Workflow</a>
           <a href="#episodes">Episodes</a>
         </nav>
+        <ThemeToggle />
         <div className={`connection-state ${connected ? "is-connected" : "is-offline"}`} role="status">
           <span className="connection-dot" />
           {connected ? "Live connection" : "Connection unavailable"}

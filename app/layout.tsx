@@ -12,6 +12,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
+      data-theme="light"
       className={`${GeistSans.variable} ${GeistMono.variable} h-full antialiased`}
     >
       <body>{children}</body>

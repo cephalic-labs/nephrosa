@@ -26,6 +26,14 @@ colors:
   episode-ink: "#282722"
   episode-rule: "#c5c0b7"
   header-ground: "rgb(5 5 5 / 94%)"
+  light-ground: "#f1eee8"
+  light-header: "rgb(241 238 232 / 94%)"
+  light-ink: "#141411"
+  light-muted: "#55524c"
+  light-rule: "#c9c4ba"
+  light-offline-ground: "#fff8e9"
+  light-offline-ink: "#68440e"
+  focus-dark: "#467500"
 typography:
   display:
     fontFamily: "Noto Serif Relay, Georgia, Times New Roman, serif"
@@ -177,13 +185,13 @@ components:
 
 **Creative North Star: “Electric Type Studio”**
 
-This system adapts Glyphs.app’s expressive type-studio character to a practical care-team workspace: a night-black canvas, oversized serif display, crisp sans-serif interface text, and confident blocks of electric lime and cyan. The page moves between focused dark space and bright, tactile work surfaces. The type and color bring personality; navigation and episode content stay familiar and task-first.
+This system adapts Glyphs.app’s expressive type-studio character to a practical care-team workspace: oversized serif display, crisp sans-serif interface text, and confident blocks of electric lime and cyan. A compact header switch starts in light mode and lets staff move to the original night-black canvas. The light theme uses warm paper ground, dark ink, and the same tactile accent work surfaces; both themes preserve the task-first hierarchy.
 
 The dashboard introduces the follow-through path, shows current team counts, and then presents the live episode queue. It does not reproduce Glyphs’ software copy, type specimens, product images, or testimonials. The bundled Noto Serif variable font supplies the display voice; its OFL license is included in `public/fonts/OFL.txt`.
 
 **Key Characteristics:**
 
-- Night-black shell with an oversized, warm-white serif headline.
+- Light warm-paper shell by default, with a switch to the night-black theme and oversized serif display.
 - Lime for live workload and connected-state signals; cyan for the workflow sequence.
 - A light paper episode surface provides a distinct, readable data zone.
 - Only API-returned counts and episode rows are displayed.
@@ -236,13 +244,13 @@ Near-black, warm paper, electric lime, and bright cyan give the dashboard the co
 
 ## Layout
 
-The page is a single centered workspace capped at 1440px, with 48px desktop gutters and a sticky, compact header. The first content region pairs the oversized headline and introduction with a cyan workflow panel. A lime band contains five live summary measures; a warm-paper panel holds the episode queue and its loading, unavailable, and empty states.
+The page is a single centered workspace capped at 1440px, with 48px desktop gutters and a sticky, compact header. The header includes an accessible light/dark switch. The first content region pairs the oversized headline and introduction with a cyan workflow panel. A lime band contains five live summary measures; a warm-paper panel holds the episode queue and its loading, unavailable, and empty states. Light mode uses warm paper for the shell and near-white for the queue; dark mode restores the night shell.
 
 At 1020px the metrics move to three columns and the episode rows wrap. At 700px the hero and workflow stack, the metric band becomes two columns, and episode rows reflow into compact pairs. Keep the page free of horizontal overflow and preserve the nav and service status in the sticky header.
 
 ## Elevation & Depth
 
-Persistent shadows are not used. Large color panels and one-pixel rules define the composition. The sticky header uses a dark translucent ground and a restrained 14px backdrop blur so it remains legible over the long page; focus uses a 3px lime outline with a 4px offset.
+Persistent shadows are not used. Large color panels and one-pixel rules define the composition. The sticky header uses a translucent theme-matched ground and a restrained 14px backdrop blur so it remains legible over the long page; focus uses a 3px high-contrast outline with a 4px offset.
 
 ## Shapes
 
@@ -252,10 +260,11 @@ Feature and episode panels use gently rounded corners (12px). The connection ind
 
 ### Navigation
 
-- **Style:** A sticky black header with a fine divider, white wordmark, and plain sans-serif links.
-- **Active state:** Lime underline under the current section; links shift to warm paper on hover.
+- **Style:** A sticky theme-matched header with a fine divider, high-contrast wordmark, and plain sans-serif links.
+- **Active state:** Lime underline under the current section; links shift to the theme's primary ink on hover.
 - **Connection state:** Lime field when live; dark inset field with amber text when unavailable.
 - **Responsive:** Navigation moves to its own row on narrow screens while the service state stays visible.
+- **Theme switch:** A text-labeled, keyboard-operable control switches between light and dark themes; light is the initial theme.
 
 ### Workflow Panel
 

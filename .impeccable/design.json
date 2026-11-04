@@ -1,7 +1,7 @@
 {
   "schemaVersion": 2,
   "generatedAt": "2026-11-04T16:42:10.183Z",
-  "title": "Design System: Renal Relay Electric Type Studio",
+  "title": "Design System: Renal Relay Electric Type Studio, Light and Dark",
   "extensions": {
     "colorMeta": {
       "night": {
@@ -363,6 +363,54 @@
           "#bfbfbf",
           "#f2f2f2"
         ]
+      },
+      "light-ground": {
+        "role": "neutral",
+        "displayName": "Light Ground",
+        "canonical": "#f1eee8",
+        "tonalRamp": []
+      },
+      "light-header": {
+        "role": "neutral",
+        "displayName": "Light Header",
+        "canonical": "rgb(241 238 232 / 94%)",
+        "tonalRamp": []
+      },
+      "light-ink": {
+        "role": "neutral",
+        "displayName": "Light Ink",
+        "canonical": "#141411",
+        "tonalRamp": []
+      },
+      "light-muted": {
+        "role": "neutral",
+        "displayName": "Light Muted",
+        "canonical": "#55524c",
+        "tonalRamp": []
+      },
+      "light-rule": {
+        "role": "neutral",
+        "displayName": "Light Rule",
+        "canonical": "#c9c4ba",
+        "tonalRamp": []
+      },
+      "light-offline-ground": {
+        "role": "neutral",
+        "displayName": "Light Offline Ground",
+        "canonical": "#fff8e9",
+        "tonalRamp": []
+      },
+      "light-offline-ink": {
+        "role": "neutral",
+        "displayName": "Light Offline Ink",
+        "canonical": "#68440e",
+        "tonalRamp": []
+      },
+      "focus-dark": {
+        "role": "neutral",
+        "displayName": "Focus Dark",
+        "canonical": "#467500",
+        "tonalRamp": []
       }
     },
     "typographyMeta": {
@@ -381,6 +429,10 @@
       "measure": {
         "displayName": "Workload measure",
         "purpose": "API-backed summary counts."
+      },
+      "theme-control": {
+        "displayName": "Theme switch",
+        "purpose": "Compact header control for switching the dashboard between light and dark themes."
       }
     },
     "motion": [
@@ -426,9 +478,9 @@
     {
       "name": "Primary Navigation",
       "kind": "nav",
-      "description": "Sticky product nav with a lime active underline.",
-      "html": "<nav class=\"ds-nav\"><a class=\"is-current\" href=\"#dashboard\">Dashboard</a><a href=\"#workflow\">Workflow</a><a href=\"#episodes\">Episodes</a></nav>",
-      "css": ".ds-nav { display: flex; gap: 36px; } .ds-nav a { border-bottom: 2px solid transparent; color: var(--paper-muted); font: 550 13px/1.4 var(--font-geist-sans), Arial, sans-serif; text-decoration: none; } .ds-nav a:hover, .ds-nav a.is-current { border-color: var(--lime); color: var(--paper); } .ds-nav a:focus-visible { outline: 3px solid var(--lime); outline-offset: 5px; }"
+      "description": "Sticky product navigation with a theme switch and lime active underline.",
+      "html": "<header class=\"ds-header\"><nav class=\"ds-nav\">\u2026</nav><button class=\"ds-theme-toggle\" type=\"button\">Switch to dark mode</button></header>",
+      "css": ".ds-nav { display: flex; gap: 36px; } .ds-nav a { border-bottom: 2px solid transparent; color: var(--paper-muted); font: 550 13px/1.4 var(--font-geist-sans), Arial, sans-serif; text-decoration: none; } .ds-nav a:hover, .ds-nav a.is-current { border-color: var(--lime); color: var(--paper); } .ds-nav a:focus-visible { outline: 3px solid var(--lime); outline-offset: 5px; } .ds-theme-toggle { min-height: 40px; border: 1px solid var(--line); border-radius: 5px; background: transparent; color: var(--ink); padding: 0 11px; font: 600 12px/1.4 var(--font-geist-sans), Arial, sans-serif; cursor: pointer; }"
     },
     {
       "name": "Workflow Panel",
@@ -443,24 +495,24 @@
       "kind": "card",
       "refersTo": "overview-panel",
       "description": "API-backed summary values on the lime signal surface.",
-      "html": "<section class=\"ds-overview\"><h2>Team overview</h2><div><strong>—</strong><span>Open episodes</span></div><p>Awaiting live data</p></section>",
+      "html": "<section class=\"ds-overview\"><h2>Team overview</h2><div><strong>\u2014</strong><span>Open episodes</span></div><p>Awaiting live data</p></section>",
       "css": ".ds-overview { border-radius: 12px; background: var(--lime); padding: 32px; color: var(--ink); } .ds-overview h2 { margin: 0 0 20px; font: 480 29px/1.15 \"Noto Serif Relay\", Georgia, serif; } .ds-overview strong { display: block; font: 590 57px/1.02 var(--font-geist-sans), Arial, sans-serif; font-variant-numeric: tabular-nums; } .ds-overview span, .ds-overview p { color: var(--lime-ink); font: 400 12px/1.4 var(--font-geist-sans), Arial, sans-serif; }"
     },
     {
       "name": "Episode State",
       "kind": "card",
       "description": "Warm paper queue with explicit unavailable state.",
-      "html": "<section class=\"ds-episodes\"><h2>Monitoring episodes</h2><p>Current follow-through across the care team.</p><div class=\"ds-state\"><strong>Live episodes couldn’t be loaded.</strong><span>Check the dashboard service, then try again.</span></div></section>",
+      "html": "<section class=\"ds-episodes\"><h2>Monitoring episodes</h2><p>Current follow-through across the care team.</p><div class=\"ds-state\"><strong>Live episodes couldn\u2019t be loaded.</strong><span>Check the dashboard service, then try again.</span></div></section>",
       "css": ".ds-episodes { border-radius: 12px; background: var(--paper); padding: 32px; color: var(--ink); } .ds-episodes h2 { margin: 0; font: 480 37px/1.15 \"Noto Serif Relay\", Georgia, serif; } .ds-episodes p, .ds-state span { color: var(--episode-muted); font: 400 13px/1.5 var(--font-geist-sans), Arial, sans-serif; } .ds-state { display: flex; min-height: 140px; flex-direction: column; justify-content: center; gap: 7px; border-top: 1px solid var(--episode-rule); } .ds-state strong { color: var(--episode-ink); font: 590 17px/1.4 var(--font-geist-sans), Arial, sans-serif; }"
     }
   ],
   "narrative": {
     "northStar": "Electric Type Studio",
-    "overview": "This system adapts Glyphs.app’s expressive type-studio character to a practical care-team workspace: a night-black canvas, oversized serif display, crisp sans-serif interface text, and confident blocks of electric lime and cyan. The page moves between focused dark space and bright, tactile work surfaces. The type and color bring personality; navigation and episode content stay familiar and task-first.\n\nThe dashboard introduces the follow-through path, shows current team counts, and then presents the live episode queue. It does not reproduce Glyphs’ software copy, type specimens, product images, or testimonials. The bundled Noto Serif variable font supplies the display voice; its OFL license is included in `public/fonts/OFL.txt`.",
+    "overview": "This system adapts Glyphs.app\u2019s expressive type-studio character to a practical care-team workspace: oversized serif display, crisp sans-serif interface text, and confident blocks of electric lime and cyan. A compact header switch starts in light mode and lets staff move to the original night-black canvas. The light theme uses warm paper ground, dark ink, and the same tactile accent work surfaces; both themes preserve the task-first hierarchy. The dashboard introduces the follow-through path, shows current team counts, and then presents the live episode queue. It does not reproduce Glyphs\u2019 software copy, type specimens, product images, or testimonials. The bundled Noto Serif variable font supplies the display voice; its OFL license is included in `public/fonts/OFL.txt`.",
     "keyCharacteristics": [
-      "Night-black shell with an oversized, warm-white serif headline.",
+      "Warm-paper shell by default, with a switch to the original night-black theme.",
       "Lime for live workload and connected-state signals; cyan for the workflow sequence.",
-      "A light paper episode surface provides a distinct, readable data zone.",
+      "Near-white queue surface in light mode and warm paper in dark mode.",
       "Only API-returned counts and episode rows are displayed."
     ],
     "rules": [

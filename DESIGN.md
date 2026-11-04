@@ -1,160 +1,184 @@
 ---
 name: Renal Relay
-description: A calm, legible care-team workspace for kidney monitoring follow-through.
+description: A clear care-team dashboard for kidney monitoring follow-through.
 colors:
-  ink: "#18353a"
-  ink-muted: "#65787b"
-  teal: "#087f78"
-  teal-dark: "#086660"
-  teal-pale: "#eaf5f3"
-  canvas: "#f5f7f7"
-  surface: "#ffffff"
-  line: "#e4eaea"
-  line-strong: "#d6e0df"
-  warning: "#a65b16"
-  warning-bg: "#fff4e7"
-  focus-ring: "#39a99d"
+  ink: "#101210"
+  muted-ink: "#48534c"
+  paper: "#fbfcfa"
+  rule: "#171a17"
+  signal-mint: "#0af474"
+  relay-green: "#057f3c"
+  support-copy: "#344139"
+  support-on-dark: "#d7e2da"
+  paper-on-dark: "#f4f8f4"
+  rule-on-dark: "#68736b"
+  support-on-mint: "#153c27"
+  row-rule: "#acb2ad"
+  overdue: "#a13223"
+  offline-red: "#8b3124"
+  offline-surface: "#ffb4a8"
+  metric-rule: "rgb(16 18 16 / 42%)"
 typography:
-  interface:
+  display:
     fontFamily: "Geist, Arial, Helvetica, sans-serif"
-    fontSize: "14px"
-    fontWeight: 400
-    lineHeight: 1.5
-  page-title:
+    fontSize: "clamp(46px, 6.4vw, 88px)"
+    fontWeight: 570
+    lineHeight: 0.97
+    letterSpacing: "-0.072em"
+  headline:
     fontFamily: "Geist, Arial, Helvetica, sans-serif"
-    fontSize: "clamp(24px, 2.3vw, 30px)"
-    fontWeight: 600
+    fontSize: "23px"
+    fontWeight: 560
     lineHeight: 1.2
-    letterSpacing: "-1px"
-  section-title:
+    letterSpacing: "-0.045em"
+  body:
     fontFamily: "Geist, Arial, Helvetica, sans-serif"
-    fontSize: "17px"
-    fontWeight: 600
-    lineHeight: 1.35
-    letterSpacing: "-0.35px"
-  metadata:
-    fontFamily: "Geist, Arial, Helvetica, sans-serif"
-    fontSize: "11px"
+    fontSize: "15px"
     fontWeight: 400
-    lineHeight: 1.45
-  compact:
-    fontFamily: "Geist, Arial, Helvetica, sans-serif"
-    fontSize: "10px"
-    fontWeight: 600
-    lineHeight: 1.4
-  small:
+    lineHeight: 1.55
+  label:
     fontFamily: "Geist, Arial, Helvetica, sans-serif"
     fontSize: "12px"
+    fontWeight: 540
+    lineHeight: 1.45
+  measurement:
+    fontFamily: "Geist, Arial, Helvetica, sans-serif"
+    fontSize: "10px"
     fontWeight: 400
-    lineHeight: 1.5
-  wordmark:
-    fontFamily: "Geist, Arial, Helvetica, sans-serif"
-    fontSize: "20px"
-    fontWeight: 700
-    lineHeight: 1.2
-  metric:
-    fontFamily: "Geist, Arial, Helvetica, sans-serif"
-    fontSize: "30px"
-    fontWeight: 600
-    lineHeight: 1.1
-  mobile-title:
-    fontFamily: "Geist, Arial, Helvetica, sans-serif"
-    fontSize: "24px"
-    fontWeight: 600
-    lineHeight: 1.2
-  control-symbol:
-    fontFamily: "Geist, Arial, Helvetica, sans-serif"
-    fontSize: "18px"
-    fontWeight: 400
-    lineHeight: 1.5
+    lineHeight: 1.35
 rounded:
-  xs: "4px"
-  sm: "8px"
-  md: "12px"
-  lg: "16px"
-  pill: "999px"
-  circle: "50%"
+  none: "0px"
 spacing:
-  sidebar-width: "248px"
-  header-height: "70px"
-  content-max: "1240px"
-  control-height: "40px"
+  shell-gutter: "44px"
+  cell-inset: "48px"
+  mobile-gutter: "16px"
+  rule: "1px"
 components:
-  nav-item:
-    backgroundColor: "{colors.teal-pale}"
-    textColor: "{colors.teal-dark}"
-    rounded: "{rounded.sm}"
-    height: "42px"
-    padding: "0 10px"
-  button-primary:
-    backgroundColor: "{colors.teal}"
-    textColor: "{colors.surface}"
-    rounded: "{rounded.sm}"
-    height: "{spacing.control-height}"
-    padding: "0 14px"
-  data-surface:
-    backgroundColor: "{colors.surface}"
+  dark-workflow-panel:
+    backgroundColor: "{colors.ink}"
+    textColor: "{colors.paper}"
+    rounded: "{rounded.none}"
+    padding: "clamp(25px, 3.6vw, 48px)"
+  signal-overview-panel:
+    backgroundColor: "{colors.signal-mint}"
     textColor: "{colors.ink}"
-    rounded: "{rounded.md}"
-    padding: "18px"
-  status-chip:
-    backgroundColor: "{colors.teal-pale}"
-    textColor: "{colors.teal-dark}"
-    rounded: "{rounded.pill}"
-    padding: "5px 8px"
+    rounded: "{rounded.none}"
+    padding: "clamp(26px, 3.6vw, 48px)"
 ---
+
+# Design System: Renal Relay
 
 ## Overview
 
-Renal Relay is a care-team operations workspace. Its visual system gives episode status, due dates, ownership, and the next accountable step a clear reading order. The interface is intentionally quiet so exceptions and unresolved follow-through remain easy to find. PRODUCT.md defines product truth; this file records the system visible in the first implemented dashboard.
+**Creative North Star: “Split Studio”**
+
+Renal Relay uses the disciplined contrast of a Swiss editorial grid to make care-team follow-through immediately visible. The dashboard pairs a quiet paper field and oversized, direct headline with an ink-dark workflow panel and a signal-mint overview. Hard rules define the four-panel composition; a small halftone mark nods to the selected Aspen Search reference without importing its marketing content.
+
+The page leads with the purpose of the work, then shows the follow-through sequence, live team counts, and the current episode queue. Aorta’s straightforward task progression informs the workflow panel. The interface renders only values returned by the dashboard API; an unavailable service shows an explicit offline state and no invented records.
+
+**Key Characteristics:**
+
+- Split Studio four-panel grid with square corners and precise black rules.
+- Signal mint used for the live count field and small workflow accents.
+- Oversized, compact headline balanced by calm operational copy.
+- Patient and episode content appears only when returned by the live service.
 
 ## Colors
 
-- **Ink** (`{colors.ink}`) is the primary text color; muted ink is reserved for supporting information and remains readable on white.
-- **Teal** (`{colors.teal}`) marks primary actions and active navigation. Deep teal is used for text on pale teal surfaces.
-- **Pale teal** (`{colors.teal-pale}`) identifies selected workspace areas and positive workflow states.
-- **Canvas** (`{colors.canvas}`) separates the work area from white data surfaces. Borders use the two low contrast line colors to define table and surface boundaries.
-- **Warning** (`{colors.warning}`) and warning background are reserved for overdue or time-sensitive work. Status meaning is also written as text; color never carries meaning alone.
+The palette is built from near-black and warm paper, with electric mint as a deliberate signal and deep green for accessible links and state accents.
 
-The page is light by design for a clinic workstation. Do not introduce dark mode without checking the information density, contrast, and ambient-use context of the full workspace.
+### Primary
+
+- **Signal Mint** (`{colors.signal-mint}`): The team overview surface and small active marks; use black text on the mint field.
+- **Relay Green** (`{colors.relay-green}`): Text links, the live connection indicator, and focus outline where a darker accent is needed.
+- **Supporting Text** (`{colors.support-copy}`): Introductory paragraph ink on paper; `support-on-dark` and `paper-on-dark` are the text values for dark surfaces.
+- **Supporting Details** (`{colors.support-on-mint}`): Secondary copy on the mint overview. `row-rule` separates episode rows, while `metric-rule` divides counts.
+- **Overdue / Offline** (`{colors.overdue}`, `{colors.offline-red}`, `{colors.offline-surface}`): Reserved for overdue status and an unavailable connection, always paired with text.
+
+### Neutral
+
+- **Ink** (`{colors.ink}`): Main text and the dark workflow panel.
+- **Muted Ink** (`{colors.muted-ink}`): Supporting copy on paper and mint.
+- **Paper** (`{colors.paper}`): Main page field and text on the ink panel.
+- **Rule** (`{colors.rule}`): One-pixel divisions between panels.
+- **Offline Red** (`{colors.offline-red}`): Connection-unavailable indicator, paired with explicit status text.
+
+**The Live-Data Rule.** Counts and episode rows come from the dashboard response. When it is unavailable, show an unavailable state instead of sample values.
 
 ## Typography
 
-Geist is bundled locally through the `geist` package and loaded with `next/font/local`, avoiding a runtime or build-time Google Fonts request. Its SIL Open Font License is included with the package. The page-title scale is fluid from 24–30px; section titles use 17px; data and helper text step down to 10–14px. Weights and restrained negative tracking establish hierarchy. Dates and counts use tabular numerals where available.
+**Display Font:** Geist (with Arial, Helvetica, sans-serif fallback)
+
+**Body Font:** Geist (with Arial, Helvetica, sans-serif fallback)
+
+**Label/Mono Font:** Geist Mono for workflow indices; system monospace fallback.
+
+**Character:** Geist gives the page a compact, contemporary voice without competing with the grid. Large display type is tightly tracked; operational text stays open and readable.
+
+### Hierarchy
+
+- **Display** (570, `clamp(46px, 6.4vw, 88px)`; 90px on extra-wide screens; 0.97): Main dashboard statement; on mobile the size scales with viewport and caps at 76px.
+- **Headline** (560, 21–23px, 1.2): Workflow, overview, and episode section titles.
+- **Body** (400, 13–17px, 1.35–1.65): Explanatory and episode copy; keep paragraphs to roughly 50ch.
+- **Label** (400–650, 9–18px, 1.35–1.5): Connection, navigation, workflow index, patient reference, and due-date details.
+- **Measurement** (590, 34–56px, 1.08): API-backed summary counts, with tabular numerals.
 
 ## Layout
 
-The desktop workspace uses a fixed 248px navigation rail, a 70px utility header, and a content column capped at 1240px. Summary measures sit above a wide episode table; the follow-through list follows directly below. At tablet widths the rail narrows and metrics form two columns. At 760px and below, navigation becomes a horizontal row and the episode table keeps its readable minimum width inside a horizontal scroll region. Keep headings, status, due date, and owner visible in the first pass through the content.
+The content is capped at 1440px. A horizontal navigation bar sits above a two-column, two-row grid with zero gaps and shared one-pixel rules. The top row gives equal space to the headline and dark workflow sequence; the lower row pairs mint counts with the episode queue. Desktop shell gutters are 44px and panel insets are fluid, around 25–48px.
+
+At 900px the gutter and panel insets tighten. At 620px and below the panels stack in reading order, the header navigation moves to its own row, and episode details reflow into a two-column list. Keep the first heading visible, keep the four workflow steps distinct, and avoid horizontal page scrolling.
 
 ## Elevation & Depth
 
-The system is mostly flat. Canvas and white surfaces, thin neutral borders, and spacing define groups. Shadows are reserved for transient overlays; do not add a shadow to every card. The focus ring uses `{colors.focus-ring}` with a 3px offset outline.
+This system is flat and uses no persistent shadows. Black rules, large color fields, and spacing establish separation; focus uses a visible 3px green outline with a 4px offset. Do not add shadows as a substitute for the grid.
 
 ## Shapes
 
-Use 8px corners for controls and navigation, 12px for data surfaces, and 16px only for larger surfaces. Status tags and small count badges may be pill-shaped. Patient identity and status also have text labels; do not rely on avatar color or color-only state.
+Surfaces and panel corners are square. Use one-pixel borders and crisp geometric marks. The workflow’s dot pattern is a small authored SVG texture tied to the supplied Aspen reference; do not expand it into a generic background grid.
 
 ## Components
 
-- **Navigation item:** 42px target height with a drawn, consistent 1.5px line icon. Active state uses pale teal and deep teal text.
-- **Primary action:** 40px high, teal fill, white text, 8px corners. Disabled actions remain visibly disabled and explain their availability through adjacent context or a title.
-- **Summary measure:** a neutral, bordered surface with label, prominent count, and brief operational explanation. Avoid decorative charts that displace episode work.
-- **Episode table:** patient reference and display name, ordered test labels, explicit workflow status, due date, and owner. Preserve a horizontal scroll affordance on narrow screens instead of compressing clinical workflow fields into ambiguous abbreviations.
-- **Status chip:** text plus a small indicator, with semantic status conveyed in words. Apply warning colors only to genuinely time-sensitive states.
-- **Follow-through row:** one next action tied to a patient/episode and accountable owner. Keep the action readable and avoid presenting a decorative checkbox as a working control.
+### Header and Navigation
+
+- **Shape:** Open horizontal bar with a one-pixel bottom rule.
+- **Navigation:** Text links with a green underline for the current section; no pills or enclosing cards.
+- **Connection:** A small status dot and explicit “Live connection” or “Connection unavailable” text.
+- **Responsive:** Brand and status remain on the first row; navigation occupies the second row on narrow screens.
+
+### Workflow Panel
+
+- **Shape:** Square ink field, padded 25–48px.
+- **Content:** Four steps in sequence: order placed, test completed, report received, next action recorded.
+- **Color:** Paper text, mint indices and directional marks.
+- **Behavior:** The diagram is explanatory content, not a claim about an individual episode’s current state.
+
+### Team Overview
+
+- **Shape:** Square signal-mint field divided into a two-by-two count grid.
+- **Content:** Open episodes, overdue, awaiting report, and clinician review values from the API; unavailable values render as an em dash.
+- **Contrast:** Ink labels and numbers; the due-within-seven-days count is supporting copy.
+
+### Episode Queue
+
+- **Shape:** Open paper field with one-pixel row rules.
+- **Content:** Only API-returned patient reference, tests, status, due date, and owner are shown.
+- **States:** A connected empty response gets a neutral empty message. A failed request gets a clear error and a working retry control.
+- **Status:** Use explicit status text; color is supplementary.
 
 ## Do's and Don'ts
 
 ### Do:
 
-- Keep synthetic records visibly identified as sample data.
-- Make ownership, due date, state, and next action scannable before adding secondary detail.
-- Use semantic headings, table headers, keyboard-visible focus, and text labels alongside status color.
-- Keep clinical interpretation and next-action authority with clinicians.
+- Keep the dashboard heading and live connection state easy to find.
+- Preserve the split grid, high contrast, and square rules.
+- Pair status colors with readable labels and visible keyboard focus.
+- Keep clinical review and next-action authority with care teams.
+- Show only API-backed patient and episode information.
 
 ### Don't:
 
-- Present the prototype as connected to a health system or as containing real patient records.
-- Use color alone for overdue, review, consent, or completion state.
-- Add decorative gradients, glass effects, or repeated icon cards that compete with episode content.
-- suggest diagnoses, interpret laboratory values, or imply automated clinical decisions.
+- Add fictional patients, fabricated counts, or demo banners to the dashboard.
+- Add controls that do not perform a real action or links that lead nowhere.
+- Use color alone to convey status, or imply automated clinical decisions.
+- Add rounded card stacks, decorative gradients, or unsupported clinical interpretations.

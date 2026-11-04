@@ -1,64 +1,63 @@
 {
   "schemaVersion": 2,
   "generatedAt": "2026-11-04T00:00:00Z",
-  "title": "Design System: Renal Relay care-team workspace",
+  "title": "Design System: Renal Relay Split Studio",
   "extensions": {
     "breakpoints": [
-      { "name": "mobile", "value": "33.75rem" },
-      { "name": "tablet", "value": "47.5rem" },
-      { "name": "wide", "value": "67.5rem" }
+      { "name": "mobile", "value": "38.75rem" },
+      { "name": "tablet", "value": "56.25rem" },
+      { "name": "wide", "value": "93.75rem" }
     ]
   },
   "components": [
     {
-      "name": "Primary Action",
-      "kind": "button",
-      "refersTo": "button-primary",
-      "description": "40px teal action with clear disabled state.",
-      "html": "<button class=\"ds-primary\">New episode</button>",
-      "css": ".ds-primary { min-height: 40px; border: 0; border-radius: 8px; background: #087f78; padding: 0 14px; color: #fff; font: 600 14px/1.5 Geist, Arial, sans-serif; } .ds-primary:focus-visible { outline: 3px solid #39a99d; outline-offset: 3px; } .ds-primary:disabled { cursor: not-allowed; opacity: .62; }"
+      "name": "Dark Workflow Panel",
+      "kind": "surface",
+      "refersTo": "dark-workflow-panel",
+      "description": "Square ink panel with paper text, mint sequence indices, and a four-step care follow-through path.",
+      "html": "<section class=\"workflow-panel\"><h2>The follow-through</h2><ol><li>Order placed</li><li>Test completed</li><li>Report received</li><li>Next action recorded</li></ol></section>",
+      "css": ".workflow-panel { background: #101210; color: #fbfcfa; padding: clamp(25px, 3.6vw, 48px); } .workflow-index { color: #0af474; font: 10px/1.35 var(--font-geist-mono), monospace; }"
     },
     {
-      "name": "Episode Data Surface",
-      "kind": "card",
-      "refersTo": "data-surface",
-      "description": "White, thin-bordered 12px surface; no persistent shadow.",
-      "html": "<section class=\"ds-surface\">Episode data</section>",
-      "css": ".ds-surface { border: 1px solid #e4eaea; border-radius: 12px; background: #fff; color: #18353a; }"
+      "name": "Live Team Overview",
+      "kind": "data-display",
+      "refersTo": "signal-overview-panel",
+      "description": "Square mint field with a divided two-by-two grid of API-backed episode counts.",
+      "html": "<section class=\"metrics-panel\"><h2>Team overview</h2><div class=\"metrics-grid\"><div class=\"metric\"><strong class=\"metric-value\">API value</strong><span class=\"metric-label\">Open episodes</span></div></div></section>",
+      "css": ".metrics-panel { background: #0af474; color: #101210; padding: clamp(26px, 3.6vw, 48px); } .metric-value { font-size: clamp(34px, 4.4vw, 56px); font-variant-numeric: tabular-nums; }"
     },
     {
-      "name": "Status Chip",
-      "kind": "badge",
-      "refersTo": "status-chip",
-      "description": "Pale teal workflow state with an explicit text label.",
-      "html": "<span class=\"ds-status\"><span></span>Clinician review</span>",
-      "css": ".ds-status { display: inline-flex; align-items: center; gap: 6px; border-radius: 999px; background: #eaf5f3; padding: 5px 8px; color: #086660; font: 600 10px/1.4 Geist, Arial, sans-serif; } .ds-status > span { width: 6px; height: 6px; border-radius: 50%; background: #168378; }"
+      "name": "Episode Queue Row",
+      "kind": "list-item",
+      "description": "Open paper row separated with a one-pixel rule; real API episode information only.",
+      "html": "<article class=\"episode-row\"><div class=\"episode-person\"><strong>API patient display name</strong><span>API patient reference</span></div><div class=\"episode-tests\">API tests</div><div class=\"episode-status\">API status</div><div class=\"episode-due\">API due date</div><div class=\"episode-owner\">API owner</div></article>",
+      "css": ".episode-row { display: grid; grid-template-columns: minmax(130px, 1.1fr) minmax(76px, .55fr) minmax(120px, 1.2fr); gap: 8px 16px; padding: 15px 0; border-top: 1px solid #acb2ad; }"
     }
   ],
   "narrative": {
-    "northStar": "Care-team follow-through made visible, legible, and accountable.",
-    "overview": "A calm light workspace gives episode state, due dates, owners, and next steps precedence. Neutral surfaces dominate; teal organizes navigation and primary actions. The dashboard is the first implemented surface, and all displayed sample records are fictional.",
+    "northStar": "Split Studio: care-team follow-through made visible with Swiss editorial precision.",
+    "overview": "A square four-panel grid pairs paper, near-black, and signal mint. A prominent headline introduces the job, the dark panel shows the care path, the mint panel shows live counts, and the queue carries current episode work. The dashboard shows no fabricated patient records or summary values.",
     "keyCharacteristics": [
-      "Fixed desktop navigation rail and constrained operational content column.",
-      "Episode table with status, ordered tests, due date, and named owner.",
-      "Flat neutral surfaces with teal accents and restrained warning color.",
-      "Responsive horizontal navigation and horizontally scrollable data table on small screens."
+      "Two-by-two desktop grid with black one-pixel rules and square corners.",
+      "Oversized compact Geist headline, calm operational copy, and Geist Mono workflow indices.",
+      "Signal mint surfaces the API-backed team overview.",
+      "Responsive one-column composition with compact episode rows on small screens."
     ],
     "rules": [
-      "Pair every state color with a readable text label.",
-      "Keep episode status, due date, owner, and next step easy to scan.",
-      "Use borders and spacing for persistent grouping; reserve shadows for overlays.",
-      "Label fictional demonstration data wherever it could be mistaken for live records."
+      "Render patient records and counts only from the dashboard API.",
+      "When the service is unavailable, use an explicit unavailable state without fictional fallback values.",
+      "Pair status color with plain status text.",
+      "Keep clinical review and next-action decisions with care teams."
     ],
     "dos": [
-      "Do use teal as a purposeful interaction accent on quiet neutral surfaces.",
-      "Do keep clinical authority and decision-making with the care team.",
-      "Do provide keyboard focus and semantic structure."
+      "Do keep the Dashboard heading findable in the primary navigation.",
+      "Do keep all four workflow stages visually distinct.",
+      "Do provide visible keyboard focus and responsive layouts."
     ],
     "donts": [
-      "Don't imply real patient data, health-system connectivity, or automated clinical decisions.",
-      "Don't use color alone to convey status.",
-      "Don't use decorative charts or gradients in place of actionable episode information."
+      "Don't add fictional patients, demo counts, or sample banners.",
+      "Don't show controls that do not perform a supported action.",
+      "Don't imply diagnosis, test interpretation, or automated clinical decisions."
     ]
   }
 }

@@ -83,7 +83,7 @@ Barrier, overdue, opted-out, and escalated conditions are orthogonal flags/tasks
 
 ## F. API and persistence baseline
 
-The proposed REST surface and entities are documented in [`../data-and-api.md`](../data-and-api.md). These are design proposals, not existing endpoints or a deployed schema. Before implementation, agree on identifiers, validation, audit retention, report handling, and access policy.
+The Phase 1 database schema is in `db/migrations/000001_initial_schema.sql`; the local demo records are in `db/seed/001_fictional_demo_data.sql`. The implemented API is read-only: health checks and `GET /api/v1/dashboard/overview`. The broader routes and transitions in [`../data-and-api.md`](../data-and-api.md) remain proposals, not implemented endpoints. Before write operations, agree on identifiers, validation, audit retention, report handling, and access policy.
 
 Initial writes include patient/episode creation, contact/barrier capture, task assignment, completion verification, report receipt, clinician review, closure, and (later) validated voice events. Mutations must enforce authorization, ownership/assignment rules, consent where applicable, and valid transition constraints.
 

@@ -1,103 +1,160 @@
 ---
-name: Renal Relay — inherited starter UI
-description: Factual capture of the current Next.js starter; no product visual direction is approved.
+name: Renal Relay
+description: A calm, legible care-team workspace for kidney monitoring follow-through.
 colors:
-  background: "#ffffff"
-  foreground: "#171717"
-  background-dark: "#0a0a0a"
-  foreground-dark: "#ededed"
+  ink: "#18353a"
+  ink-muted: "#65787b"
+  teal: "#087f78"
+  teal-dark: "#086660"
+  teal-pale: "#eaf5f3"
+  canvas: "#f5f7f7"
+  surface: "#ffffff"
+  line: "#e4eaea"
+  line-strong: "#d6e0df"
+  warning: "#a65b16"
+  warning-bg: "#fff4e7"
+  focus-ring: "#39a99d"
 typography:
-  app-sans:
+  interface:
     fontFamily: "Geist, Arial, Helvetica, sans-serif"
-  app-mono:
-    fontFamily: "Geist Mono, monospace"
+    fontSize: "14px"
+    fontWeight: 400
+    lineHeight: 1.5
+  page-title:
+    fontFamily: "Geist, Arial, Helvetica, sans-serif"
+    fontSize: "clamp(24px, 2.3vw, 30px)"
+    fontWeight: 600
+    lineHeight: 1.2
+    letterSpacing: "-1px"
+  section-title:
+    fontFamily: "Geist, Arial, Helvetica, sans-serif"
+    fontSize: "17px"
+    fontWeight: 600
+    lineHeight: 1.35
+    letterSpacing: "-0.35px"
+  metadata:
+    fontFamily: "Geist, Arial, Helvetica, sans-serif"
+    fontSize: "11px"
+    fontWeight: 400
+    lineHeight: 1.45
+  compact:
+    fontFamily: "Geist, Arial, Helvetica, sans-serif"
+    fontSize: "10px"
+    fontWeight: 600
+    lineHeight: 1.4
+  small:
+    fontFamily: "Geist, Arial, Helvetica, sans-serif"
+    fontSize: "12px"
+    fontWeight: 400
+    lineHeight: 1.5
+  wordmark:
+    fontFamily: "Geist, Arial, Helvetica, sans-serif"
+    fontSize: "20px"
+    fontWeight: 700
+    lineHeight: 1.2
+  metric:
+    fontFamily: "Geist, Arial, Helvetica, sans-serif"
+    fontSize: "30px"
+    fontWeight: 600
+    lineHeight: 1.1
+  mobile-title:
+    fontFamily: "Geist, Arial, Helvetica, sans-serif"
+    fontSize: "24px"
+    fontWeight: 600
+    lineHeight: 1.2
+  control-symbol:
+    fontFamily: "Geist, Arial, Helvetica, sans-serif"
+    fontSize: "18px"
+    fontWeight: 400
+    lineHeight: 1.5
 rounded:
-  full: "9999px"
-  code: "0.25rem"
+  xs: "4px"
+  sm: "8px"
+  md: "12px"
+  lg: "16px"
+  pill: "999px"
+  circle: "50%"
 spacing:
-  action-height: "3rem"
-  action-inline: "1.25rem"
-  page-inline: "4rem"
-  page-block: "8rem"
+  sidebar-width: "248px"
+  header-height: "70px"
+  content-max: "1240px"
+  control-height: "40px"
 components:
-  starter-link-primary:
-    backgroundColor: "{colors.foreground}"
-    textColor: "{colors.background}"
-    rounded: "{rounded.full}"
-    height: "{spacing.action-height}"
-    padding: "0 {spacing.action-inline}"
-  starter-link-secondary:
-    backgroundColor: "{colors.background}"
-    textColor: "{colors.foreground}"
-    rounded: "{rounded.full}"
-    height: "{spacing.action-height}"
-    padding: "0 {spacing.action-inline}"
+  nav-item:
+    backgroundColor: "{colors.teal-pale}"
+    textColor: "{colors.teal-dark}"
+    rounded: "{rounded.sm}"
+    height: "42px"
+    padding: "0 10px"
+  button-primary:
+    backgroundColor: "{colors.teal}"
+    textColor: "{colors.surface}"
+    rounded: "{rounded.sm}"
+    height: "{spacing.control-height}"
+    padding: "0 14px"
+  data-surface:
+    backgroundColor: "{colors.surface}"
+    textColor: "{colors.ink}"
+    rounded: "{rounded.md}"
+    padding: "18px"
+  status-chip:
+    backgroundColor: "{colors.teal-pale}"
+    textColor: "{colors.teal-dark}"
+    rounded: "{rounded.pill}"
+    padding: "5px 8px"
 ---
-
-# Design System: Renal Relay — inherited starter UI
 
 ## Overview
 
-This document captures the current `create-next-app` page as it exists in the repository. It is a reference for the incumbent implementation only. The page still identifies itself as the Next.js starter and does not express Renal Relay product workflows or an approved Renal Relay visual identity.
-
-The user has asked that the starter UI be documented while the product's visual direction remains open. No named creative north star, brand palette, component system, or target visual character is established here. Use the product requirements in [`PRODUCT.md`](PRODUCT.md) for product truth; do not treat this starter capture as a target for the future care-team application.
-
-**Key Characteristics:**
-
-- Single centered starter page with two outbound calls to action.
-- Light/dark appearance follows the operating-system color preference.
-- Tailwind utilities provide layout and framework-default colors; no shared component library exists.
+Renal Relay is a care-team operations workspace. Its visual system gives episode status, due dates, ownership, and the next accountable step a clear reading order. The interface is intentionally quiet so exceptions and unresolved follow-through remain easy to find. PRODUCT.md defines product truth; this file records the system visible in the first implemented dashboard.
 
 ## Colors
 
-The only custom color tokens are the global light/dark foreground and background variables. The page also uses Tailwind default color utilities and a one-off hover color; those are not a Renal Relay semantic palette.
+- **Ink** (`{colors.ink}`) is the primary text color; muted ink is reserved for supporting information and remains readable on white.
+- **Teal** (`{colors.teal}`) marks primary actions and active navigation. Deep teal is used for text on pale teal surfaces.
+- **Pale teal** (`{colors.teal-pale}`) identifies selected workspace areas and positive workflow states.
+- **Canvas** (`{colors.canvas}`) separates the work area from white data surfaces. Borders use the two low contrast line colors to define table and surface boundaries.
+- **Warning** (`{colors.warning}`) and warning background are reserved for overdue or time-sensitive work. Status meaning is also written as text; color never carries meaning alone.
 
-### Neutral
-
-- **Light background** (`{colors.background}`): Global page background and light surface.
-- **Light foreground** (`{colors.foreground}`): Default text and primary starter action.
-- **Dark background** (`{colors.background-dark}`): Background when the OS requests dark appearance.
-- **Dark foreground** (`{colors.foreground-dark}`): Text in dark appearance.
+The page is light by design for a clinic workstation. Do not introduce dark mode without checking the information density, contrast, and ambient-use context of the full workspace.
 
 ## Typography
 
-**App sans:** Geist is loaded by the root layout and exposed to Tailwind. The page's main container requests the sans utility. The global `body` rule separately specifies Arial/Helvetica, so the repository currently has two overlapping font declarations.
-
-**Mono:** Geist Mono is loaded for code-oriented use.
-
-No reusable type scale has been defined. The starter page uses Tailwind text-size and weight utilities directly in the page markup.
+Geist is bundled locally through the `geist` package and loaded with `next/font/local`, avoiding a runtime or build-time Google Fonts request. Its SIL Open Font License is included with the package. The page-title scale is fluid from 24–30px; section titles use 17px; data and helper text step down to 10–14px. Weights and restrained negative tracking establish hierarchy. Dates and counts use tabular numerals where available.
 
 ## Layout
 
-The page is a single centered column. Its main region is constrained to Tailwind's `max-w-3xl`, uses generous vertical and horizontal padding, and changes text alignment at the `sm` utility breakpoint. The outer layout fills the viewport height and centers its content. No shared application navigation, dashboard grid, or responsive table pattern exists yet.
+The desktop workspace uses a fixed 248px navigation rail, a 70px utility header, and a content column capped at 1240px. Summary measures sit above a wide episode table; the follow-through list follows directly below. At tablet widths the rail narrows and metrics form two columns. At 760px and below, navigation becomes a horizontal row and the episode table keeps its readable minimum width inside a horizontal scroll region. Keep headings, status, due date, and owner visible in the first pass through the content.
 
 ## Elevation & Depth
 
-The starter page uses flat surfaces. No box-shadow token or elevation system is defined. Separation comes from background changes and a thin border on the secondary link action.
+The system is mostly flat. Canvas and white surfaces, thin neutral borders, and spacing define groups. Shadows are reserved for transient overlays; do not add a shadow to every card. The focus ring uses `{colors.focus-ring}` with a 3px offset outline.
 
 ## Shapes
 
-The two main link actions use fully rounded pill shapes. Inline code uses a small rounded background. The rest of the page has no reusable surface or card shape rules.
+Use 8px corners for controls and navigation, 12px for data surfaces, and 16px only for larger surfaces. Status tags and small count badges may be pill-shaped. Patient identity and status also have text labels; do not rely on avatar color or color-only state.
 
 ## Components
 
-### Starter link actions
-
-These are page-local links styled as actions; they are not reusable Renal Relay controls.
-
-- **Primary link:** Dark foreground surface, light text, pill shape, 48px height, and 20px horizontal padding. Hover changes the background. Dark appearance uses a light action surface.
-- **Secondary link:** Light surface, subtle border, pill shape, same height and horizontal padding. Hover removes the border and adds a faint background; dark appearance has corresponding dark styles.
-- Both links use a short color transition and become full-width on narrow layouts, with a fixed width at the `md` utility breakpoint.
+- **Navigation item:** 42px target height with a drawn, consistent 1.5px line icon. Active state uses pale teal and deep teal text.
+- **Primary action:** 40px high, teal fill, white text, 8px corners. Disabled actions remain visibly disabled and explain their availability through adjacent context or a title.
+- **Summary measure:** a neutral, bordered surface with label, prominent count, and brief operational explanation. Avoid decorative charts that displace episode work.
+- **Episode table:** patient reference and display name, ordered test labels, explicit workflow status, due date, and owner. Preserve a horizontal scroll affordance on narrow screens instead of compressing clinical workflow fields into ambiguous abbreviations.
+- **Status chip:** text plus a small indicator, with semantic status conveyed in words. Apply warning colors only to genuinely time-sensitive states.
+- **Follow-through row:** one next action tied to a patient/episode and accountable owner. Keep the action readable and avoid presenting a decorative checkbox as a working control.
 
 ## Do's and Don'ts
 
 ### Do:
 
-- **Do** describe these values as inherited starter defaults when maintaining the current page.
-- **Do** use [`PRODUCT.md`](PRODUCT.md) and the relevant product brief before designing a Renal Relay workflow screen.
+- Keep synthetic records visibly identified as sample data.
+- Make ownership, due date, state, and next action scannable before adding secondary detail.
+- Use semantic headings, table headers, keyboard-visible focus, and text labels alongside status color.
+- Keep clinical interpretation and next-action authority with clinicians.
 
 ### Don't:
 
-- **Don't** present the starter colors or pill actions as approved Renal Relay branding.
-- **Don't** infer a dashboard layout, clinical status palette, or patient-facing visual language from this single starter page.
-- **Don't** treat Tailwind's default palette utilities as custom design tokens.
+- Present the prototype as connected to a health system or as containing real patient records.
+- Use color alone for overdue, review, consent, or completion state.
+- Add decorative gradients, glass effects, or repeated icon cards that compete with episode content.
+- suggest diagnoses, interpret laboratory values, or imply automated clinical decisions.

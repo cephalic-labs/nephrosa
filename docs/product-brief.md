@@ -36,7 +36,7 @@ Each monitoring order becomes a persistent episode with an owner, due window, ap
 
 ## Design direction
 
-Use a calm, professional interface with deep teal `#0E343B`, teal `#087F78`, soft mint `#EAF7F5`, neutral `#F6F8FA`, and amber for attention states. Pair status colors with text and icons. Support readable tables, search, filters, keyboard access, responsive layouts, clear empty/error states, and large touch targets for the optional patient experience.
+The supplied concept suggests a calm teal/mint palette. The accepted dashboard direction keeps neutral surfaces primary, uses teal for focused interaction and pale mint for selected/positive states, and gives Impeccable's hierarchy, legibility, and accessibility guidance priority. The rendered tokens are documented in [`../DESIGN.md`](../DESIGN.md). Pair status color with text; keep warning color limited to time-sensitive work.
 
 Candidate languages include Tamil, Hindi, and English; validate availability and quality before enabling them in a demo.
 

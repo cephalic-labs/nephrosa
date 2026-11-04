@@ -17,7 +17,7 @@ The repository needs a visible scaffold without implying that those services, th
 ## Decision proposal
 
 1. Keep the existing Next.js app at the repository root during the first prototype phase.
-2. Mark future `backend/`, `db/`, `integrations/voice/`, and `deploy/` boundaries without adding service code until each has an agreed contract and implementation task.
+2. Use `backend/`, `db/`, and `deploy/` as the initial implementation boundaries; reserve `integrations/voice/` for a future adapter.
 3. If the Go/Gin service is accepted, it owns authorization, consent validation, episode transitions, closure checks, and audit-event creation.
 4. PostgreSQL is the proposed system of record for episode workflow data.
 5. Voice and language-model components may propose structured follow-up observations but do not own workflow state or clinical decisions.
@@ -40,7 +40,7 @@ Deferred because no institution, interface, identity model, or integration contr
 
 ## Consequences
 
-- Empty scaffold directories are intentional and do not indicate a running service.
+- Current implementation includes a read-only dashboard API, initial schema/migrations, fictional seed, and local Compose configuration; their presence does not make the proposed architecture an accepted production design.
 - Product and architecture docs distinguish proposal from accepted decisions and implementation evidence.
 - Later service work must update this ADR if it changes runtime authority or repository boundaries.
 - The data model must minimize sensitive information and support attributable workflow events.

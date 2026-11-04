@@ -1,29 +1,29 @@
 # Architecture navigation
 
-This guide identifies the current repository areas and proposed ownership boundaries.
+This guide distinguishes the Phase 1 implementation from proposed authority boundaries. The deployed technology choices remain a prototype baseline pending architecture review.
 
 ## Current tree
 
 ```text
 nephrosa/
-├── app/                    # Existing Next.js App Router starter
-├── public/                 # Existing static starter assets
-├── docs/                   # Product, architecture, decisions, and guides
-├── backend/                # Empty planned API boundaries
-├── db/                     # Empty planned migration and seed boundaries
-├── integrations/voice/      # Empty planned voice adapter boundary
-└── deploy/                 # Empty planned local deployment boundary
+├── app/                    # Next.js read-only care-team dashboard
+├── backend/                # Go API, configuration, migration and seed commands
+├── db/                     # Initial schema and fictional seed
+├── deploy/                 # Local PostgreSQL/API Compose setup
+├── docs/                   # Product, design, architecture, decisions, and guides
+├── integrations/voice/      # Reserved future provider adapter boundary
+└── scripts/                # Local-only development setup helpers
 ```
 
-## Proposed authority boundaries
+## Current authority and limits
 
-| Area | Proposed owner |
+| Area | Current responsibility |
 | --- | --- |
-| `app/` | Clinician/coordinator and optional patient interfaces. |
-| `backend/` | Authentication/authorization, consent checks, lifecycle validation, and audit-event writes. |
-| `db/` | Versioned PostgreSQL schema and fictional seed data. |
-| `integrations/voice/` | Provider transport and constrained speech/LLM integration only. |
-| `deploy/` | Local service orchestration after the runtime choices are accepted. |
-| `docs/` | Product, architecture, workflow, and implementation-status source of truth. |
+| `app/` | Display the overview and episode queue; no workflow mutation or clinical decision support. |
+| `backend/` | Health endpoints, dashboard read model, DB access, migrations, and fictional seeding. No authentication or writes. |
+| `db/` | Initial PostgreSQL schema and fictional seed records. |
+| `integrations/voice/` | No implementation; provider and scripts remain undecided. |
+| `deploy/` | Local service orchestration only. |
+| `docs/` | Product truth, proposed architecture and contracts, and implementation status. |
 
-See [the architecture baseline](../architecture/renal-relay-hld-lld.md) and [ADR-0001](../adr/0001-monorepo-scaffold-and-runtime-boundaries.md). The directories do not imply implemented services.
+See [the architecture baseline](../architecture/renal-relay-hld-lld.md), [ADR-0001](../adr/0001-monorepo-scaffold-and-runtime-boundaries.md), and [the scaffold ledger](../scaffold-plan.md). None of the current services are approved for real patient data or production use.

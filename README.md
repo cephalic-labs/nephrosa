@@ -4,7 +4,7 @@ Renal Relay is a clinician-led follow-through workspace for kidney monitoring in
 
 ## Project status
 
-This repository contains the initial Next.js application and documentation/scaffold for the user-confirmed prototype baseline. The Renal Relay workflows and planned services are not implemented. The architecture and clinical integration choices remain proposals or open decisions.
+This repository contains the Phase 1 Renal Relay prototype foundation: a Next.js care-team dashboard, Go API, PostgreSQL schema and fictional demo seed, plus a local Compose environment. It is a demonstration scaffold, not a clinical system. Authentication, authorization, workflow mutations, integrations, and production deployment remain unimplemented.
 
 ## Product boundary
 
@@ -22,12 +22,14 @@ This repository contains the initial Next.js application and documentation/scaff
 - [Architecture decision record](docs/adr/0001-monorepo-scaffold-and-runtime-boundaries.md)
 - [Scaffold plan and progress ledger](docs/scaffold-plan.md)
 - [Local development](docs/guides/local-development.md)
+- [Security and local secrets](docs/guides/security-secrets.md)
+- [Dashboard surface brief](docs/design/dashboard.md)
 
 The documents distinguish proposal, accepted decisions, scaffold, and implemented behavior. See the [source notes](docs/source-notes.md) for the supplied concept materials and unresolved decisions.
 
 ## Current application
 
-The repository contains the initialized Next.js app at its root and empty directories marking the planned backend, database, voice integration, and deployment boundaries. No service code, migrations, containers, or integrations have been implemented. See `package.json` for the available commands.
+The root Next.js app renders a care-team overview from the Go dashboard API when it is available and clearly labeled fictional sample records otherwise. The API exposes liveness/readiness and a read-only overview endpoint. PostgreSQL migrations establish workflow tables; a separate command seeds two fictional demonstration episodes. Docker Compose wires the local services and secret files. No authentication, workflow mutation endpoints, health-system connection, voice integration, or production hardening is included. See the local development guide for startup steps and limits.
 
 ## Prototype outcome
 

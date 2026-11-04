@@ -17,7 +17,7 @@ When project documents disagree, use this order:
 ## Product and design
 
 - [`../PRODUCT.md`](../PRODUCT.md) — users, purpose, positioning, constraints, evidence, and unresolved product facts.
-- [`../DESIGN.md`](../DESIGN.md) — Impeccable capture of the current inherited starter UI; it is not the approved Renal Relay visual direction.
+- [`../DESIGN.md`](../DESIGN.md) — current Renal Relay care-team dashboard design system, documented from the Phase 1 implementation.
 - [`product/mvp-spec.md`](product/mvp-spec.md) — user-confirmed prototype scope, roles, journeys, functional requirements, safeguards, and acceptance.
 - [`product-brief.md`](product-brief.md) — concise concept summary.
 - [`requirements.md`](requirements.md) — prioritized requirements and safety constraints.
@@ -36,7 +36,12 @@ When project documents disagree, use this order:
 ## Contributor guides
 
 - [`guides/architecture-navigation.md`](guides/architecture-navigation.md) — repository paths and responsibility boundaries.
-- [`guides/local-development.md`](guides/local-development.md) — current web-only local workflow and planned-service status.
+- [`guides/local-development.md`](guides/local-development.md) — local web/API/database workflow and its current limits.
+- [`guides/security-secrets.md`](guides/security-secrets.md) — local credential handling and production secret requirements.
+- [`design/dashboard.md`](design/dashboard.md) — dashboard audience, hierarchy, states, and prototype interaction boundary.
+- [`../backend/README.md`](../backend/README.md) — API commands, current read-only endpoints, and configuration.
+- [`../db/README.md`](../db/README.md) — migration, seed, and database-role conventions.
+- [`../deploy/README.md`](../deploy/README.md) — local Compose startup, reset, and security boundary.
 - [`guides/frontend-ui.md`](guides/frontend-ui.md) — required Impeccable workflow for future UI work.
 
 ## Source material

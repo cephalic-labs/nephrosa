@@ -1,24 +1,16 @@
-# Frontend UI development
+# Frontend UI guidance
 
-Use the Impeccable skill for Renal Relay interface work. The repository's current `app/page.tsx` is the unmodified Next.js starter screen; its tokens and styling are inherited setup, not an approved product identity. Do not treat those choices as the Renal Relay visual direction.
+Use the Impeccable skill for interface work. Read the relevant skill references before shaping a new surface, then ground implementation in [PRODUCT.md](../../PRODUCT.md), [DESIGN.md](../../DESIGN.md), and the route-specific brief under `docs/design/`.
 
-## Required workflow
+## Current system
 
-1. Read [`../../PRODUCT.md`](../../PRODUCT.md) and the relevant requirements in [`../product/mvp-spec.md`](../product/mvp-spec.md).
-2. Load Impeccable project context from the repository root with `impeccable context` and pass the target route/file when working on a surface.
-3. For a new screen, establish its user, task, states, content, and responsive behavior before implementation. Keep visual direction open until the product owner selects it.
-4. Before editing UI code, follow the applicable Impeccable reference and read its `craft-floor.md` guidance after the direction is settled.
-5. Inspect the result at desktop and mobile widths in one bounded visual review; address the discovered defects in a single correction pass and confirm once.
-6. Run the Impeccable detector once on changed UI targets after implementation. Record actual verification evidence in the handoff.
+The dashboard at `app/page.tsx` is the first Renal Relay surface. `app/globals.css` holds its tokens and components. The design is neutral-first with teal interaction accents, clear operational hierarchy, visible synthetic-data labeling, semantic tables, and responsive behavior. Do not reintroduce the Next.js starter page.
 
-## Product-specific constraints
+## UI implementation expectations
 
-- Clinical actions, patient identity, due dates, barriers, report receipt, acknowledgement, and closure status must be represented clearly and accurately.
-- Color cannot be the only status signal. Use text and icons as well.
-- Preserve keyboard access, visible focus, readable tables, responsive layout, and accessible empty/error states.
-- Do not invent clinical outcomes, patient quotes, analytics, or claims. Mark demonstration data as fictional.
-- Patient-facing outreach is consented and plain-language; clinical questions route to care staff.
-
-## Current design record
-
-The current visual implementation is being documented separately in root `DESIGN.md` as an incumbent starter reference. It must not be mistaken for an approved Renal Relay design system. A later visual direction should be established through Impeccable before the application UI is replaced.
+- Keep server data access on the server and never place secrets in `NEXT_PUBLIC_*` variables.
+- Follow the installed Next.js guides under `node_modules/next/dist/docs/` as required by `AGENTS.md`.
+- Preserve clinical authority boundaries: the UI displays workflow state but does not interpret laboratory results or recommend treatment.
+- Use semantic landmarks and table headings, readable text status, keyboard focus, and narrow-screen behavior.
+- Document only durable design decisions that are present in the rendered implementation.
+- Keep prototype and fictional-data limitations visible where data could be mistaken for live records.

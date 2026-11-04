@@ -1,38 +1,33 @@
-# Project structure plan
+# Project structure
 
-## Current repository
-
-The initialized repository is a Next.js application at its root (`app/`, `public/`, and root configuration files). Empty tracked directories now mark the planned backend, database, voice integration, and deployment boundaries. They contain no implementation code. The directory tree below describes the scaffold and later implementation destinations.
-
-## Proposed monorepo layout
+The repository keeps the initialized Next.js app at its root and adds the first local API/database boundaries. This describes current ownership, not a commitment to production topology.
 
 ```text
 .
-├── app/                         # Existing Next.js application
-├── public/                      # Existing static assets
-├── docs/                        # Product and technical documentation
+├── app/                         # Next.js dashboard and visual system
 ├── backend/
-│   ├── cmd/api/                  # Go API entry point
-│   └── internal/                 # API, domain workflow, and persistence packages
+│   ├── cmd/api/                  # API, migration, seed, and healthcheck commands
+│   └── internal/                 # Config, database, HTTP, migration, seed code
 ├── db/
-│   ├── migrations/               # PostgreSQL schema changes
-│   └── seed/                     # Fictional demo data
-├── integrations/
-│   └── voice/                    # Provider adapter boundary (later phase)
-└── deploy/                       # Local service orchestration (later phase)
+│   ├── init/                     # Local PostgreSQL role initialization
+│   ├── migrations/               # Embedded schema migrations
+│   └── seed/                     # Fictional demonstration records
+├── deploy/compose.yaml           # Local database and API services
+├── docs/                         # Product, design, architecture, and guides
+├── integrations/voice/           # Reserved for a future provider adapter
+├── scripts/dev-secrets.sh         # Local-only credential generation
+└── secrets/                       # Generated local credentials; ignored by Git
 ```
 
-The exact Go package boundaries, migration tool, and deployment files are undecided. The existing root Next.js app can remain the web workspace; avoid moving it until a concrete repository need justifies that change.
+## Current ownership
 
-## Planned ownership boundaries
+- `app/`: server-rendered care-team dashboard; currently read-only.
+- `backend/`: health checks and dashboard read endpoint, database configuration, and one-shot migration/seed commands. No authentication or workflow mutation rules exist yet.
+- `db/`: initial workflow schema, local role setup, and fictional seed only.
+- `deploy/`: local Compose service configuration; not a production deployment manifest.
+- `integrations/voice/`: future boundary; no provider code or credentials.
+- `docs/`: product truth, design system, prototype limits, proposed architecture, and contributor guides.
 
-- `app/`: clinician/coordinator UI and optional patient-facing UI.
-- `backend/`: authorization, workflow rules, validated state transitions, and audit creation.
-- `db/`: versioned schema and fictional seed records.
-- `integrations/voice/`: provider-specific transport and speech integration, isolated from clinical workflow decisions.
-- `deploy/`: local development dependencies once the chosen stack is ready.
-- `docs/`: source of truth for product requirements, workflow, architecture, data/API proposal, and open decisions.
+## Next foundation work
 
-## Scaffolding sequence
-
-Create implementation directories together with their first meaningful artifacts in later implementation work. Avoid empty folders, placeholder source files, and speculative dependencies. The first code phase should establish the local service contract and fictional data flow before voice integration.
+Implement and review authentication/authorization, validated workflow mutations, transactional audit events, clinical policy constraints, and a non-demo deployment boundary before operational use. Keep patient and report data out of the demo until institutional review and data-handling decisions are complete.

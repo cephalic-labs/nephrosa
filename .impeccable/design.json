@@ -1,48 +1,64 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-11-04T13:47:41Z",
-  "title": "Design System: Renal Relay — inherited starter UI",
+  "generatedAt": "2026-11-04T00:00:00Z",
+  "title": "Design System: Renal Relay care-team workspace",
   "extensions": {
     "breakpoints": [
-      { "name": "sm", "value": "40rem" },
-      { "name": "md", "value": "48rem" }
+      { "name": "mobile", "value": "33.75rem" },
+      { "name": "tablet", "value": "47.5rem" },
+      { "name": "wide", "value": "67.5rem" }
     ]
   },
   "components": [
     {
-      "name": "Starter Primary Link",
+      "name": "Primary Action",
       "kind": "button",
-      "refersTo": "starter-link-primary",
-      "description": "Page-local outbound link styled as the primary starter action.",
-      "html": "<a class=\"ds-starter-primary\" href=\"#\">Deploy Now</a>",
-      "css": ".ds-starter-primary { display: flex; height: 3rem; width: 100%; align-items: center; justify-content: center; gap: 0.5rem; border-radius: 9999px; background: #171717; padding: 0 1.25rem; color: #ffffff; font: 500 1rem/1.5 Arial, Helvetica, sans-serif; text-decoration: none; transition: background-color 150ms; } .ds-starter-primary:hover { background: #383838; } .ds-starter-primary:focus-visible { outline: auto; } @media (prefers-color-scheme: dark) { .ds-starter-primary { background: #ededed; color: #0a0a0a; } .ds-starter-primary:hover { background: #cccccc; } } @media (min-width: 768px) { .ds-starter-primary { width: 158px; } }"
+      "refersTo": "button-primary",
+      "description": "40px teal action with clear disabled state.",
+      "html": "<button class=\"ds-primary\">New episode</button>",
+      "css": ".ds-primary { min-height: 40px; border: 0; border-radius: 8px; background: #087f78; padding: 0 14px; color: #fff; font: 600 14px/1.5 Geist, Arial, sans-serif; } .ds-primary:focus-visible { outline: 3px solid #39a99d; outline-offset: 3px; } .ds-primary:disabled { cursor: not-allowed; opacity: .62; }"
     },
     {
-      "name": "Starter Secondary Link",
-      "kind": "button",
-      "refersTo": "starter-link-secondary",
-      "description": "Page-local outbound link styled as the secondary starter action.",
-      "html": "<a class=\"ds-starter-secondary\" href=\"#\">Documentation</a>",
-      "css": ".ds-starter-secondary { display: flex; height: 3rem; width: 100%; align-items: center; justify-content: center; border: 1px solid rgba(0, 0, 0, 0.08); border-radius: 9999px; padding: 0 1.25rem; color: #171717; font: 500 1rem/1.5 Arial, Helvetica, sans-serif; text-decoration: none; transition: background-color 150ms, border-color 150ms; } .ds-starter-secondary:hover { border-color: transparent; background: rgba(0, 0, 0, 0.04); } .ds-starter-secondary:focus-visible { outline: auto; } @media (prefers-color-scheme: dark) { .ds-starter-secondary { border-color: rgba(255, 255, 255, 0.145); color: #ededed; } .ds-starter-secondary:hover { border-color: transparent; background: #1a1a1a; } } @media (min-width: 768px) { .ds-starter-secondary { width: 158px; } }"
+      "name": "Episode Data Surface",
+      "kind": "card",
+      "refersTo": "data-surface",
+      "description": "White, thin-bordered 12px surface; no persistent shadow.",
+      "html": "<section class=\"ds-surface\">Episode data</section>",
+      "css": ".ds-surface { border: 1px solid #e4eaea; border-radius: 12px; background: #fff; color: #18353a; }"
+    },
+    {
+      "name": "Status Chip",
+      "kind": "badge",
+      "refersTo": "status-chip",
+      "description": "Pale teal workflow state with an explicit text label.",
+      "html": "<span class=\"ds-status\"><span></span>Clinician review</span>",
+      "css": ".ds-status { display: inline-flex; align-items: center; gap: 6px; border-radius: 999px; background: #eaf5f3; padding: 5px 8px; color: #086660; font: 600 10px/1.4 Geist, Arial, sans-serif; } .ds-status > span { width: 6px; height: 6px; border-radius: 50%; background: #168378; }"
     }
   ],
   "narrative": {
-    "northStar": "Unassigned; inherited Next.js starter UI",
-    "overview": "This document records the existing create-next-app screen only. It is not the Renal Relay visual direction. The user has asked to keep that direction open.",
+    "northStar": "Care-team follow-through made visible, legible, and accountable.",
+    "overview": "A calm light workspace gives episode state, due dates, owners, and next steps precedence. Neutral surfaces dominate; teal organizes navigation and primary actions. The dashboard is the first implemented surface, and all displayed sample records are fictional.",
     "keyCharacteristics": [
-      "Single centered starter page with two outbound calls to action.",
-      "Light/dark appearance follows the operating-system color preference.",
-      "Tailwind utilities provide layout and framework-default colors; no shared component library exists."
+      "Fixed desktop navigation rail and constrained operational content column.",
+      "Episode table with status, ordered tests, due date, and named owner.",
+      "Flat neutral surfaces with teal accents and restrained warning color.",
+      "Responsive horizontal navigation and horizontally scrollable data table on small screens."
     ],
-    "rules": [],
+    "rules": [
+      "Pair every state color with a readable text label.",
+      "Keep episode status, due date, owner, and next step easy to scan.",
+      "Use borders and spacing for persistent grouping; reserve shadows for overlays.",
+      "Label fictional demonstration data wherever it could be mistaken for live records."
+    ],
     "dos": [
-      "Do describe these values as inherited starter defaults when maintaining the current page.",
-      "Do use PRODUCT.md and the relevant product brief before designing a Renal Relay workflow screen."
+      "Do use teal as a purposeful interaction accent on quiet neutral surfaces.",
+      "Do keep clinical authority and decision-making with the care team.",
+      "Do provide keyboard focus and semantic structure."
     ],
     "donts": [
-      "Don't present the starter colors or pill actions as approved Renal Relay branding.",
-      "Don't infer a dashboard layout, clinical status palette, or patient-facing visual language from this single starter page.",
-      "Don't treat Tailwind's default palette utilities as custom design tokens."
+      "Don't imply real patient data, health-system connectivity, or automated clinical decisions.",
+      "Don't use color alone to convey status.",
+      "Don't use decorative charts or gradients in place of actionable episode information."
     ]
   }
 }

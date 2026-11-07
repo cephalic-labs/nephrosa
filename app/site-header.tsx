@@ -1,3 +1,4 @@
+import { ActionForm } from "./action-form";
 import Link from "next/link";
 import { ThemeToggle } from "./theme-toggle";
 
@@ -19,6 +20,7 @@ export function SiteHeader({ active = "dashboard", connected = false, role }: Si
         <Link href="/workflow" aria-current={active === "workflow" ? "page" : undefined}>{role === "clinician" ? "Care pathway" : "Workflow"}</Link>
         <Link href={`${role === "clinician" || role === "coordinator" ? `/dashboard/${role}` : "/dashboard"}#episodes`} aria-current={active === "episodes" ? "page" : undefined}>Episodes</Link>
       </nav>
+      {role && <ActionForm operation="logout" label="Sign out" />}
       <ThemeToggle />
       <div className={`connection-state ${connected ? "is-connected" : "is-offline"}`} role="status">
         <span className="connection-dot" />

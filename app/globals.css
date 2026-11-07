@@ -299,3 +299,18 @@ html[data-theme="dark"] .care-actions{background:#1d3029;color:#eff4ed;}
 html[data-theme="dark"] .care-actions h2,html[data-theme="dark"] .care-actions h3,html[data-theme="dark"] .care-actions p,html[data-theme="dark"] .care-actions label{color:#eff4ed;}
 html[data-theme="dark"] .care-actions .workflow-form{background:#263d34;color:#eff4ed;}
 html[data-theme="dark"] .detail-grid,html[data-theme="dark"] .episode-progress{color:#eff4ed;}
+html[data-theme="dark"] .theme-toggle{color:#eff4ed;border-color:#53695f;background:#1d3029;}
+html[data-theme="dark"] .theme-toggle:hover{background:#2a4037;border-color:#90a99b;}
+html[data-theme="dark"] .episodes-heading p{color:#d0ddd4;}
+html[data-theme="dark"] .episode-columns,html[data-theme="dark"] .episode-person span,html[data-theme="dark"] .episode-tests,html[data-theme="dark"] .episode-due,html[data-theme="dark"] .episode-owner{color:#cbd8cf;}
+html[data-theme="dark"] .episode-status{color:#dce8df;}
+html[data-theme="dark"] .row-open{color:#d7ec8c;}
+html[data-theme="dark"] .detail-heading h1,html[data-theme="dark"] .detail-heading>div>p,html[data-theme="dark"] .detail-owner{color:#173c34;}
+html[data-theme="dark"] .detail-status{color:#244d3b;}
+html[data-theme="dark"] .episode-detail .detail-section,html[data-theme="dark"] .episode-detail .detail-section h2,html[data-theme="dark"] .episode-detail .detail-section h3,html[data-theme="dark"] .episode-detail .detail-list,html[data-theme="dark"] .episode-detail .detail-list p,html[data-theme="dark"] .episode-detail .detail-empty,html[data-theme="dark"] .episode-detail .detail-item-heading span,html[data-theme="dark"] .episode-detail .detail-timeline{color:#eff4ed;}
+html[data-theme="dark"] .episode-detail .detail-list li,html[data-theme="dark"] .episode-detail .detail-section h2,html[data-theme="dark"] .episode-detail .detail-subsection{border-color:#53695f;}
+html[data-theme="dark"] .episode-detail .episode-progress{background:#1d3029;color:#eff4ed;}
+html[data-theme="dark"] .episode-detail .episode-progress h2,html[data-theme="dark"] .episode-detail .episode-progress strong{color:#eff4ed;}
+html[data-theme="dark"] .episode-detail .episode-progress small{color:#cbd8cf;}
+html[data-theme="dark"] .episode-detail [class*="controls"],html[data-theme="dark"] .episode-detail [class*="action"]{color:#eff4ed;}
+html[data-theme="dark"] .episode-detail [class*="controls"] h2,html[data-theme="dark"] .episode-detail [class*="controls"] h3,html[data-theme="dark"] .episode-detail [class*="controls"] p,html[data-theme="dark"] .episode-detail [class*="controls"] label,html[data-theme="dark"] .episode-detail [class*="action"] h2,html[data-theme="dark"] .episode-detail [class*="action"] h3,html[data-theme="dark"] .episode-detail [class*="action"] p,html[data-theme="dark"] .episode-detail [class*="action"] label{color:#eff4ed;}

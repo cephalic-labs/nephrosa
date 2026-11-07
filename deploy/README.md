@@ -1,5 +1,7 @@
 # Local service orchestration
 
+For the single-instance hackathon deployment, see [Demo deployment](demo.md).
+
 `compose.yaml` runs PostgreSQL and the Go API on loopback for local development. It is not a production deployment manifest. The web application runs separately through `pnpm dev`.
 
 ## Start

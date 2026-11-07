@@ -26,6 +26,7 @@ Start with the [Samvaad demo guide](docs/guides/samvaad-demo.md) for required co
 - [Architecture decision record](docs/adr/0001-monorepo-scaffold-and-runtime-boundaries.md)
 - [Scaffold plan and progress ledger](docs/scaffold-plan.md)
 - [Local development](docs/guides/local-development.md)
+- [Single-instance demo deployment](deploy/demo.md)
 - [Security and local secrets](docs/guides/security-secrets.md)
 - [Dashboard surface brief](docs/design/dashboard.md)
 - [Episode detail surface brief](docs/design/episode-detail.md)

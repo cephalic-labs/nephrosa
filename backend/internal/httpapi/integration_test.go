@@ -132,6 +132,10 @@ func TestDemoWorkflowAndVoiceIntegration(t *testing.T) {
 	request("POST", "/api/v1/sarvam/webhooks/invalid", "", event, 404)
 	request("POST", callback, "", event, 204)
 	request("POST", callback, "", event, 204)
+	var followUpNote string
+	if err := pool.QueryRow(ctx, `SELECT follow_up_note FROM call_attempts WHERE episode_id=$1`, id).Scan(&followUpNote); err != nil || followUpNote != "Please stop automated calls." {
+		t.Fatalf("callback did not persist the patient response summary: note=%q err=%v", followUpNote, err)
+	}
 	var tasks, contacts int
 	_ = pool.QueryRow(ctx, `SELECT count(*) FROM tasks WHERE episode_id=$1`, id).Scan(&tasks)
 	_ = pool.QueryRow(ctx, `SELECT count(*) FROM contact_attempts WHERE episode_id=$1`, id).Scan(&contacts)

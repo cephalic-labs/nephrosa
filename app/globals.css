@@ -321,9 +321,10 @@ html[data-theme="dark"] .episode-detail .workspace-panel .workflow-form{backgrou
 html[data-theme="dark"] .episode-detail .workspace-panel .workflow-form p,html[data-theme="dark"] .episode-detail .workspace-panel .workflow-form label{color:#eff4ed;}
 html[data-theme="dark"] .episode-detail .workspace-panel .workflow-form input:not([type="hidden"]),html[data-theme="dark"] .episode-detail .workspace-panel .workflow-form select,html[data-theme="dark"] .episode-detail .workspace-panel .workflow-form textarea{background:#14231e;color:#eff4ed;border-color:#657b70;}
 @media(max-width:760px){.theme-toggle{width:44px;min-width:44px;height:44px;min-height:44px}.workspace-toolbar .retry-button,.workspace-toolbar a{min-height:44px}}
-/* Episode action panels deliberately stay light in both themes; keep their copy dark. */
-html[data-theme="dark"] .episode-detail .workspace-panel{background:#fffefa!important;color:#173c34!important;}
-html[data-theme="dark"] .episode-detail .workspace-panel :is(h2,h3,p,label,strong){color:#173c34!important;}
-html[data-theme="dark"] .episode-detail .workspace-panel .workflow-form{background:#f3f5ec!important;color:#173c34!important;}
-html[data-theme="dark"] .episode-detail .workspace-panel .workflow-form :is(p,label){color:#173c34!important;}
-html[data-theme="dark"] .episode-detail .workspace-panel .workflow-form :is(input:not([type="hidden"]),select,textarea){background:#fffefa!important;color:#173c34!important;border-color:#cbd8cf!important;}
+/* Keep nested action cards and forms on one dark surface in the dark theme. */
+html[data-theme="dark"] .workspace-panel{background:#1d3029;color:#eff4ed;}
+html[data-theme="dark"] .workspace-panel .controls-grid>section{background:#263d34;color:#eff4ed;}
+html[data-theme="dark"] .workspace-panel :is(h2,h3,p,label,strong){color:#eff4ed;}
+html[data-theme="dark"] .workspace-panel .workflow-form{background:transparent;color:#eff4ed;}
+html[data-theme="dark"] .workspace-panel .workflow-form :is(p,label){color:#eff4ed;}
+html[data-theme="dark"] .workspace-panel .workflow-form :is(input:not([type="hidden"]),select,textarea){background:#14231e;color:#eff4ed;border-color:#657b70;}

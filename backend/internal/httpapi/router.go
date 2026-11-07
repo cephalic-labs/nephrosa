@@ -5,29 +5,50 @@ import (
 	"errors"
 	"log/slog"
 	"net/http"
+	"strings"
 	"time"
 
+	"github.com/cephalic-labs/nephrosa/backend/internal/sarvam"
 	"github.com/gin-gonic/gin"
 	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgxpool"
 )
 
 type Router struct {
-	db *pgxpool.Pool
+	db    *pgxpool.Pool
+	voice *sarvam.Client
 }
 
-func New(pool *pgxpool.Pool) http.Handler {
-	router := &Router{db: pool}
+func New(pool *pgxpool.Pool, voice *sarvam.Client) http.Handler {
+	router := &Router{db: pool, voice: voice}
 	engine := gin.New()
-	engine.Use(gin.Recovery(), responseHeaders())
+	engine.Use(gin.CustomRecoveryWithWriter(nil, func(c *gin.Context, _ any) { fail(c, 500, "The request could not be completed.") }), responseHeaders(), func(c *gin.Context) {
+		limit := int64(16384)
+		if strings.HasPrefix(c.Request.URL.Path, "/api/v1/sarvam/webhooks/") {
+			limit = 1 << 20
+		}
+		c.Request.Body = http.MaxBytesReader(c.Writer, c.Request.Body, limit)
+		c.Next()
+	})
 	_ = engine.SetTrustedProxies(nil)
 
 	engine.GET("/health/live", func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{"status": "ok"})
 	})
 	engine.GET("/health/ready", router.ready)
-	engine.GET("/api/v1/dashboard/overview", router.dashboardOverview)
-	engine.GET("/api/v1/episodes/:id", router.episodeDetail)
+	engine.POST("/api/v1/sessions", router.login)
+	engine.POST("/api/v1/sarvam/webhooks/:secret", router.webhook)
+	api := engine.Group("/api/v1", router.authenticate)
+	api.GET("/session", func(c *gin.Context) { c.JSON(200, actor(c)) })
+	api.DELETE("/session", router.logout)
+	api.GET("/users", router.users)
+	api.GET("/dashboard/overview", router.dashboardOverview)
+	api.GET("/episodes/:id", router.episodeDetail)
+	api.POST("/episodes", router.createEpisode)
+	api.POST("/episodes/:id/actions", router.workflow)
+	api.POST("/episodes/:id/calls", router.startCall)
+	api.GET("/episodes/:id/calls", router.callList)
+	api.POST("/episodes/:id/calls/:call/reconcile", router.reconcile)
 	return engine
 }
 
@@ -37,6 +58,7 @@ func responseHeaders() gin.HandlerFunc {
 		c.Header("X-Content-Type-Options", "nosniff")
 		c.Header("X-Frame-Options", "DENY")
 		c.Header("Referrer-Policy", "no-referrer")
+		c.Header("Content-Security-Policy", "default-src 'none'; frame-ancestors 'none'")
 		c.Next()
 	}
 }
@@ -90,6 +112,9 @@ type EpisodeDetail struct {
 	Tasks              []EpisodeTask    `json:"tasks"`
 	Reports            []EpisodeReport  `json:"reports"`
 	ClinicalReviews    []EpisodeReview  `json:"clinicalReviews"`
+	Consent            string           `json:"consent"`
+	Language           string           `json:"language"`
+	Phone              string           `json:"phone"`
 	AuditEvents        []AuditEvent     `json:"auditEvents"`
 }
 
@@ -150,6 +175,7 @@ type AuditEvent struct {
 	EventType  string    `json:"eventType"`
 	OccurredAt time.Time `json:"occurredAt"`
 	Actor      string    `json:"actor"`
+	Note       string    `json:"note,omitempty"`
 }
 
 func (r *Router) episodeDetail(c *gin.Context) {
@@ -172,7 +198,7 @@ func (r *Router) episodeDetail(c *gin.Context) {
 		FROM episodes e
 		JOIN patients p ON p.id = e.patient_id
 		JOIN users u ON u.id = e.owner_id
-		WHERE e.id::text = $1 AND e.status <> 'closed'
+		WHERE e.id::text = $1
 	`, c.Param("id")).Scan(
 		&detail.ID,
 		&detail.PatientReference,
@@ -190,6 +216,11 @@ func (r *Router) episodeDetail(c *gin.Context) {
 		return
 	}
 
+	err = tx.QueryRow(ctx, `SELECT p.preferred_language,COALESCE(p.phone_number,''),COALESCE((SELECT status FROM consents WHERE patient_id=p.id AND channel='voice' ORDER BY created_at DESC,id DESC LIMIT 1),'pending') FROM patients p JOIN episodes e ON e.patient_id=p.id WHERE e.id::text=$1`, detail.ID).Scan(&detail.Language, &detail.Phone, &detail.Consent)
+	if err != nil {
+		writeUnavailable(c, "episode_detail_unavailable", err)
+		return
+	}
 	detail.Tests = make([]EpisodeTest, 0)
 	rows, err := tx.Query(ctx, `
 		SELECT o.id::text, o.test_type, o.ordered_at, o.due_at,
@@ -359,7 +390,7 @@ func (r *Router) episodeDetail(c *gin.Context) {
 
 	detail.AuditEvents = make([]AuditEvent, 0)
 	rows, err = tx.Query(ctx, `
-		SELECT ae.event_type, ae.occurred_at, COALESCE(u.display_name, 'System')
+		SELECT ae.event_type, ae.occurred_at, COALESCE(u.display_name, 'System'),COALESCE(ae.metadata->>'note','')
 		FROM audit_events ae LEFT JOIN users u ON u.id = ae.actor_id
 		WHERE ae.episode_id::text = $1 ORDER BY ae.occurred_at DESC
 	`, detail.ID)
@@ -369,7 +400,7 @@ func (r *Router) episodeDetail(c *gin.Context) {
 	}
 	for rows.Next() {
 		var event AuditEvent
-		if err := rows.Scan(&event.EventType, &event.OccurredAt, &event.Actor); err != nil {
+		if err := rows.Scan(&event.EventType, &event.OccurredAt, &event.Actor, &event.Note); err != nil {
 			rows.Close()
 			writeUnavailable(c, "episode_detail_unavailable", err)
 			return
@@ -450,11 +481,11 @@ func (r *Router) dashboardOverview(c *gin.Context) {
 		JOIN patients p ON p.id = e.patient_id
 		JOIN users u ON u.id = e.owner_id
 		LEFT JOIN test_orders o ON o.episode_id = e.id
-	WHERE e.status <> 'closed'
+	WHERE ($1::boolean OR e.status <> 'closed')
 	GROUP BY e.id, p.external_reference, p.display_name, u.display_name
 	ORDER BY e.due_at, p.display_name
-	LIMIT 10
-	`)
+	LIMIT 100
+	`, c.Query("history") == "true")
 	if err != nil {
 		writeUnavailable(c, "dashboard_episodes_unavailable", err)
 		return

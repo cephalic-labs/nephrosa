@@ -15,6 +15,7 @@ import (
 	"github.com/cephalic-labs/nephrosa/backend/internal/database"
 	"github.com/cephalic-labs/nephrosa/backend/internal/httpapi"
 	"github.com/cephalic-labs/nephrosa/backend/internal/migrate"
+	"github.com/cephalic-labs/nephrosa/backend/internal/sarvam"
 	"github.com/cephalic-labs/nephrosa/backend/internal/seed"
 )
 
@@ -34,7 +35,7 @@ func run(args []string) error {
 	switch command {
 	case "healthcheck":
 		return healthcheck()
-	case "serve", "migrate", "seed":
+	case "serve", "migrate", "seed", "reset-demo":
 		cfg, err := config.Load()
 		if err != nil {
 			return err
@@ -52,6 +53,11 @@ func run(args []string) error {
 		switch command {
 		case "migrate":
 			return migrate.Apply(ctx, pool)
+		case "reset-demo":
+			if cfg.AppEnv != "development" || cfg.Database.Name != "renalrelay" || len(args) != 2 || args[1] != "--confirm-fictional-reset" {
+				return errors.New("reset requires development, database renalrelay, and --confirm-fictional-reset")
+			}
+			return seed.Reset(ctx, pool)
 		case "seed":
 			if cfg.AppEnv != "development" {
 				return errors.New("fictional demo data can only be seeded when APP_ENV=development")
@@ -61,17 +67,21 @@ func run(args []string) error {
 			return serve(cfg, pool)
 		}
 	default:
-		return fmt.Errorf("unknown command %q; use serve, migrate, seed, or healthcheck", command)
+		return fmt.Errorf("unknown command %q; use serve, migrate, seed, reset-demo, or healthcheck", command)
 	}
 }
 
 func serve(cfg config.Config, pool *database.Pool) error {
+	voiceCfg, err := sarvam.Load()
+	if err != nil {
+		return err
+	}
 	server := &http.Server{
 		Addr:              cfg.HTTPAddr,
-		Handler:           httpapi.New(pool),
+		Handler:           httpapi.New(pool, sarvam.New(voiceCfg)),
 		ReadHeaderTimeout: 5 * time.Second,
 		ReadTimeout:       15 * time.Second,
-		WriteTimeout:      15 * time.Second,
+		WriteTimeout:      30 * time.Second,
 		IdleTimeout:       60 * time.Second,
 		MaxHeaderBytes:    1 << 20,
 	}

@@ -4,9 +4,10 @@ import { ThemeToggle } from "./theme-toggle";
 type SiteHeaderProps = {
   active?: "dashboard" | "workflow" | "episodes";
   connected?: boolean;
+  role?: string;
 };
 
-export function SiteHeader({ active = "dashboard", connected = false }: SiteHeaderProps) {
+export function SiteHeader({ active = "dashboard", connected = false, role }: SiteHeaderProps) {
   return (
     <header className="site-header">
       <Link className="wordmark" href="/" aria-label="Renal Relay dashboard">
@@ -14,9 +15,9 @@ export function SiteHeader({ active = "dashboard", connected = false }: SiteHead
         <span>renal relay</span>
       </Link>
       <nav className="primary-nav" aria-label="Main navigation">
-        <Link href="/#dashboard" aria-current={active === "dashboard" ? "page" : undefined}>Dashboard</Link>
-        <Link href="/#workflow" aria-current={active === "workflow" ? "page" : undefined}>Workflow</Link>
-        <Link href="/#episodes" aria-current={active === "episodes" ? "page" : undefined}>Episodes</Link>
+        <Link href={role === "clinician" || role === "coordinator" ? `/dashboard/${role}` : "/dashboard"} aria-current={active === "dashboard" ? "page" : undefined}>Dashboard</Link>
+        <Link href="/workflow" aria-current={active === "workflow" ? "page" : undefined}>{role === "clinician" ? "Care pathway" : "Workflow"}</Link>
+        <Link href={`${role === "clinician" || role === "coordinator" ? `/dashboard/${role}` : "/dashboard"}#episodes`} aria-current={active === "episodes" ? "page" : undefined}>Episodes</Link>
       </nav>
       <ThemeToggle />
       <div className={`connection-state ${connected ? "is-connected" : "is-offline"}`} role="status">

@@ -95,9 +95,9 @@ async function EpisodePage({ params }: { params: Promise<{ id: string }> }) {
 
   return (
     <main className="dashboard-shell">
-      <SiteHeader active="episodes" connected={result.connected} />
+      <SiteHeader active="episodes" connected={result.connected} role={user.role} />
       <section className="episode-detail" aria-labelledby="episode-title">
-        <Link className="back-link" href="/#episodes">← All episodes</Link>
+        <Link className="back-link" href={`/dashboard/${user.role}#episodes`}>← All episodes</Link>
         {detail ? (
           <>
             <div className="detail-heading">
@@ -109,8 +109,15 @@ async function EpisodePage({ params }: { params: Promise<{ id: string }> }) {
             </div>
             <p className="detail-owner">Care owner <strong>{detail.ownerDisplayName}</strong></p>
 
+            <section className="episode-progress" aria-labelledby="progress-title"><h2 id="progress-title">Where this episode stands</h2><ol>{[
+              { title: "Testing", done: detail.tests.length > 0 && detail.tests.every(test => Boolean(test.completion)), note: detail.tests.length ? `${detail.tests.filter(test => test.completion).length} of ${detail.tests.length} tests verified` : "No tests recorded" },
+              { title: "Report", done: detail.reports.length > 0, note: detail.reports.length ? "Report receipt recorded" : "Waiting for report receipt" },
+              { title: "Clinician review", done: detail.clinicalReviews.length > 0, note: detail.clinicalReviews.length ? "Next action documented" : "Waiting for clinician acknowledgement" },
+              { title: "Close episode", done: detail.status === "closed", note: detail.status === "closed" ? "Episode closed" : "Open for follow-through" },
+            ].map((step,index)=><li key={step.title} className={step.done ? "is-done" : index === 0 || (index > 0 && [detail.tests.every(test=>Boolean(test.completion)),detail.reports.length>0,detail.clinicalReviews.length>0][index-1]) ? "is-current" : ""}><span>{step.done ? "✓" : index+1}</span><div><strong>{step.title}</strong><small>{step.note}</small></div></li>)}</ol></section>
+
             <EpisodeControls id={id} closed={detail.status === "closed"} role={user.role} consent={detail.consent} phone={detail.phone} tests={detail.tests} tasks={detail.tasks} />
-            <div className="detail-grid">
+            <h2 className="record-heading">Episode record</h2><div className="detail-grid">
               <div className="detail-column">
                 <PageSection title="Ordered tests">
                   {detail.tests.length ? (

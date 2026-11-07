@@ -5,11 +5,11 @@ import { ActionForm } from "../../action-form";
 import { SiteHeader } from "../../site-header";
 async function NewEpisode() {
   const user = await requireUser();
-  if (user.role !== "clinician") return <main className="dashboard-shell"><p>A clinician must create the episode.</p><Link href="/">Dashboard</Link></main>;
+  if (user.role !== "clinician") return <main className="dashboard-shell"><p>A clinician must create the episode.</p><Link href={`/dashboard/${user.role}`}>Dashboard</Link></main>;
   const response = await apiFetch("/users");
   if (!response.ok) throw new Error("Care owners could not be loaded.");
   const users: SessionUser[] = await response.json();
-  return <main className="dashboard-shell"><SiteHeader connected /><section className="workspace-panel"><Link href="/">← Dashboard</Link><h1>Create monitoring episode</h1><p>Use fictional patient information and a consenting demonstration phone.</p>
+  return <main className="dashboard-shell"><SiteHeader connected role={user.role}/><section className="new-episode-page"><Link className="back-link" href={`/dashboard/${user.role}`}>← Dashboard</Link><div className="new-episode-heading"><p className="hero-kicker">A thoughtful next step</p><h1>Create a monitoring episode.</h1><p>Record the clinician’s order and assign a teammate to follow through.</p></div><section className="workspace-panel new-episode-panel"><p className="safety-note">Use fictional patient information and a consenting demonstration phone.</p>
     <ActionForm operation="create" label="Create episode">
       <label>Patient display name<input name="name" maxLength={120} required /></label>
       <label>Unique patient reference<input name="reference" maxLength={80} required /></label>
@@ -21,6 +21,6 @@ async function NewEpisode() {
       <label className="check-label"><input name="consent" type="checkbox" /> Voice-contact consent has been granted</label>
       <label>Consent source or pending-consent note<input name="consentSource" maxLength={120} required /></label>
     </ActionForm>
-  </section></main>;
+  </section></section></main>;
 }
 export default function Page() { return <Suspense fallback={<p role="status">Loading episode form…</p>}><NewEpisode /></Suspense>; }

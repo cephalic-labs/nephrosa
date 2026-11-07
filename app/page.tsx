@@ -1,177 +1,20 @@
-import { Suspense } from "react";
 import Link from "next/link";
-import { requireUser, apiFetch } from "./api-client";
-import { ActionForm } from "./action-form";
-import { SiteHeader } from "./site-header";
+import { ThemeToggle } from "./theme-toggle";
 
-type Episode = {
-  id: string;
-  patientReference: string;
-  patientDisplayName: string;
-  status: string;
-  dueAt: string;
-  ownerDisplayName: string;
-  tests: string[];
-};
-
-type Overview = {
-  summary: {
-    openEpisodes: number;
-    overdueEpisodes: number;
-    awaitingReport: number;
-    awaitingClinicianReview: number;
-    dueWithinSevenDays: number;
-  };
-  episodes: Episode[];
-};
-
-async function getOverview(history: boolean): Promise<Overview | null> {
-
-  try {
-    const response = await apiFetch(`/dashboard/overview?history=${history}`);
-    if (!response.ok) return null;
-    return (await response.json()) as Overview;
-  } catch {
-    return null;
-  }
-}
-
-const workflow = [
-  "Order placed",
-  "Test completed",
-  "Report received",
-  "Next action recorded",
+const steps = [
+  ["Order", "A clinician places a uACR and eGFR monitoring order with a due date."],
+  ["Follow through", "The care team helps the patient arrange testing and records verified completion."],
+  ["Review", "The report reaches the clinician, who records the next action."],
 ];
 
-const metrics = [
-  ["Open episodes", "openEpisodes"],
-  ["Overdue", "overdueEpisodes"],
-  ["Awaiting report", "awaitingReport"],
-  ["Clinician review", "awaitingClinicianReview"],
-  ["Due within seven days", "dueWithinSevenDays"],
-] as const;
-
-function readable(value: string) {
-  return value.replaceAll("_", " ");
-}
-
-function dateLabel(value: string) {
-  const date = new Date(value);
-  if (Number.isNaN(date.getTime())) return "Date not set";
-  return new Intl.DateTimeFormat("en", {
-    month: "short",
-    day: "numeric",
-    year: "numeric",
-    timeZone: "UTC",
-  }).format(date);
-}
-
-async function Dashboard({ searchParams }: { searchParams: Promise<{ history?: string }> }) {
-  const user = await requireUser();
-  const history = (await searchParams).history === "true";
-  const data = await getOverview(history);
-  const connected = data !== null;
-  const episodes = data?.episodes ?? [];
-  const today = new Date().toISOString().slice(0, 10);
-
-  return (
-    <main className="dashboard-shell">
-      <SiteHeader connected={connected} />
-      <div className="workspace-toolbar"><span>{user.name} · {user.role}</span>{user.role === "clinician" && <Link className="retry-button" href="/episodes/new">Create episode</Link>}<Link href={history ? "/" : "/?history=true"}>{history ? "Open episodes" : "Include closed episodes"}</Link><ActionForm operation="logout" label="Sign out" /></div>
-
-      <section className="hero" id="dashboard" aria-labelledby="dashboard-title">
-        <div className="hero-copy">
-          <h1 id="dashboard-title">Care continues after the order.</h1>
-          <p>Keep uACR and eGFR monitoring moving—from the clinician’s order through report review and a documented next action.</p>
-        </div>
-        <section className="workflow-panel" id="workflow" aria-labelledby="workflow-title">
-          <h2 id="workflow-title">The follow-through</h2>
-          <p>One clear path for every monitoring episode.</p>
-          <ol className="workflow-list">
-            {workflow.map((step, index) => (
-              <li key={step}>
-                <span className="workflow-index">0{index + 1}</span>
-                <span className="workflow-label">{step}</span>
-              </li>
-            ))}
-          </ol>
-        </section>
-      </section>
-
-      <section className="overview-panel" aria-labelledby="overview-title">
-        <div className="overview-heading">
-          <h2 id="overview-title">Team overview</h2>
-          <span className="overview-context">{connected ? "Current workload" : "Awaiting live data"}</span>
-        </div>
-        <div className="metrics-grid">
-          {metrics.map(([label, key]) => (
-            <div className="metric" key={key}>
-              <strong className="metric-value">{connected ? data.summary[key] : "—"}</strong>
-              <span className="metric-label">{label}</span>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      <section className="episodes-panel" id="episodes" aria-labelledby="episodes-title">
-        <div className="episodes-heading">
-          <div>
-            <h2 id="episodes-title">Monitoring episodes</h2>
-            <p>Current follow-through across the care team.</p>
-          </div>
-          <span className="episode-total">{connected ? episodes.length : "—"}<span> displayed</span></span>
-        </div>
-        {!connected ? (
-          <div className="episode-state" role="status">
-            <strong>Live episodes couldn’t be loaded.</strong>
-            <span>Check the dashboard service, then try again.</span>
-            <form action="/" method="get">
-              <button className="retry-button" type="submit">Try again</button>
-            </form>
-          </div>
-        ) : episodes.length === 0 ? (
-          <div className="episode-state">
-            <strong>No open monitoring episodes.</strong>
-            <span>New episodes will appear here when they are recorded.</span>
-          </div>
-        ) : (
-          <div className="episode-list" role="list" aria-label="Open monitoring episodes">
-            {episodes.map((episode) => {
-              const overdue = episode.dueAt.slice(0, 10) < today;
-              return (
-                <article className="episode-row" key={episode.id} role="listitem">
-                  <div className="episode-person">
-                    <Link href={`/episodes/${episode.id}`} aria-label={`Open episode details for ${episode.patientDisplayName}`}>
-                    <strong>{episode.patientDisplayName}</strong>
-                    </Link>
-                    <span>{episode.patientReference}</span>
-                  </div>
-                  <div className="episode-tests">{episode.tests.join(" · ")}</div>
-                  <div className="episode-status">
-                    <span className={overdue ? "status-dot is-overdue" : "status-dot"} />
-                    {overdue ? "Overdue · " : ""}{readable(episode.status)}
-                  </div>
-                  <div className="episode-due">Due {dateLabel(episode.dueAt)}</div>
-                  <div className="episode-owner">{episode.ownerDisplayName}</div>
-                </article>
-              );
-            })}
-          </div>
-        )}
-      </section>
-
-      <footer className="site-footer">
-        <span>Renal Relay</span>
-        <span>Care teams retain responsibility for clinical review and next-action decisions.</span>
-      </footer>
-    </main>
-  );
-}
-
-export default function Home({ searchParams }: { searchParams: Promise<{ history?: string }> }) {
-  return (
-    <Suspense fallback={<main className="loading-screen" role="status">Loading dashboard…</main>}>
-      <Dashboard searchParams={searchParams} />
-    </Suspense>
-  );
+export default function LandingPage() {
+  return <main className="landing-page">
+    <header className="landing-header"><Link className="wordmark" href="/" aria-label="Renal Relay home"><span className="wordmark-symbol" aria-hidden="true"><span/><span/><span/></span><span>renal relay</span></Link><nav aria-label="Main"><a href="#how-it-works">How it works</a><Link className="landing-sign-in" href="/login">Care team sign in <span aria-hidden="true">↗</span></Link><ThemeToggle/></nav></header>
+    <section className="landing-hero">
+      <div className="landing-photo" role="img" aria-label="A care coordinator listens to an older adult patient in a bright clinic"><div className="photo-caption">Care that follows through.</div></div>
+      <div className="landing-copy"><p className="hero-kicker">Kidney monitoring, with people at the center</p><h1>Better follow-through starts with a conversation.</h1><p>Renal Relay helps care teams keep clinician-ordered kidney monitoring moving—from the first order to a reviewed report and a clear next step.</p><Link className="landing-cta" href="/login">Open care team workspace <span aria-hidden="true">↗</span></Link><p className="landing-note">Built for care teams. Clinical decisions stay with clinicians.</p></div>
+    </section>
+    <section className="landing-process" id="how-it-works"><div className="process-intro"><p className="hero-kicker">A clear path through care</p><h2>Every order has a next step.</h2><p>Keep the handoffs visible so patients and care teams know what still needs attention.</p></div><ol className="process-list">{steps.map(([title, copy], index)=><li key={title}><span className="process-step">{String(index+1).padStart(2,"0")}</span><div><h3>{title}</h3><p>{copy}</p></div></li>)}</ol></section>
+    <footer className="landing-footer"><span>Renal Relay</span><span>A care-team follow-through workspace</span><span>Demonstration only · use fictional records</span></footer>
+  </main>;
 }

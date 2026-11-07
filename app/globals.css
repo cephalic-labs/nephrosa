@@ -328,3 +328,10 @@ html[data-theme="dark"] .workspace-panel :is(h2,h3,p,label,strong){color:#eff4ed
 html[data-theme="dark"] .workspace-panel .workflow-form{background:transparent;color:#eff4ed;}
 html[data-theme="dark"] .workspace-panel .workflow-form :is(p,label){color:#eff4ed;}
 html[data-theme="dark"] .workspace-panel .workflow-form :is(input:not([type="hidden"]),select,textarea){background:#14231e;color:#eff4ed;border-color:#657b70;}
+
+html[data-theme="dark"] .new-episode-panel{background:#1d3029;color:#eff4ed;}
+html[data-theme="dark"] .new-episode-panel :is(.safety-note,label,legend){color:#eff4ed;}
+html[data-theme="dark"] .new-episode-panel .workflow-form input:not([type="hidden"]),html[data-theme="dark"] .new-episode-panel .workflow-form select,html[data-theme="dark"] .new-episode-panel .workflow-form textarea{background:#14231e;color:#eff4ed;border-color:#657b70;}
+html[data-theme="dark"] .new-episode-panel .workflow-form input::placeholder{color:#b9cbc0;opacity:1;}
+html[data-theme="dark"] .new-episode-panel .workflow-form fieldset{border-color:#657b70;}
+html[data-theme="dark"] .new-episode-panel .workflow-form input[type="checkbox"]{accent-color:#cbe85d;}

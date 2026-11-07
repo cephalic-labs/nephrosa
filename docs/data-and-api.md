@@ -1,15 +1,15 @@
 # Proposed data model and API
 
-This document records the supplied prototype design proposal and distinguishes the currently implemented read-only routes. The broader schema and write contracts remain proposals; field types, identifiers, validation rules, and privacy policy still need design review.
+This document records the original prototype proposal. The current implemented contract is in [backend/README.md](../backend/README.md) and the router. The proposal below should not be used as an endpoint inventory.
 
 ## Implemented read routes
 
 | Method and route | Behavior |
 | --- | --- |
-| `GET /api/v1/dashboard/overview` | Returns the current summary counts and up to ten open episode summaries. |
-| `GET /api/v1/episodes/:id` | Returns one open episode's detail from PostgreSQL, including test orders/completion verification, contact history, barriers, tasks, report receipt metadata, clinician acknowledgement/next action, and event labels with actor and time. |
+| `GET /api/v1/dashboard/overview` | Returns summary counts and up to 100 episode summaries; `?history=true` includes closed records. |
+| `GET /api/v1/episodes/:id` | Returns an open or closed episode's detail from PostgreSQL, including test orders/completion verification, contact history, barriers, tasks, report receipt metadata, clinician acknowledgement/next action, and event labels with actor and time. |
 
-The detail read uses a read-only repeatable-read transaction. It omits report contents and audit-event metadata. Missing or closed episodes return 404; database failures return a generic 503. Neither route authenticates callers. They are limited to the local fictional-data prototype and are not approved for real-patient data or untrusted networks. All proposed mutation routes below remain unimplemented.
+The detail read uses a read-only repeatable-read transaction. It omits report contents and other audit-event metadata. Missing episodes return 404; database failures return a generic 503. Care-team routes require an authenticated bearer session. The current prototype uses fictional records and is not approved for real-patient data or untrusted networks. Creation, audited workflow actions, and voice calls are implemented through the consolidated endpoints listed in [backend/README.md](../backend/README.md).
 
 ## Proposed entities
 
@@ -30,7 +30,9 @@ The detail read uses a read-only repeatable-read transaction. It omits report co
 
 Avoid storing unnecessary health details or call recordings. Data minimization, retention, access rules, and whether reports are uploaded or represented only by metadata need to be decided before real use.
 
-## Proposed REST routes
+## Original proposed REST routes
+
+These are source-proposal routes, not the current API contract. Several proposed write operations are consolidated under `POST /api/v1/episodes/:id/actions`; voice callbacks use a per-call secret route.
 
 | Method and route | Purpose |
 | --- | --- |

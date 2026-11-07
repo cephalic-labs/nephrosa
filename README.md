@@ -6,6 +6,8 @@ Renal Relay is a clinician-led follow-through workspace for kidney monitoring in
 
 This repository contains a care-team demonstration implementation: authenticated clinician/coordinator sessions, patient/episode creation, audited workflow actions, a Sarvam Samvaad instant-calling adapter, and guarded clinician closeout. The running services, a real Samvaad call and ngrok callback, and fictional coordinator/clinician closeout were verified on 7 November 2026. Use fictional clinical records and a consenting demonstration phone.
 
+Phase 1 foundations and Phase 2 core workflow are implemented. Phase 3 voice integration has a demonstrated English calling/callback path, with outcome and language verification still pending. Phase 4 demo and quality work is in progress. See the [progress ledger](docs/scaffold-plan.md) for current evidence and remaining gates.
+
 Start with the [Samvaad demo guide](docs/guides/samvaad-demo.md) for required configuration, agent instructions, callback security, test commands, and the presenter script.
 
 ## Product boundary

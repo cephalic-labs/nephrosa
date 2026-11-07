@@ -2,7 +2,7 @@
 
 This directory is the working source of truth for Renal Relay product scope, system boundaries, implementation decisions, and contributor guidance. The prototype baseline is user-confirmed; clinical policy and technical architecture decisions remain proposed or open where marked.
 
-The current demonstration implementation and its verification evidence are described in [`guides/samvaad-demo.md`](guides/samvaad-demo.md). Earlier phase ledgers and roadmap entries describe historical proposals.
+The current demonstration implementation and its verification evidence are described in [`guides/samvaad-demo.md`](guides/samvaad-demo.md). The [progress ledger](scaffold-plan.md) tracks current phase status; the roadmap remains a proposed sequence.
 
 ## Source precedence
 

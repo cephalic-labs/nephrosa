@@ -20,6 +20,17 @@ Address role and workflow edge cases, accessibility, operational measures, deplo
 
 The phases are proposed sequencing, not a committed schedule. The demo timeline and available developers have not been supplied.
 
+## Current delivery status
+
+| Phase | Current status | Remaining evidence |
+| --- | --- | --- |
+| 1 — Foundation | Implemented | Owner acceptance of the proposed architecture/ADR remains separate from prototype completion. |
+| 2 — Core workflow | Implemented for fictional-data demonstration | Disposable-database integration checks and operational policy review remain before real use. |
+| 3 — Patient and voice integration | Partial | English live calling/callback was demonstrated; structured-barrier outcome, multilingual quality, and approved scripts remain open. A patient-facing surface is not implemented. |
+| 4 — Quality and demo | Partial | Demo rehearsal is recorded; rendered accessibility/responsive review, remaining integration checks, and deployment preparation remain open. |
+
+The detailed status and latest checks are in the [progress ledger](scaffold-plan.md). No real-patient pilot has started.
+
 ## Pilot proposal
 
 The concept proposes a 60–90-day pilot in one diabetes clinic. Agree on the baseline with the clinical team and review exceptions weekly. The primary process outcome is the share of ordered kidney-monitoring episodes with testing completed, report acknowledged, and a next action recorded within the clinician-set window.

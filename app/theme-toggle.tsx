@@ -68,7 +68,7 @@ export function ThemeToggle() {
           <path d="M10 1.5v2M10 16.5v2M18.5 10h-2M3.5 10h-2m14.5-6-1.4 1.4M5.4 14.6 4 16m12 0-1.4-1.4M5.4 5.4 4 4" />
         </svg>
       )}
-      <span>{theme === "light" ? "Light" : "Dark"}</span>
+
     </button>
   );
 }

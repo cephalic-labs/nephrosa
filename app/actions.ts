@@ -32,7 +32,7 @@ export async function submitAction(_previous: ActionState, form: FormData): Prom
     if (operation === "login") {
       const result = await response.json();
       (await cookies()).set("relay-session", result.token, { httpOnly: true, secure: process.env.NODE_ENV === "production", sameSite: "lax", path: "/", maxAge: 8 * 60 * 60 });
-      destination = "/";
+      destination = result.user.role === "clinician" ? "/dashboard/clinician" : "/dashboard/coordinator";
     } else if (operation === "logout") {
       (await cookies()).delete("relay-session"); destination = "/login";
     } else if (operation === "create") destination = `/episodes/${(await response.json()).id}`;

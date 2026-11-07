@@ -1,30 +1,22 @@
-# Dashboard surface brief
+# Dashboard surfaces
 
-## Purpose
+## Public landing page (`/`)
 
-Help a care coordinator see which ordered uACR/eGFR monitoring episodes remain open, who owns them, when they are due, and what follow-through is expected next.
+Introduce Renal Relay before sign-in. Lead with the user-supplied care-team photograph, explain kidney-monitoring follow-through in plain language, and provide a direct route to care-team sign-in. Keep clinical accountability explicit. Do not show patient data, fabricated summary measures, or workflow controls publicly.
 
-## Mode and audience
+## Role workspaces (`/dashboard/clinician`, `/dashboard/coordinator`)
 
-Operate. The primary user is a clinic care-team member reviewing a daily queue at a workstation, with occasional narrow-screen use.
+Require an authenticated care-team session. `/dashboard` routes each signed-in user to their role-specific workspace. Adapt the welcome copy and focus summary for clinicians and care coordinators, then present live API workload measures and a clearly labeled episode queue. The queue identifies the patient by minimum display name and prototype reference, ordered tests, current workflow step, due date, and care owner. The patient link opens episode detail. The clinician can create an episode; both roles can inspect workflow and episode history.
 
-## First viewport
+Unavailable API data uses an explicit retryable state and never substitutes example rows or counts. Closed history is selected through an explicit history control.
 
-The first view establishes the workspace, then shows API-backed open/overdue/review measures and a queue of open episodes with patient reference, ordered tests, workflow status, due date, and owner. Each patient name links to a read-only episode detail route. When the API is unavailable, measures use an em dash and both dashboard and detail views show a clear retryable unavailable state; they never substitute sample records.
+## Navigation and workflow
 
-## Content and state
+The shared care-team navigation links to `/dashboard`, `/workflow`, and the episode queue. The workflow page explains the ordered handoffs from clinician order through verified testing, report receipt, clinician acknowledgement, and closure. Every visible navigation item must lead to a functioning route or section.
 
-- Show only minimal patient display information and a prototype reference.
-- Keep ordered test types and workflow status explicit.
-- Show dates and accountable owner without relying on color or position alone.
-- Episode detail shows recorded tasks, barriers, contact history, completion verification, report receipt metadata, clinician acknowledgement, and audit event labels.
-- Provide empty states for no open episodes and no follow-through tasks.
-- Keep disabled or unimplemented controls visibly unavailable; do not imply that a displayed action has changed persisted workflow state.
+## Visual and content rules
 
-## Interaction boundary
-
-The current prototype is read-only. The dashboard links to episode details; no episode mutations or clinical decision support are implemented. The read API has no authentication or authorization and is for fictional local data only. The care team retains review, next-action, escalation, and closure authority.
-
-## Visual direction
-
-Follow the project-wide [DESIGN.md](../../DESIGN.md): warm-paper light mode by default, an available dark theme, editorial serif display, lime and cyan work surfaces, readable status text, and restrained warning color.
+- Follow [DESIGN.md](../../DESIGN.md): warm, light-first editorial styling, responsive layouts, and an available dark theme.
+- Keep measures and queue information legible at narrow widths; use clear column labels on wide screens and stacked, labeled episode rows on mobile.
+- Distinguish due status with text and a marker, not color alone.
+- Keep clinical decisions with the clinician. Use fictional data only.

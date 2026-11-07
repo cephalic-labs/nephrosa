@@ -280,58 +280,56 @@ body{font-size:15px;background:var(--night);color:var(--ink)} .dashboard-shell{w
 @media(min-width:761px) and (max-width:1100px){.episode-row,.episode-columns{grid-template-columns:minmax(125px,1.2fr) minmax(75px,.6fr) minmax(125px,1fr) minmax(100px,.8fr) minmax(100px,.8fr) minmax(75px,.6fr);gap:8px}.row-open{font-size:10px}}
 @media(max-width:760px){.episode-row{grid-template-columns:1fr auto}.row-open{grid-column:1/-1;justify-self:start;padding-top:4px}}
 
-/* Polished controls and readable dark theme */
-.theme-toggle{width:38px;min-width:38px;height:38px;min-height:38px;padding:0;border-radius:50%;}
-.theme-toggle svg{width:18px;height:18px;}
-.site-header .workflow-form{display:flex;margin:0;}
-.site-header .workflow-form .retry-button{min-height:36px;padding:0 14px;white-space:nowrap;}
-.workspace-toolbar .retry-button,.workspace-toolbar a{display:inline-flex;align-items:center;justify-content:center;min-height:42px;line-height:1.2;text-decoration:none;}
-.workspace-toolbar{gap:12px 18px;}
-html[data-theme="dark"] .episode-columns{color:#b7c9be;}
-html[data-theme="dark"] .episode-person span,html[data-theme="dark"] .episode-tests,html[data-theme="dark"] .episode-due,html[data-theme="dark"] .episode-owner,html[data-theme="dark"] .episodes-heading p{color:#c4d2c9;}
-html[data-theme="dark"] .episode-status{color:#d8e5dc;}
-html[data-theme="dark"] .row-open{color:#d5e98a;}
-html[data-theme="dark"] .detail-heading .detail-subtitle,html[data-theme="dark"] .detail-owner{color:#c4d2c9;}
-html[data-theme="dark"] .detail-hero{color:#173c34;}
-html[data-theme="dark"] .detail-hero h1,html[data-theme="dark"] .detail-hero p{color:#173c34;}
-html[data-theme="dark"] .detail-hero .status-badge{color:#315f4b;}
-html[data-theme="dark"] .care-actions{background:#1d3029;color:#eff4ed;}
-html[data-theme="dark"] .care-actions h2,html[data-theme="dark"] .care-actions h3,html[data-theme="dark"] .care-actions p,html[data-theme="dark"] .care-actions label{color:#eff4ed;}
-html[data-theme="dark"] .care-actions .workflow-form{background:#263d34;color:#eff4ed;}
-html[data-theme="dark"] .detail-grid,html[data-theme="dark"] .episode-progress{color:#eff4ed;}
-html[data-theme="dark"] .theme-toggle{color:#eff4ed;border-color:#53695f;background:#1d3029;}
-html[data-theme="dark"] .theme-toggle svg{stroke:#eff4ed;}
-html[data-theme="dark"] .theme-toggle:hover{background:#2a4037;border-color:#90a99b;}
-html[data-theme="dark"] .episodes-heading p{color:#d0ddd4;}
-html[data-theme="dark"] .episode-columns,html[data-theme="dark"] .episode-person span,html[data-theme="dark"] .episode-tests,html[data-theme="dark"] .episode-due,html[data-theme="dark"] .episode-owner{color:#cbd8cf;}
-html[data-theme="dark"] .episode-status{color:#dce8df;}
-html[data-theme="dark"] .row-open{color:#d7ec8c;}
-html[data-theme="dark"] .detail-heading h1,html[data-theme="dark"] .detail-heading>div>p,html[data-theme="dark"] .detail-owner{color:#173c34;}
-html[data-theme="dark"] .detail-status{color:#244d3b;}
-html[data-theme="dark"] .episode-detail .detail-section,html[data-theme="dark"] .episode-detail .detail-section h2,html[data-theme="dark"] .episode-detail .detail-section h3,html[data-theme="dark"] .episode-detail .detail-list,html[data-theme="dark"] .episode-detail .detail-list p,html[data-theme="dark"] .episode-detail .detail-empty,html[data-theme="dark"] .episode-detail .detail-item-heading span,html[data-theme="dark"] .episode-detail .detail-timeline{color:#eff4ed;}
-html[data-theme="dark"] .episode-detail .detail-list li,html[data-theme="dark"] .episode-detail .detail-section h2,html[data-theme="dark"] .episode-detail .detail-subsection{border-color:#53695f;}
-html[data-theme="dark"] .episode-detail .episode-progress{background:#1d3029;color:#eff4ed;}
-html[data-theme="dark"] .episode-detail .episode-progress h2,html[data-theme="dark"] .episode-detail .episode-progress strong{color:#eff4ed;}
-html[data-theme="dark"] .episode-detail .episode-progress small{color:#cbd8cf;}
-html[data-theme="dark"] .episode-detail [class*="controls"],html[data-theme="dark"] .episode-detail [class*="action"]{color:#eff4ed;}
-html[data-theme="dark"] .episode-detail [class*="controls"] h2,html[data-theme="dark"] .episode-detail [class*="controls"] h3,html[data-theme="dark"] .episode-detail [class*="controls"] p,html[data-theme="dark"] .episode-detail [class*="controls"] label,html[data-theme="dark"] .episode-detail [class*="action"] h2,html[data-theme="dark"] .episode-detail [class*="action"] h3,html[data-theme="dark"] .episode-detail [class*="action"] p,html[data-theme="dark"] .episode-detail [class*="action"] label{color:#eff4ed;}
-html[data-theme="dark"] .episode-detail .workspace-panel{background:#1d3029;color:#eff4ed;}
-html[data-theme="dark"] .episode-detail .workspace-panel h2,html[data-theme="dark"] .episode-detail .workspace-panel h3,html[data-theme="dark"] .episode-detail .workspace-panel p,html[data-theme="dark"] .episode-detail .workspace-panel label{color:#eff4ed;}
-html[data-theme="dark"] .episode-detail .workspace-panel .workflow-form{background:#263d34;color:#eff4ed;}
-html[data-theme="dark"] .episode-detail .workspace-panel .workflow-form p,html[data-theme="dark"] .episode-detail .workspace-panel .workflow-form label{color:#eff4ed;}
-html[data-theme="dark"] .episode-detail .workspace-panel .workflow-form input:not([type="hidden"]),html[data-theme="dark"] .episode-detail .workspace-panel .workflow-form select,html[data-theme="dark"] .episode-detail .workspace-panel .workflow-form textarea{background:#14231e;color:#eff4ed;border-color:#657b70;}
-@media(max-width:760px){.theme-toggle{width:44px;min-width:44px;height:44px;min-height:44px}.workspace-toolbar .retry-button,.workspace-toolbar a{min-height:44px}}
-/* Keep nested action cards and forms on one dark surface in the dark theme. */
-html[data-theme="dark"] .workspace-panel{background:#1d3029;color:#eff4ed;}
-html[data-theme="dark"] .workspace-panel .controls-grid>section{background:#263d34;color:#eff4ed;}
-html[data-theme="dark"] .workspace-panel :is(h2,h3,p,label,strong){color:#eff4ed;}
-html[data-theme="dark"] .workspace-panel .workflow-form{background:transparent;color:#eff4ed;}
-html[data-theme="dark"] .workspace-panel .workflow-form :is(p,label){color:#eff4ed;}
-html[data-theme="dark"] .workspace-panel .workflow-form :is(input:not([type="hidden"]),select,textarea){background:#14231e;color:#eff4ed;border-color:#657b70;}
-
-html[data-theme="dark"] .new-episode-panel{background:#1d3029;color:#eff4ed;}
-html[data-theme="dark"] .new-episode-panel :is(.safety-note,label,legend){color:#eff4ed;}
-html[data-theme="dark"] .new-episode-panel .workflow-form input:not([type="hidden"]),html[data-theme="dark"] .new-episode-panel .workflow-form select,html[data-theme="dark"] .new-episode-panel .workflow-form textarea{background:#14231e;color:#eff4ed;border-color:#657b70;}
-html[data-theme="dark"] .new-episode-panel .workflow-form input::placeholder{color:#b9cbc0;opacity:1;}
-html[data-theme="dark"] .new-episode-panel .workflow-form fieldset{border-color:#657b70;}
-html[data-theme="dark"] .new-episode-panel .workflow-form input[type="checkbox"]{accent-color:#cbe85d;}
+/* Shared care-workspace surfaces and controls */
+:root {
+  --action-panel: #fffefa;
+  --action-card: #f4f6ef;
+  --action-field: #fffefa;
+  --action-text: #173c34;
+  --action-muted: #52675c;
+  --action-border: #c8d5ca;
+}
+html[data-theme="dark"] {
+  --action-panel: #1d3029;
+  --action-card: #263d34;
+  --action-field: #14231e;
+  --action-text: #eff4ed;
+  --action-muted: #cbd8cf;
+  --action-border: #657b70;
+}
+.theme-toggle { display: inline-flex; width: 44px; min-width: 44px; height: 44px; min-height: 44px; padding: 0; border-radius: 50%; color: var(--canvas-ink); }
+.theme-toggle svg { width: 18px; height: 18px; stroke: currentColor; }
+html[data-theme="dark"] .theme-toggle { color: var(--action-text); border-color: var(--action-border); background: var(--action-panel); }
+.site-header .workflow-form { display: flex; margin: 0; }
+.site-header .workflow-form .retry-button { min-height: 44px; padding: 0 14px; white-space: nowrap; }
+.workspace-toolbar { gap: 12px 18px; }
+.workspace-toolbar .retry-button, .workspace-toolbar a { display: inline-flex; min-height: 44px; align-items: center; justify-content: center; line-height: 1.2; text-decoration: none; }
+html[data-theme="dark"] .episode-columns,
+html[data-theme="dark"] .episode-person span,
+html[data-theme="dark"] .episode-tests,
+html[data-theme="dark"] .episode-due,
+html[data-theme="dark"] .episode-owner,
+html[data-theme="dark"] .episodes-heading p { color: var(--action-muted); }
+html[data-theme="dark"] .episode-status { color: var(--action-text); }
+html[data-theme="dark"] .row-open { color: #d7ec8c; }
+html[data-theme="dark"] .detail-heading :is(h1, p),
+html[data-theme="dark"] .detail-status { color: #173c34; }
+html[data-theme="dark"] .detail-owner { color: var(--action-muted); }
+html[data-theme="dark"] .episode-progress,
+html[data-theme="dark"] .detail-grid { background: var(--action-panel); color: var(--action-text); }
+html[data-theme="dark"] .episode-progress :is(h2, strong),
+html[data-theme="dark"] .detail-grid :is(h2, h3, strong) { color: var(--action-text); }
+html[data-theme="dark"] .episode-progress small,
+html[data-theme="dark"] .detail-grid :is(p, .detail-empty, .detail-item-heading span) { color: var(--action-muted); }
+html[data-theme="dark"] .workspace-panel { background: var(--action-panel); color: var(--action-text); }
+html[data-theme="dark"] .workspace-panel :is(h2, h3, strong, label, legend) { color: var(--action-text); }
+html[data-theme="dark"] .workspace-panel p { color: var(--action-muted); }
+html[data-theme="dark"] .controls-grid > section { background: var(--action-card); color: var(--action-text); }
+html[data-theme="dark"] .workspace-panel .workflow-form { background: transparent; color: var(--action-text); }
+html[data-theme="dark"] .workspace-panel .workflow-form :is(input:not([type="hidden"]), select, textarea) { background: var(--action-field); color: var(--action-text); border-color: var(--action-border); }
+html[data-theme="dark"] .workspace-panel .workflow-form input::placeholder { color: var(--action-muted); opacity: 1; }
+html[data-theme="dark"] .workspace-panel .workflow-form fieldset { border-color: var(--action-border); }
+html[data-theme="dark"] .workspace-panel .workflow-form input[type="checkbox"] { accent-color: #cbe85d; }
+@media (max-width: 760px) {
+  .episode-row .row-open { min-height: 44px; align-items: center; }
+}

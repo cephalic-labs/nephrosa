@@ -2,6 +2,8 @@
 
 This directory is the working source of truth for Renal Relay product scope, system boundaries, implementation decisions, and contributor guidance. The prototype baseline is user-confirmed; clinical policy and technical architecture decisions remain proposed or open where marked.
 
+The current demonstration implementation and its verification evidence are described in [`guides/samvaad-demo.md`](guides/samvaad-demo.md). Earlier phase ledgers and roadmap entries describe historical proposals.
+
 ## Source precedence
 
 When project documents disagree, use this order:
@@ -36,10 +38,11 @@ When project documents disagree, use this order:
 ## Contributor guides
 
 - [`guides/architecture-navigation.md`](guides/architecture-navigation.md) — repository paths and responsibility boundaries.
+- [`guides/samvaad-demo.md`](guides/samvaad-demo.md) — agent configuration, real calling, webhook security, live-test results, and the presenter script.
 - [`guides/local-development.md`](guides/local-development.md) — local web/API/database workflow and its current limits.
 - [`guides/security-secrets.md`](guides/security-secrets.md) — local credential handling and production secret requirements.
 - [`design/dashboard.md`](design/dashboard.md) — dashboard audience, hierarchy, states, and prototype interaction boundary.
-- [`../backend/README.md`](../backend/README.md) — API commands, current read-only endpoints, and configuration.
+- [`../backend/README.md`](../backend/README.md) — API commands, authenticated workflow endpoints, and configuration.
 - [`../db/README.md`](../db/README.md) — migration, seed, and database-role conventions.
 - [`../deploy/README.md`](../deploy/README.md) — local Compose startup, reset, and security boundary.
 - [`guides/frontend-ui.md`](guides/frontend-ui.md) — required Impeccable workflow for future UI work.

@@ -4,7 +4,9 @@ Renal Relay is a clinician-led follow-through workspace for kidney monitoring in
 
 ## Project status
 
-This repository contains the Phase 1 Renal Relay prototype foundation: a Next.js care-team dashboard, Go API, PostgreSQL schema and fictional demo seed, plus a local Compose environment. It is a demonstration scaffold, not a clinical system. Authentication, authorization, workflow mutations, integrations, and production deployment remain unimplemented.
+This repository contains a care-team demonstration implementation: authenticated clinician/coordinator sessions, patient/episode creation, audited workflow actions, a Sarvam Samvaad instant-calling adapter, and guarded clinician closeout. The running services, a real Samvaad call and ngrok callback, and fictional coordinator/clinician closeout were verified on 7 November 2026. Use fictional clinical records and a consenting demonstration phone.
+
+Start with the [Samvaad demo guide](docs/guides/samvaad-demo.md) for required configuration, agent instructions, callback security, test commands, and the presenter script.
 
 ## Product boundary
 
@@ -30,7 +32,7 @@ The documents distinguish proposal, accepted decisions, scaffold, and implemente
 
 ## Current application
 
-The root Next.js app renders the care-team overview and linked episode details from the Go API. If the API is unavailable, it shows an explicit unavailable state without sample records or fabricated counts. The API exposes liveness/readiness, a read-only dashboard overview, and a read-only episode detail endpoint. PostgreSQL migrations establish workflow tables; a separate command seeds two fictional demonstration episodes. Docker Compose wires the local services and secret files. Authentication, workflow mutation endpoints, health-system connection, voice integration, and production hardening are not included. Use fictional records only; see the local development guide for startup steps and limits.
+The root Next.js app renders the dashboard and episode details from the Go API. Authenticated actions create episodes, record consent, initiate calls, resolve coordinator work, verify tests, record report receipt, acknowledge reports, and close episodes. Backend checks enforce permissions and closure requirements. Closed episodes remain accessible through dashboard history. Samvaad handles voice/telephony; the application stores validated patient-reported outcomes and short notes, not transcripts or recordings. Calls remain disabled until the documented configuration and callback-security checkpoint is complete.
 
 ## Prototype outcome
 

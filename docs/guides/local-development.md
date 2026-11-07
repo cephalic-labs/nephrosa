@@ -1,84 +1,78 @@
 # Local development
 
-Phase 1 runs the Next.js workspace directly and the Go API/PostgreSQL services through Docker Compose. Use only the fictional seed records provided for the prototype. This setup has no authentication and is not suitable for real patient information.
+Run Next.js on the host and the Go API with PostgreSQL through Docker Compose. The application provides authenticated clinician/coordinator demonstration accounts, audited workflow actions, and optional Sarvam Samvaad calls. Use fictional clinical records and a consenting demonstration phone.
 
 ## Prerequisites
 
 - Node.js supported by the pinned Next.js package and pnpm 12.10.1.
-- Go 1.26 or newer in the 1.26 line for local API development.
-- Docker Engine with Compose v2, able to pull the PostgreSQL image and build the API image.
-- OpenSSL for generating local credentials.
+- Go 1.26 or newer for direct API development and backend tests.
+- Docker Engine with Compose, with access to the public PostgreSQL and Go images.
+- OpenSSL for generating local credentials and Python 3 for the configuration preflight.
 
-## Prepare the local environment
+## Prepare and start
 
-From the repository root:
+From the repository root, install dependencies and generate credentials on a fresh checkout.
 
-```bash
+```sh
 pnpm install --frozen-lockfile
-docker compose -f deploy/compose.yaml up -d --build db api
-docker compose -f deploy/compose.yaml --profile dev-seed run --rm seed
+./scripts/dev-secrets.sh
 ```
 
-If `.env` or `secrets/` does not exist, run `./scripts/dev-secrets.sh` once before starting Compose. It creates non-secret local settings plus three random database credentials with restrictive permissions. It refuses to overwrite an existing secrets directory. Keep these files local and never paste their contents into logs, issues, or commits. Existing database roles keep the credentials with which the database volume was initialized; only reset a disposable local database using a planned reset procedure.
+The setup script creates owner-only database and demo-account passwords, an empty Samvaad key file, and the root `.env`. It refuses to overwrite an existing `secrets/` directory. On an existing installation, create only missing files and preserve credentials associated with the database volume. The [Samvaad guide](samvaad-demo.md) describes each required setting and the value-entry checkpoint before live testing.
 
-Compose starts PostgreSQL, bootstraps the app and migration roles in a one-shot container running as your host UID/GID, applies migrations, then starts the Go API on `127.0.0.1:8080`. This lets the role bootstrap read the owner-only secret files without making them world-readable. The database volume is preserved across this role-bootstrap change; no database reset is needed. Seeding is explicit and repeatable; it adds only the fictional demo records. Check the services and API health:
+Start the database, role bootstrap, migrations, API, and fictional seed.
 
-```bash
-docker compose -f deploy/compose.yaml ps
-curl -fsS http://127.0.0.1:8080/health/live
-curl -fsS http://127.0.0.1:8080/health/ready
-```
-
-Inspect the API-backed dashboard counts and episode rows:
-
-```bash
-curl -fsS http://127.0.0.1:8080/api/v1/dashboard/overview | python3 -m json.tool
-```
-
-Copy an `id` from the returned `episodes` array and request its detail:
-
-```bash
-curl -fsS http://127.0.0.1:8080/api/v1/episodes/EPISODE_ID | python3 -m json.tool
-```
-
-In a second terminal, run the web app and open <http://localhost:3000>:
-
-```bash
+```sh
+docker compose --env-file .env -f deploy/compose.yaml up -d --build db api
+docker compose --env-file .env -f deploy/compose.yaml --profile dev-seed run --rm seed
 pnpm dev
 ```
 
-The Next.js server reads `RELAY_API_URL` from `.env`; the default is `http://127.0.0.1:8080`. Select a patient name in the dashboard queue to open its episode details. The UI renders API data only. If the API is unavailable, it shows an unavailable state instead of fallback counts or rows.
+Open <http://localhost:3000/login>. Use the `clinician` or `coordinator` login and the matching password in `secrets/demo_clinician_password` or `secrets/demo_coordinator_password`. Seeding hashes these passwords and revokes prior demo-account sessions. The PostgreSQL volume persists across restarts.
 
-## Smoke checks
+The explicit `--env-file .env` supplies root settings to Compose. The web server reads `RELAY_API_URL` from its Next.js environment, with `.env.local` taking precedence over `.env`. Its default is `http://127.0.0.1:8080`. Compose passes the Go service's environment and mounts its credentials separately.
 
-- `GET /health/live` returns `{"status":"ok"}` when the API process is running.
-- `GET /health/ready` returns `{"status":"ready"}` when PostgreSQL is reachable.
-- `GET /api/v1/dashboard/overview` returns seeded fictional summary counts and open episode rows.
-- `GET /api/v1/episodes/<id>` returns episode detail. An unknown or closed episode returns HTTP 404.
-- In the browser, episode names open details and the light/dark theme control works on both routes.
-- To see the unavailable state, run `docker compose -f deploy/compose.yaml stop api`, reload the page, then restore the API with `docker compose -f deploy/compose.yaml start api`.
-- To see the not-found UI, navigate to `/episodes/not-an-id` in the browser.
+## Verify the services
 
-These routes are unauthenticated. Use only the included fictional records; do not enter real patient information or expose the services beyond loopback.
+```sh
+docker compose --env-file .env -f deploy/compose.yaml ps
+curl -fsS http://127.0.0.1:8080/health/live
+curl -fsS http://127.0.0.1:8080/health/ready
+go test ./...
+pnpm lint
+pnpm build
+```
 
-## Available commands
+The backend integration test requires `TEST_DATABASE_URL` for a disposable PostgreSQL database and a role allowed to create schemas. It creates and drops an isolated schema. Without that setting, Go explicitly skips the database test while running unit tests.
 
-| Command | Purpose |
-| --- | --- |
-| `pnpm dev` | Run the Next.js workspace. |
-| `pnpm build` | Build the web application. |
-| `pnpm start` | Run the built web application. |
-| `pnpm lint` | Run ESLint. |
-| `go run ./backend/cmd/api migrate` | Apply embedded SQL migrations (requires database environment variables and migrator credentials). |
-| `go run ./backend/cmd/api seed` | Add fictional demo records; allowed only when `APP_ENV=development`. |
-| `docker compose -f deploy/compose.yaml logs -f api` | Follow local API logs. |
+The dashboard, episode, and workflow endpoints require a bearer session token. Next.js holds that token in an HTTP-only cookie and forwards it server-side. The browser guide in [the demo runbook](samvaad-demo.md) exercises the authenticated path without exposing tokens in terminal output.
 
-The API image waits for database migration before startup. The seed command is an explicit, repeatable development step and is not run automatically by `up`.
+A clinician can create an episode, assign an owner, acknowledge its report, and authorize closure. Both care-team roles can record consent, request calls, resolve tasks/barriers, verify test completion, and record report receipt. Closed episodes remain available through dashboard history. Unknown episodes return HTTP 404.
 
-## Next.js documentation rule
+## Live calls and configuration changes
 
-Before changing application code, follow the repository `AGENTS.md`: read the relevant guide under `node_modules/next/dist/docs/` for the installed version.
+Configure the agent, connected phone number, API key, public HTTPS callback, and `DEMO_CALL_PHONE_NUMBER` using the [Samvaad runbook](samvaad-demo.md). Run `python3 scripts/demo-preflight.py` after the owner has populated the files and confirmed readiness. This check validates local configuration without placing a call.
+
+After changing the API key, app version, or callback settings, recreate the API to load the new values.
+
+```sh
+docker compose --env-file .env -f deploy/compose.yaml up -d --force-recreate api
+```
+
+The demo number is used when creating a fictional patient. Changing it in `.env` takes effect in a newly created test episode. Existing patients retain their saved numbers. Calls originate through the Go API after consent and duplicate-call checks.
+
+## Stop and reset
+
+Stop Next.js with Ctrl-C and stop the Compose services with the following command.
+
+```sh
+docker compose --env-file .env -f deploy/compose.yaml down
+```
+
+For an explicit fictional-data reset, follow the guarded reset procedure in the Samvaad guide. Keep the volume and credentials together when retaining records.
 
 ## Current limits
 
-The API is read-only and unauthenticated. Do not expose it beyond loopback or enter real patient information. Production use needs identity and access controls, TLS and managed secrets, institutional privacy/security approval, data retention and backup policies, clinical workflow review, and a deployment threat model. See the [security and secrets guide](security-secrets.md).
+Calls start in English and contact history currently records English. Multilingual conversation accuracy and a dedicated live structured-barrier result remain unverified. The dashboard list is capped at 100 records. Webhooks use per-call secret URLs, and deployment must protect those URLs from disclosure. Review [secret handling](security-secrets.md) before changing credentials or deployment configuration.
+
+Before changing Next.js code, read the installed guides under `node_modules/next/dist/docs/` as required by `AGENTS.md`.

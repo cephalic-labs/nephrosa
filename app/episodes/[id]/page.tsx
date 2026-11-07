@@ -3,11 +3,13 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import type { ReactNode } from "react";
+import { requireUser, apiFetch } from "../../api-client";
+import { EpisodeControls } from "../../episode-controls";
 import { SiteHeader } from "../../site-header";
 
 export const metadata: Metadata = {
   title: "Episode details | Renal Relay",
-  description: "Read-only follow-through details for a Renal Relay monitoring episode.",
+  description: "Follow-through details for a Renal Relay monitoring episode.",
 };
 
 type EpisodeDetail = {
@@ -15,6 +17,9 @@ type EpisodeDetail = {
   patientReference: string;
   patientDisplayName: string;
   status: string;
+  consent: string;
+  language: string;
+  phone: string;
   dueAt: string;
   ownerDisplayName: string;
   tests: {
@@ -37,18 +42,14 @@ type EpisodeDetail = {
   }[];
   reports: { receivedAt: string; reference: string; recordedBy: string }[];
   clinicalReviews: { acknowledgedAt: string; clinician: string; nextAction: string }[];
-  auditEvents: { eventType: string; occurredAt: string; actor: string }[];
+  auditEvents: { eventType: string; occurredAt: string; actor: string; note?: string }[];
 };
 
 type LoadResult = { detail: EpisodeDetail; connected: true } | { detail: null; connected: false };
 
 async function getEpisode(id: string): Promise<LoadResult | null> {
-  const apiUrl = process.env.RELAY_API_URL ?? "http://127.0.0.1:8080";
   try {
-    const response = await fetch(`${apiUrl}/api/v1/episodes/${encodeURIComponent(id)}`, {
-      cache: "no-store",
-      signal: AbortSignal.timeout(2000),
-    });
+    const response = await apiFetch(`/episodes/${encodeURIComponent(id)}`);
     if (response.status === 404) return null;
     if (!response.ok) return { detail: null, connected: false };
     return { detail: (await response.json()) as EpisodeDetail, connected: true };
@@ -86,6 +87,7 @@ function PageSection({ title, children }: { title: string; children: ReactNode }
 }
 
 async function EpisodePage({ params }: { params: Promise<{ id: string }> }) {
+  const user = await requireUser();
   const { id } = await params;
   const result = await getEpisode(id);
   if (result === null) notFound();
@@ -107,6 +109,7 @@ async function EpisodePage({ params }: { params: Promise<{ id: string }> }) {
             </div>
             <p className="detail-owner">Care owner <strong>{detail.ownerDisplayName}</strong></p>
 
+            <EpisodeControls id={id} closed={detail.status === "closed"} role={user.role} consent={detail.consent} phone={detail.phone} tests={detail.tests} tasks={detail.tasks} />
             <div className="detail-grid">
               <div className="detail-column">
                 <PageSection title="Ordered tests">
@@ -203,7 +206,7 @@ async function EpisodePage({ params }: { params: Promise<{ id: string }> }) {
                         <li key={`${event.occurredAt}-${index}`}>
                           <span className="timeline-dot" aria-hidden="true" />
                           <strong>{readable(event.eventType)}</strong>
-                          <span>{event.actor} · {dateLabel(event.occurredAt)}</span>
+                          <span>{event.actor} · {dateLabel(event.occurredAt)}</span>{event.note && <p>{event.note}</p>}
                         </li>
                       ))}
                     </ol>

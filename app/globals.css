@@ -239,3 +239,19 @@ html[data-theme="dark"] .theme-toggle { color: var(--paper); }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
 }
+
+.workspace-toolbar { display: flex; flex-wrap: wrap; gap: 20px; align-items: center; padding: 24px 0; color: var(--canvas-ink); }
+.workspace-panel { margin: 32px 0; padding: 28px; border: 1px solid var(--line); color: var(--canvas-ink); }
+.workspace-panel h1, .workspace-panel h2, .workspace-panel h3 { color: inherit; }
+.controls-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px; }
+.workflow-form { display: grid; gap: 12px; max-width: 560px; margin: 16px 0 24px; }
+.workflow-form label { display: grid; gap: 6px; font-weight: 550; }
+.workflow-form input:not([type="hidden"]), .workflow-form select, .workflow-form textarea { min-height: 44px; width: 100%; padding: 10px 12px; background: var(--paper); color: var(--ink); border: 1px solid var(--episode-rule); border-radius: 3px; font: inherit; font-size: 1rem; }
+.workflow-form .check-label { display: flex; align-items: center; gap: 10px; }
+.workflow-form input[type="checkbox"] { width: 20px; min-height: 20px; }
+.workflow-form button { justify-self: start; }
+.workflow-form button:disabled { opacity: .6; cursor: wait; }
+.workflow-form p { margin: 0; overflow-wrap: anywhere; }
+.workflow-form p[role="status"]:empty { display: none; }
+.workflow-form fieldset { border: 1px solid var(--line); padding: 12px; }
+@media (max-width: 720px) { .controls-grid { grid-template-columns: 1fr; } .workspace-panel { padding: 18px; } }

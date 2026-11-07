@@ -9,7 +9,7 @@ export default function EpisodeNotFound() {
         <Link className="back-link" href="/#episodes">← All episodes</Link>
         <div className="detail-unavailable">
           <h1 id="not-found-title">Episode not found</h1>
-          <p>This episode is unavailable or no longer open.</p>
+          <p>This episode does not exist or is unavailable.</p>
           <Link className="retry-button detail-return" href="/#episodes">Return to episodes</Link>
         </div>
       </section>

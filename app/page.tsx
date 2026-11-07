@@ -1,5 +1,7 @@
 import { Suspense } from "react";
 import Link from "next/link";
+import { requireUser, apiFetch } from "./api-client";
+import { ActionForm } from "./action-form";
 import { SiteHeader } from "./site-header";
 
 type Episode = {
@@ -23,14 +25,10 @@ type Overview = {
   episodes: Episode[];
 };
 
-async function getOverview(): Promise<Overview | null> {
-  const apiUrl = process.env.RELAY_API_URL ?? "http://127.0.0.1:8080";
+async function getOverview(history: boolean): Promise<Overview | null> {
 
   try {
-    const response = await fetch(`${apiUrl}/api/v1/dashboard/overview`, {
-      cache: "no-store",
-      signal: AbortSignal.timeout(1500),
-    });
+    const response = await apiFetch(`/dashboard/overview?history=${history}`);
     if (!response.ok) return null;
     return (await response.json()) as Overview;
   } catch {
@@ -68,8 +66,10 @@ function dateLabel(value: string) {
   }).format(date);
 }
 
-async function Dashboard() {
-  const data = await getOverview();
+async function Dashboard({ searchParams }: { searchParams: Promise<{ history?: string }> }) {
+  const user = await requireUser();
+  const history = (await searchParams).history === "true";
+  const data = await getOverview(history);
   const connected = data !== null;
   const episodes = data?.episodes ?? [];
   const today = new Date().toISOString().slice(0, 10);
@@ -77,6 +77,7 @@ async function Dashboard() {
   return (
     <main className="dashboard-shell">
       <SiteHeader connected={connected} />
+      <div className="workspace-toolbar"><span>{user.name} · {user.role}</span>{user.role === "clinician" && <Link className="retry-button" href="/episodes/new">Create episode</Link>}<Link href={history ? "/" : "/?history=true"}>{history ? "Open episodes" : "Include closed episodes"}</Link><ActionForm operation="logout" label="Sign out" /></div>
 
       <section className="hero" id="dashboard" aria-labelledby="dashboard-title">
         <div className="hero-copy">
@@ -118,7 +119,7 @@ async function Dashboard() {
             <h2 id="episodes-title">Monitoring episodes</h2>
             <p>Current follow-through across the care team.</p>
           </div>
-          <span className="episode-total">{connected ? episodes.length : "—"}<span> open</span></span>
+          <span className="episode-total">{connected ? episodes.length : "—"}<span> displayed</span></span>
         </div>
         {!connected ? (
           <div className="episode-state" role="status">
@@ -167,10 +168,10 @@ async function Dashboard() {
   );
 }
 
-export default function Home() {
+export default function Home({ searchParams }: { searchParams: Promise<{ history?: string }> }) {
   return (
     <Suspense fallback={<main className="loading-screen" role="status">Loading dashboard…</main>}>
-      <Dashboard />
+      <Dashboard searchParams={searchParams} />
     </Suspense>
   );
 }

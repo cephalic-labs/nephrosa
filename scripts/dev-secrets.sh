@@ -17,10 +17,11 @@ fi
 umask 077
 mkdir -m 700 "$secret_dir"
 trap 'rm -rf "$secret_dir"' EXIT HUP INT TERM
-for secret_name in postgres_admin_password app_db_password migrator_db_password; do
+for secret_name in postgres_admin_password app_db_password migrator_db_password demo_clinician_password demo_coordinator_password; do
   openssl rand -hex 32 > "$secret_dir/$secret_name"
   chmod 600 "$secret_dir/$secret_name"
 done
+: > "$secret_dir/sarvam_api_key"
 if [ ! -f "$project_root/.env" ]; then
   sed \
     -e "s/^LOCAL_UID=.*/LOCAL_UID=$(id -u)/" \

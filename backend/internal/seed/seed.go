@@ -30,6 +30,10 @@ func Apply(ctx context.Context, pool *pgxpool.Pool) error {
 			_ = tx.Rollback(ctx)
 			return fmt.Errorf("apply seed %s: %w", name, err)
 		}
+		if err := accounts(ctx, tx); err != nil {
+			_ = tx.Rollback(ctx)
+			return err
+		}
 		if err := tx.Commit(ctx); err != nil {
 			return fmt.Errorf("commit seed %s: %w", name, err)
 		}

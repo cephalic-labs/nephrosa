@@ -88,6 +88,16 @@ services:
     environment:
       APP_ENV: ${APP_ENV:-development}
       HTTP_ADDR: :8080
+      SARVAM_API_BASE_URL: ${SARVAM_API_BASE_URL:-https://apps.sarvam.ai}
+      SARVAM_ORG_ID: ${SARVAM_ORG_ID:-}
+      SARVAM_WORKSPACE_ID: ${SARVAM_WORKSPACE_ID:-}
+      SARVAM_APP_ID: ${SARVAM_APP_ID:-}
+      SARVAM_APP_VERSION: ${SARVAM_APP_VERSION:-}
+      SARVAM_CONNECTION_ID: ${SARVAM_CONNECTION_ID:-}
+      SARVAM_AGENT_PHONE_NUMBER: ${SARVAM_AGENT_PHONE_NUMBER:-}
+      SARVAM_API_KEY_FILE: /run/secrets/sarvam_api_key
+      SARVAM_WEBHOOK_URL: ${SARVAM_WEBHOOK_URL:-}
+      SARVAM_WEBHOOK_ENABLED: ${SARVAM_WEBHOOK_ENABLED:-false}
       DATABASE_HOST: db
       DATABASE_PORT: "5432"
       DATABASE_NAME: renalrelay
@@ -96,6 +106,7 @@ services:
       DATABASE_SSLMODE: disable
     secrets:
       - app_db_password
+      - sarvam_api_key
     depends_on:
       migrate:
         condition: service_completed_successfully
@@ -132,8 +143,12 @@ services:
       DATABASE_USER: renalrelay_app
       DATABASE_PASSWORD_FILE: /run/secrets/app_db_password
       DATABASE_SSLMODE: disable
+      DEMO_CLINICIAN_PASSWORD_FILE: /run/secrets/demo_clinician_password
+      DEMO_COORDINATOR_PASSWORD_FILE: /run/secrets/demo_coordinator_password
     secrets:
       - app_db_password
+      - demo_clinician_password
+      - demo_coordinator_password
     depends_on:
       migrate:
         condition: service_completed_successfully
@@ -147,6 +162,12 @@ services:
     restart: "no"
 
 secrets:
+  sarvam_api_key:
+    file: ../secrets/sarvam_api_key
+  demo_clinician_password:
+    file: ../secrets/demo_clinician_password
+  demo_coordinator_password:
+    file: ../secrets/demo_coordinator_password
   postgres_admin_password:
     file: ../secrets/postgres_admin_password
   app_db_password:

@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import type { ReactNode } from "react";
 import { requireUser, apiFetch } from "../../api-client";
-import { EpisodeControls } from "../../episode-controls";
+import { EpisodeControls, getEpisodeCalls } from "../../episode-controls";
 import { SiteHeader } from "../../site-header";
 
 export const metadata: Metadata = {
@@ -89,6 +89,8 @@ function PageSection({ title, children }: { title: string; children: ReactNode }
 async function EpisodePage({ params }: { params: Promise<{ id: string }> }) {
   const user = await requireUser();
   const { id } = await params;
+  // If a call is terminal, read episode details after its callback transaction committed.
+  const calls = await getEpisodeCalls(id);
   const result = await getEpisode(id);
   if (result === null) notFound();
   const detail = result.detail;
@@ -116,7 +118,7 @@ async function EpisodePage({ params }: { params: Promise<{ id: string }> }) {
               { title: "Close episode", done: detail.status === "closed", note: detail.status === "closed" ? "Episode closed" : "Open for follow-through" },
             ].map((step,index)=><li key={step.title} className={step.done ? "is-done" : index === 0 || (index > 0 && [detail.tests.every(test=>Boolean(test.completion)),detail.reports.length>0,detail.clinicalReviews.length>0][index-1]) ? "is-current" : ""}><span>{step.done ? "✓" : index+1}</span><div><strong>{step.title}</strong><small>{step.note}</small></div></li>)}</ol></section>
 
-            <EpisodeControls id={id} closed={detail.status === "closed"} role={user.role} consent={detail.consent} phone={detail.phone} tests={detail.tests} tasks={detail.tasks} />
+            <EpisodeControls key={id} id={id} calls={calls} closed={detail.status === "closed"} role={user.role} consent={detail.consent} phone={detail.phone} tests={detail.tests} tasks={detail.tasks} />
             <h2 className="record-heading">Episode record</h2><div className="detail-grid">
               <div className="detail-column">
                 <PageSection title="Ordered tests">

@@ -244,6 +244,8 @@ html[data-theme="dark"] .theme-toggle { color: var(--paper); }
 .workspace-panel { margin: 32px 0; padding: 28px; border: 1px solid var(--line); color: var(--canvas-ink); }
 .workspace-panel h1, .workspace-panel h2, .workspace-panel h3 { color: inherit; }
 .controls-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px; }
+.latest-call { overflow-wrap: anywhere; }
+.latest-call .patient-response { padding-inline-start: 12px; border-inline-start: 2px solid var(--line); color: var(--canvas-ink); }
 .workflow-form { display: grid; gap: 12px; max-width: 560px; margin: 16px 0 24px; }
 .workflow-form label { display: grid; gap: 6px; font-weight: 550; }
 .workflow-form input:not([type="hidden"]), .workflow-form select, .workflow-form textarea { min-height: 44px; width: 100%; padding: 10px 12px; background: var(--paper); color: var(--ink); border: 1px solid var(--episode-rule); border-radius: 3px; font: inherit; font-size: 1rem; }

@@ -37,10 +37,13 @@ export async function submitAction(_previous: ActionState, form: FormData): Prom
       (await cookies()).delete("relay-session"); destination = "/login";
     } else if (operation === "create") destination = `/episodes/${(await response.json()).id}`;
     revalidatePath("/");
-    if (id) revalidatePath(`/episodes/${id}`);
+    if (id && operation !== "call") revalidatePath(`/episodes/${id}`);
   } catch {
     return { message: "Service unavailable. Refresh to check the current state before retrying, especially after a call request." };
+  } finally {
+    if (operation === "call") revalidatePath(`/episodes/${id}`);
   }
   if (destination) redirect(destination);
+  if (operation === "call") return { message: "Call requested. Waiting for the call result." };
   return { message: "Saved. The episode has been updated." };
 }

@@ -31,12 +31,12 @@ The product supports follow-up between clinic visits. The first demonstration us
 - A voice or language-model component may capture structured follow-up outcomes. It must not diagnose, interpret results, calculate clinical risk, or recommend treatment.
 - Staff verify test completion and report receipt. Clinicians own report acknowledgement, next action, and standard closure.
 - Real-patient use requires clinician co-design and institutional privacy/security review.
-- The Phase 1 prototype currently uses Go/Gin, PostgreSQL, and local Docker Compose for an unauthenticated read-only dashboard. These are prototype implementation choices, not accepted production architecture. Telephony, Sarvam, hosted language models, authentication, and report storage remain proposed or undecided.
+- The current local demonstration uses a Next.js web workspace, a Go API, PostgreSQL, authenticated clinician/coordinator sessions, audited episode actions, and an optional Sarvam voice adapter. These are prototype implementation choices, not accepted production architecture.
 
 ## Evidence on Hand
 
 - The supplied Renal Relay concept and prototype plan and the eight-slide Health-a-thon presentation define the proposed use case, workflow, safeguards, technical options, and pilot measures. Source filenames and reconciliation notes are recorded in [`docs/source-notes.md`](docs/source-notes.md).
-- The repository contains a read-only care-team dashboard, initial database schema, and fictional seed records. The demo does not implement authentication, workflow mutations, clinical integrations, or clinical decision support.
+- The repository contains a public product landing page, authenticated role-aware care-team dashboard, workflow guide, episode creation and detail pages, backend workflow actions, and fictional seed records. Clinical integrations and clinical decision support are not implemented.
 - No real-patient data, validated clinical scripts, clinical integration, or pilot outcome is included in this repository.
 
 ## Product Principles
